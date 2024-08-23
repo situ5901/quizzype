@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../domain/repository/repository_imports.dart';
 import '../../../App routes/approutes.dart';
+import '../../../domain/service/app/app_service_imports.dart';
 import '../../widgets/Toast/toast.dart';
 
 class OtpController extends GetxController {
@@ -13,11 +14,12 @@ class OtpController extends GetxController {
   bool isRetry = false;
   late String phone;
   TextEditingController otpController = TextEditingController();
+  String? token; // To store the token
+  final DatabaseService databaseService = Get.find<DatabaseService>();
 
   @override
   void onInit() {
     super.onInit();
-    // Retrieve the phone number passed from the LoginController
     final arguments = Get.arguments;
     phone = arguments['phone'];
     startTimer();
@@ -51,31 +53,33 @@ class OtpController extends GetxController {
     try {
       await authRepository.otpLessLogin(phone: phone);
     } catch (error) {
-      // showToast(message: error.toString());
+      // Handle error
     }
   }
 
   Future<void> verifyOtp() async {
     try {
       if (otpController.text.length < 4) {
-         showToast(message: 'Enter valid otp');
+        showToast(message: 'Enter valid otp');
         return;
       }
-      // Show loading dialog
-      // AppDialog.loading(title: 'Verifying OTP...');
-      await authRepository.verifyOtp(phone: phone, otp: otpController.text);
+
+      final response = await authRepository.verifyOtp(
+        phone: phone,
+        otp: otpController.text,
+      );
+
       showToast(message: 'Otp Verified');
-     // Get.back();
-      Get.offAllNamed(AppRoutes.homeScreen);
+
+      token = response.data['token']; // Store the token
+      await databaseService.putAccessToken(token!); // Save the token securely // Call the method with token
+
+      Get.offAllNamed(AppRoutes.profileScreen);
+      token = databaseService.accessToken; // Retrieve the token using the getter method
+      print("Retrieved token: $token"); // Print the token to the console
+
     } catch (error) {
-     // Get.back();
       showToast(message: error.toString());
     }
-  }
-
-  @override
-  void onClose() {
-    periodicTimer?.cancel();
-    super.onClose();
   }
 }

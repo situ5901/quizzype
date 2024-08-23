@@ -10,6 +10,8 @@ import 'package:quizzype001/model/common/device_info.dart';
 
 
 import '../../../main.dart';
+import '../../../model/UserModels/StudentModel.dart';
+import '../../../model/UserModels/UserModel.dart';
 
 /// api service imports
 part 'api_service.dart';
@@ -17,4 +19,4 @@ part 'dio_interceptors.dart';
 part 'dio_exceptions.dart';
 
 part 'authentication/auth_api.dart';
-// part 'user/user.dart';
+part 'user/user.dart';

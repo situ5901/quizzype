@@ -34,7 +34,7 @@ class AppService extends GetxService {
 //    Get.put( SearchApi(apiService.dio));
 //
 //    /// Initialize and put the UserApi
-  // Get.put( UserApi(apiService.dio));
+     Get.put( UserApi(apiService.dio));
 //
 //    /// Initialize and put the NotificationAPI
 //    Get.put( NotificationAPI(apiService.dio));

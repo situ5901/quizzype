@@ -3,7 +3,7 @@ import 'package:quizzype001/UI/Home.dart';
 
 import 'package:quizzype001/UI/MegaContest.dart';
 import 'package:quizzype001/UI/Auth/otp/Otp.dart';
-import 'package:quizzype001/UI/Profile.dart';
+import 'package:quizzype001/UI/Profile/Profile.dart';
 import 'package:quizzype001/UI/Live_Contest/LiveContest.dart';
 import '../Common/Colors.dart';
 import 'Share&Earn.dart';

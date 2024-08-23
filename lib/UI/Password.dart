@@ -5,7 +5,7 @@ import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/Common/TapButton.dart';
 import 'package:quizzype001/Common/Colors.dart';
 
-import 'Profile.dart';
+import 'Profile/Profile.dart';
 
 class PasswordUI extends StatefulWidget {
   const PasswordUI({super.key});

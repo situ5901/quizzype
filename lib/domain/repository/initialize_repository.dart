@@ -12,7 +12,7 @@ Future<void> initializeRepositories() async {
     // Get.put(CreateFlatRepository());
     // Get.put(HousingRepository());
     // Get.put(SearchRepository());
-    // Get.put(UserRepository());
+    Get.put(UserRepository());
     // Get.put(NotificationRepository());
 
     print('repository initialize');

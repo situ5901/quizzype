@@ -4,7 +4,7 @@ import 'package:quizzype001/UI/Home.dart';
 import '../UI/Auth/login/Login.dart';
 import '../UI/Auth/otp/Otp.dart';
 import '../UI/Home.dart';
-import '../UI/Profile.dart';
+import '../UI/Profile/Profile.dart';
 
 
 class AppRoutes{
@@ -19,7 +19,7 @@ class AppRoutes{
     GetPage(name: login, page: () =>  Login_Page()),
     GetPage(name: verify, page: () =>   Otp()),
     GetPage(name: homeScreen, page: () =>  const Home()),
-    GetPage(name: profileScreen, page: () =>  const ProfilePage()),
+    GetPage(name: profileScreen, page: () =>   ProfilePage()),
 
   ];
 }
