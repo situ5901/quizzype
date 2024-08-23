@@ -6,10 +6,10 @@ import 'package:quizzype001/Common/BoldText.dart';
 import 'package:quizzype001/Common/PlainText.dart';
 import 'package:quizzype001/Common/TapButton.dart';
 import 'package:quizzype001/UI/DailyContest.dart';
-import 'package:quizzype001/UI/Login.dart';
+
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/MegaContest.dart';
-import 'package:quizzype001/UI/Otp.dart';
+import 'package:quizzype001/UI/Auth/otp/Otp.dart';
 import 'package:quizzype001/UI/Profile.dart';
 import 'package:quizzype001/UI/Shareing.dart';
 import 'package:quizzype001/UI/SideBar.dart';

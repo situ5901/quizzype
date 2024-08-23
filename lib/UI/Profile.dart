@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/Common/TapButton.dart';
 import 'package:quizzype001/UI/Home.dart';
-import 'package:quizzype001/UI/Login.dart';
+
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/Navbar.dart';
 import '../Common/BoldText.dart';
+import 'Auth/login/Login.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);

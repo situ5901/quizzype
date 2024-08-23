@@ -1,20 +1,47 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quizzype001/UI/Login.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'App routes/approutes.dart';
+import 'domain/service/app/app_service_imports.dart';
+import 'firebase_options.dart';
+import 'localization/app_localization.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await Get.putAsync(() => AppService().init());
+  runApp(const MyApp()
+
+
+  );
 }
-
+class TempContext {
+  static late BuildContext context;
+}
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addObserver(lifecycleObserver);
+    TempContext.context = context;
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Login_Page()
+      title: 'Campus Admin',
+      //navigatorKey: NavigatorService.navigatorKey,
+      translations: AppLocalization(),
+      locale: Get.deviceLocale, //for setting localization strings
+      fallbackLocale: const Locale('en', 'US'),
+      initialRoute: AppRoutes.profileScreen,
+      getPages: AppRoutes.routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
+
+
+
