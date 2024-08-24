@@ -9,7 +9,16 @@ import '../widgets/Toast/toast.dart';
 
 class ProfileController extends GetxController {
   final repository = UserRepository();
-  StudentDetails? studentDetails;
+  var selectEducation;
+      var fullname;
+      var address;
+      var phoneNumber;
+      var schoolName;
+      var schoolAddress;
+      var boardOption;
+      var classvalue;
+      var mediumName;
+      var aadharcard;
   UserDetails? userDetails;
   String? token;
   final DatabaseService databaseService = Get.find<DatabaseService>();
@@ -24,7 +33,17 @@ class ProfileController extends GetxController {
 
   Future<void> postStudentDetails() async {
     if (token != null) {
-      await repository.postStudentDetails(studentDetails!, token!);
+      await repository.postStudentDetails( token: token!,
+          selectEducation: selectEducation,
+          fullname: fullname,
+          address: address,
+          phoneNumber: phoneNumber,
+          schoolName: schoolName,
+          schoolAddress: schoolAddress,
+          boardOption: boardOption,
+          classvalue: classvalue,
+          mediumName: mediumName,
+          aadharcard: aadharcard);
       Get.offAllNamed(AppRoutes.homeScreen);
     } else {
       showToast(message: 'Token not available');

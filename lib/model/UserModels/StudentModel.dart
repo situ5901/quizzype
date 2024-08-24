@@ -35,7 +35,7 @@ class StudentDetails {
     'boardOption': boardOption,
     'classValue': classValue,
     'mediumName': mediumName,
-    'aadharcard': aadharcard,
+     'aadharcard': aadharcard,
   };
 
   // Create a StudentDetails object from a JSON map

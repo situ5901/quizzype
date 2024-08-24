@@ -129,6 +129,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   onChanged: (value) {
                                     setState(() {
                                       selectedValue = value;
+                                      selectedValue =controller.selectEducation;
 
                                     });
                                   },
@@ -140,6 +141,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   onChanged: (value) {
                                     setState(() {
                                       selectedValue = value;
+                                      selectedValue =controller.selectEducation;
 
                                     });
                                   },
@@ -151,6 +153,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   onChanged: (value) {
                                     setState(() {
                                       selectedValue = value;
+                                      selectedValue =controller.selectEducation;
 
                                     });
                                   },
@@ -167,6 +170,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     decoration: InputDecoration(
                                       hintText: "--",
                                     ),
+
                                   ),
                                 ),
                                 SizedBox(
@@ -181,6 +185,9 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     decoration: InputDecoration(
                                       hintText: "--",
                                     ),
+                                    onChanged: (value) {
+                                      controller.fullname = value;
+                                    },
                                   ),
                                 ),
                                 SizedBox(
@@ -195,6 +202,9 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     decoration: InputDecoration(
                                       hintText: "--",
                                     ),
+                                    onChanged: (value) {
+                                      controller.phoneNumber = value;
+                                    },
                                   ),
                                 ),
                                 SizedBox(
@@ -209,6 +219,9 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     decoration: InputDecoration(
                                       hintText: "--",
                                     ),
+                                    onChanged: (value) {
+                                      controller.schoolName = value;
+                                    },
                                   ),
                                 ),
                                 SizedBox(
@@ -223,6 +236,9 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     decoration: InputDecoration(
                                       hintText: "--",
                                     ),
+                                    onChanged: (value) {
+                                      controller.schoolAddress = value;
+                                    },
                                   ),
                                 ),
                                 SizedBox(
@@ -250,19 +266,30 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 ),
                                 RadioListTile<String>(
                                   title: BoldText(name:'OTHER',fontsize: 16,color: boxColor,),
-                                  value: 'Option 3',
+                                  value: 'Option 3', // Assuming this is the "OTHER" option
                                   groupValue: selectedBoard,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedBoard = value;
+                                      if (value == 'Option 3') {
+                                        // Update the TextController when OTHER is selected
+
+                                          controller.boardOption = value;
+
+                                        boardController.text = ''; // Clear existing text if any
+                                      }
                                     });
                                   },
                                 ),
+
                                 TextFormField(
                                   controller: boardController,
                                   decoration: InputDecoration(
                                     hintText: "ENTER YOUR BOARD NAME",
                                   ),
+                                  onChanged: (value) {
+                                    controller.boardOption = value;
+                                  },
                                 ),
                                 SizedBox(
                                   height: 12,
@@ -276,6 +303,9 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     decoration: InputDecoration(
                                       hintText: "--",
                                     ),
+                                    onChanged: (value) {
+                                      controller.classvalue = value;
+                                    },
                                   ),
                                 ),
                                 RadioListTile<String>(
@@ -298,13 +328,22 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     });
                                   },
                                 ),
+                                // For Medium Selection
                                 RadioListTile<String>(
                                   title: BoldText(name:'OTHER',fontsize: 16,color: boxColor,),
-                                  value: 'Option 3',
+                                  value: 'Option 3', // Assuming this is the "OTHER" option
                                   groupValue: selectedMedium,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedMedium = value;
+                                      if (value == 'Option 3') {
+
+
+                                          controller.mediumName = value;
+
+                                        // Update the TextController when OTHER is selected
+                                        mediumController.text = ''; // Clear existing text if any
+                                      }
                                     });
                                   },
                                 ),
@@ -315,6 +354,9 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     decoration: InputDecoration(
                                         hintText: 'ENTER YOUR MEDIUM NAME'
                                     ),
+                                    onChanged: (value) {
+                                      controller.mediumName = value;
+                                    },
                                   ),
                                 ),
 
@@ -330,32 +372,79 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     decoration: InputDecoration(
                                       hintText: "--",
                                     ),
+                                    onChanged: (value) {
+                                      controller.aadharcard = value;
+                                    },
                                   ),
                                 ),
                                 SizedBox(
                                   height: 8,
                                 ),
-                                RoundedButton(buttonColor:boxColor,
-                                    title:"SUBMIT", onTap:(){
-                                      final studentDetails = StudentDetails(
-                                        selectEducation: selectedValue ?? '',
-                                        fullname: fullnameController.text,
-                                        address: addressController.text,
-                                        phoneNumber: phoneNumberController.text,
-                                        schoolName: schoolNameController.text,
-                                        schoolAddress: schoolAddressController.text,
-                                        boardOption: selectedBoard ?? '',
-                                        classValue: classController.text,
-                                        mediumName: mediumController.text,
-                                        aadharcard: aadharcardController.text,
-                                      );
+                          RoundedButton(
+                            buttonColor: boxColor,
+                            title: "SUBMIT",
+                            onTap: () {
+                              // Debugging: Print values to console
+                              print("selectEducation: ${controller.selectEducation}");
 
-                                      // Update the controller with the new details
-                                      final profileController = Get.find<ProfileController>();
-                                      profileController.studentDetails = studentDetails;
-                                      profileController.postStudentDetails();
-                                    }),
-                              ],
+
+                              // Assign values
+                               controller.selectEducation = selectedValue ;
+                               controller.fullname = fullnameController.text;
+                             controller.address =  addressController.text ;
+                                controller.phoneNumber =phoneNumberController.text;
+                               controller.schoolName =schoolNameController.text;
+                               controller.schoolAddress = schoolAddressController.text;
+                              controller.aadharcard = aadharcardController.text ;
+                               controller.classvalue = classController.text;
+
+                              // Update the selected board and medium
+                              if (selectedBoard == 'Option 3') {
+                                controller.boardOption = boardController.text ?? ''; // Use the text from the TextField
+                              } else {
+                                controller.boardOption = selectedBoard ?? ''; // Use the selected value
+                              }
+
+                              if (selectedMedium == 'Option 3') {
+                                controller.mediumName = mediumController.text ?? ''; // Use the text from the TextField
+                              } else {
+                                controller.mediumName = selectedMedium ?? ''; // Use the selected value
+                              }
+
+
+
+
+
+                              print("fullname: ${fullnameController.text}");
+                              print("address: ${controller.address}");
+                              print("phoneNumber: ${controller.phoneNumber}");
+                              print("schoolName: ${controller.schoolName}");
+                              print("schoolAddress: ${controller.schoolAddress}");
+                              print("aadharcard: ${controller.aadharcard}");
+                              print("classvalue: ${controller.classvalue}");
+                              print("selectedBoard: $selectedBoard");
+                              print("selectedMedium: $selectedMedium");print("fullname: ${controller.fullname}");
+                              print("address: ${controller.address}");
+                              print("phoneNumber: ${controller.phoneNumber}");
+                              print("schoolName: ${controller.schoolName}");
+                              print("schoolAddress: ${controller.schoolAddress}");
+                              print("aadharcard: ${controller.aadharcard}");
+                              print("classvalue: ${controller.classvalue}");
+                              print("selectedBoard: $selectedBoard");
+                              print("selectedMedium: $selectedMedium");
+
+
+
+
+                              // Update the controller with the new details
+                              final profileController = Get.find<ProfileController>();
+
+                              profileController.postStudentDetails();
+                            },
+                          )
+
+
+                          ],
                             ),
                           ),
                         ),
