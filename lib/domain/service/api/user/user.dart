@@ -8,13 +8,33 @@ class UserApi {
   // Replace with your actual token
 
 
-  Future<Response> postUserDetails(UserDetails userDetails,String token) async {
+  Future<Response> postUserDetails({
+    required String token,
+    required String fullname,
+    required String address,
+    required String phoneNumber,
+    required String email,
+    required String city,
+    required String state,
+    required String pincode,
+    required String dob,
+  }) async {
     final String endpoint = '/other/add';
 
     try {
       final response = await dio.post(
         '$basePath$endpoint',
-        data: userDetails.toJson(),
+        data: {
+          "fullname" : fullname,
+          "address":address,
+          "email":email,
+          "city":city,
+          "state":state,
+          "pincode":pincode,
+          "phoneNumber":phoneNumber,
+          "dob":dob
+
+        },
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

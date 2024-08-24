@@ -4,13 +4,32 @@ class UserRepository {
   final UserApi userApi = Get.find<UserApi>();
   final DatabaseService databaseService = Get.find<DatabaseService>();
 
-  Future<bool> postUserDetails(UserDetails user,String token) async {
+  Future<bool> postUserDetails({
+    required String token,
+    required String fullname,
+    required String address,
+    required String phoneNumber,
+    required String email,
+    required String city,
+    required String state,
+    required String pincode,
+    required String dob,
+  }) async {
     try {
       // Send the user details to the server via the API
-      final response = await userApi.postUserDetails(user,token);
+      final response = await userApi.postUserDetails(
+          token: token,
+          fullname: fullname,
+          address: address,
+          phoneNumber: phoneNumber,
+          email: email,
+          city: city,
+          state: state,
+          pincode: pincode,
+          dob: dob);
 
       // Extract the data from the response
-      var responseData = response.data['data'];
+       var responseData = response.data['data'];
 
       // Save the received user data to the local database
      // await databaseService.putUser(UserDetails.fromJson(responseData));

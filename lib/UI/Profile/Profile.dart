@@ -33,6 +33,11 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   final TextEditingController classController = TextEditingController();
   final TextEditingController mediumController = TextEditingController();
   final TextEditingController aadharcardController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
+  final TextEditingController pincodeController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   late TabController tabController;
 
   @override
@@ -203,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                       hintText: "--",
                                     ),
                                     onChanged: (value) {
-                                      controller.phoneNumber = value;
+
                                     },
                                   ),
                                 ),
@@ -274,7 +279,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                       if (value == 'Option 3') {
                                         // Update the TextController when OTHER is selected
 
-                                          controller.boardOption = value;
+
 
                                         boardController.text = ''; // Clear existing text if any
                                       }
@@ -339,7 +344,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                       if (value == 'Option 3') {
 
 
-                                          controller.mediumName = value;
+
 
                                         // Update the TextController when OTHER is selected
                                         mediumController.text = ''; // Clear existing text if any
@@ -389,10 +394,10 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
 
 
                               // Assign values
-                               controller.selectEducation = selectedValue ;
+                               controller.selectEducation = selectedValue! ;
                                controller.fullname = fullnameController.text;
                              controller.address =  addressController.text ;
-                                controller.phoneNumber =phoneNumberController.text;
+                              //  controller.phoneNumber =phoneNumberController.text;
                                controller.schoolName =schoolNameController.text;
                                controller.schoolAddress = schoolAddressController.text;
                               controller.aadharcard = aadharcardController.text ;
@@ -461,6 +466,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               Container(
                                 height: 30,
                                 child: TextFormField(
+                                  controller: fullnameController,
                                   decoration: InputDecoration(
                                     hintText: "--",
                                   ),
@@ -474,6 +480,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               Container(
                                 height: 30,
                                 child: TextFormField(
+                                  controller: addressController,
                                   decoration: InputDecoration(
                                     hintText: "--",
                                   ),
@@ -487,6 +494,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               Container(
                                 height: 30,
                                 child: TextFormField(
+                                  controller: emailController,
                                   decoration: InputDecoration(
                                     hintText: "--",
                                   ),
@@ -500,6 +508,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               Container(
                                 height: 30,
                                 child: TextFormField(
+                                  controller: cityController,
                                   decoration: InputDecoration(
                                     hintText: "--",
                                   ),
@@ -513,6 +522,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               Container(
                                 height: 30,
                                 child: TextFormField(
+                                  controller: stateController,
                                   decoration: InputDecoration(
                                     hintText: "--",
                                   ),
@@ -526,6 +536,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               Container(
                                 height: 30,
                                 child: TextFormField(
+                                  controller: pincodeController,
                                   decoration: InputDecoration(
                                     hintText: "--",
                                   ),
@@ -539,6 +550,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               Container(
                                 height: 30,
                                 child: TextFormField(
+                                  controller: phoneNumberController,
                                   decoration: InputDecoration(
                                     hintText: "--",
                                   ),
@@ -552,6 +564,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               Container(
                                 height: 30,
                                 child: TextFormField(
+                                  controller: dobController,
                                   decoration: InputDecoration(
                                     hintText: "--",
                                   ),
@@ -562,7 +575,19 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               ),
                               RoundedButton(buttonColor: boxColor,
                                   title: 'SUBMIT', onTap: (){
-                                    Get.to(()=>Login_Page());
+                                    controller.fullname = fullnameController.text;
+                                    controller.address =  addressController.text;
+                                    controller.email =  emailController.text;
+                                    controller.pincode =  pincodeController.text;
+                                    controller.city =  cityController.text;
+                                    controller.state =  stateController.text;
+                                    controller.dob =  dobController.text;
+                                    controller.phoneNumber1 =  phoneNumberController.text;
+
+                                    // Update the controller with the new details
+                                    final profileController = Get.find<ProfileController>();
+
+                                    profileController.postUserDetails();
                                   })
                             ],
                           ),
