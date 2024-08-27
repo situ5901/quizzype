@@ -19,6 +19,7 @@ class UserApi {
     required String pincode,
     required String dob,
   }) async {
+    ;
     final String endpoint = '/other/add';
 
     try {
@@ -67,24 +68,33 @@ class UserApi {
     required var aadharcard,
 
 }) async {
+    print("fullname: ${fullname}");
+    print("address: ${address}");
+    print("phoneNumber: ${phoneNumber}");
+    print("schoolName: ${schoolName}");
+    print("schoolAddress: ${schoolAddress}");
+    print("aadharcard: ${aadharcard}");
+    print("classvalue: ${classvalue}");
+    print("selectedBoard: $selectEducation");
+    print("selectedMedium: ${mediumName}");
+    print("selectedboardOption: ${boardOption}");
     final String endpoint = '/student/add';
 
     try {
       final response = await dio.post(
         '$basePath$endpoint',
         data: {
-          "selectEducation":selectEducation,
-          "fullname":fullname,
+          "selectEducation": selectEducation,
+          "fullname": fullname,
           "address": address,
-          "phoneNumber":phoneNumber,
-          "schoolName":schoolName,
-          "schoolAddress":schoolAddress,
-          "boardOption":"${boardOption}_Board",
-          "classvalue":classvalue,
-          "mediumName":"${mediumName}_Medium",
-          "aadharcard":aadharcard
-
-},
+          "phoneNumber": phoneNumber,
+          "schoolName": schoolName,
+          "schoolAddress": schoolAddress,
+          "boardOption": boardOption,
+          "classvalue": classvalue,
+          "mediumName": mediumName,
+          "aadharcard": aadharcard
+        },
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -95,8 +105,13 @@ class UserApi {
 
       return response;
     } catch (e) {
-
+      if (e is DioError) {
+        print('Dio Error: ${e.response?.statusCode} ${e.response?.data}');
+      } else {
+        print('Error: $e');
+      }
       rethrow;
     }
+
   }
 }

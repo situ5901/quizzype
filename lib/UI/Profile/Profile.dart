@@ -129,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               children: [
                                 RadioListTile<String>(
                                   title: BoldText(name:'SCHOOL',fontsize: 16,color: boxColor,),
-                                  value: 'Option 1',
+                                  value: 'SCHOOL',
                                   groupValue: selectedValue,
                                   onChanged: (value) {
                                     setState(() {
@@ -141,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 ),
                                 RadioListTile<String>(
                                   title: BoldText(name:'COLLEGE',fontsize: 16,color: boxColor,),
-                                  value: 'Option 2',
+                                  value: 'COLLEGE',
                                   groupValue: selectedValue,
                                   onChanged: (value) {
                                     setState(() {
@@ -153,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 ),
                                 RadioListTile<String>(
                                   title: BoldText(name:'INSTITUTE',fontsize: 16,color: boxColor,),
-                                  value: 'Option 3',
+                                  value: 'INSTITUTE',
                                   groupValue: selectedValue,
                                   onChanged: (value) {
                                     setState(() {
@@ -251,7 +251,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 ),
                                 RadioListTile<String>(
                                   title: BoldText(name:'CBSE BOARD',fontsize: 16,color: boxColor,),
-                                  value: 'Option 1',
+                                  value: 'CBSE_BOARD',
                                   groupValue: selectedBoard,
                                   onChanged: (value) {
                                     setState(() {
@@ -261,7 +261,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 ),
                                 RadioListTile<String>(
                                   title: BoldText(name:'ICSC BOARD',fontsize: 16,color: boxColor,),
-                                  value: 'Option 2',
+                                  value: 'ICSC_BOARD',
                                   groupValue: selectedBoard,
                                   onChanged: (value) {
                                     setState(() {
@@ -271,12 +271,12 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 ),
                                 RadioListTile<String>(
                                   title: BoldText(name:'OTHER',fontsize: 16,color: boxColor,),
-                                  value: 'Option 3', // Assuming this is the "OTHER" option
+                                  value: 'Other', // Assuming this is the "OTHER" option
                                   groupValue: selectedBoard,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedBoard = value;
-                                      if (value == 'Option 3') {
+                                      if (value == 'Other') {
                                         // Update the TextController when OTHER is selected
 
 
@@ -315,7 +315,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 ),
                                 RadioListTile<String>(
                                   title: BoldText(name:'ENGLISH MEDIUM',fontsize: 16,color: boxColor,),
-                                  value: 'Option 1',
+                                  value: 'English_Medium',
                                   groupValue: selectedMedium,
                                   onChanged: (value) {
                                     setState(() {
@@ -325,7 +325,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 ),
                                 RadioListTile<String>(
                                   title: BoldText(name:'HINDI MEDIUM',fontsize: 16,color: boxColor,),
-                                  value: 'Option 2',
+                                  value: 'Hindi_Medium',
                                   groupValue: selectedMedium,
                                   onChanged: (value) {
                                     setState(() {
@@ -336,12 +336,12 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 // For Medium Selection
                                 RadioListTile<String>(
                                   title: BoldText(name:'OTHER',fontsize: 16,color: boxColor,),
-                                  value: 'Option 3', // Assuming this is the "OTHER" option
+                                  value: 'Other', // Assuming this is the "OTHER" option
                                   groupValue: selectedMedium,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedMedium = value;
-                                      if (value == 'Option 3') {
+                                      if (value == 'Other') {
 
 
 
@@ -389,28 +389,26 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                             buttonColor: boxColor,
                             title: "SUBMIT",
                             onTap: () {
-                              // Debugging: Print values to console
-                              print("selectEducation: ${controller.selectEducation}");
-
 
                               // Assign values
                                controller.selectEducation = selectedValue! ;
                                controller.fullname = fullnameController.text;
                              controller.address =  addressController.text ;
-                              //  controller.phoneNumber =phoneNumberController.text;
-                               controller.schoolName =schoolNameController.text;
+                              controller.phoneNumber = int.parse(phoneNumberController.text);
+
+                              controller.schoolName =schoolNameController.text;
                                controller.schoolAddress = schoolAddressController.text;
                               controller.aadharcard = aadharcardController.text ;
                                controller.classvalue = classController.text;
 
                               // Update the selected board and medium
-                              if (selectedBoard == 'Option 3') {
+                              if (selectedBoard == 'Other') {
                                 controller.boardOption = boardController.text ?? ''; // Use the text from the TextField
                               } else {
                                 controller.boardOption = selectedBoard ?? ''; // Use the selected value
                               }
 
-                              if (selectedMedium == 'Option 3') {
+                              if (selectedMedium == 'Other') {
                                 controller.mediumName = mediumController.text ?? ''; // Use the text from the TextField
                               } else {
                                 controller.mediumName = selectedMedium ?? ''; // Use the selected value
@@ -420,23 +418,6 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
 
 
 
-                              print("fullname: ${fullnameController.text}");
-                              print("address: ${controller.address}");
-                              print("phoneNumber: ${controller.phoneNumber}");
-                              print("schoolName: ${controller.schoolName}");
-                              print("schoolAddress: ${controller.schoolAddress}");
-                              print("aadharcard: ${controller.aadharcard}");
-                              print("classvalue: ${controller.classvalue}");
-                              print("selectedBoard: $selectedBoard");
-                              print("selectedMedium: $selectedMedium");print("fullname: ${controller.fullname}");
-                              print("address: ${controller.address}");
-                              print("phoneNumber: ${controller.phoneNumber}");
-                              print("schoolName: ${controller.schoolName}");
-                              print("schoolAddress: ${controller.schoolAddress}");
-                              print("aadharcard: ${controller.aadharcard}");
-                              print("classvalue: ${controller.classvalue}");
-                              print("selectedBoard: $selectedBoard");
-                              print("selectedMedium: $selectedMedium");
 
 
 
