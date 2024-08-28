@@ -27,9 +27,23 @@ class EnsureAuthMiddleware extends GetMiddleware {
       }
 
       if (user.fullname != null && user.fullname!.isNotEmpty) {
+        // To avoid getting stuck on OTP or other screens, ensure this redirect
+        // only happens once or adjust the state.
+        if (route == AppRoutes.homeScreen) {
+          print("Already on Home Screen");
+          return null; // No redirect needed
+        }
+
         print("Redirecting to Home Screen");
         return const RouteSettings(name: AppRoutes.homeScreen);
       } else {
+        // Avoid redirect loops by ensuring this condition isn't triggered
+        // once on the profile screen.
+        if (route == AppRoutes.profileScreen) {
+          print("Already on Profile Screen");
+          return null; // No redirect needed
+        }
+
         print("Redirecting to Profile Screen");
         return const RouteSettings(name: AppRoutes.profileScreen);
       }
@@ -38,7 +52,6 @@ class EnsureAuthMiddleware extends GetMiddleware {
       return const RouteSettings(name: AppRoutes.login);
     }
   }
-
-
 }
+
 
