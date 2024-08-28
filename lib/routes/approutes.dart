@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:quizzype001/UI/HomeScreen/Home.dart';
+import 'package:quizzype001/UI/userProfie/userProfile.dart';
 
 import '../UI/Auth/login/Login.dart';
 import '../UI/Auth/otp/Otp.dart';
@@ -14,6 +15,8 @@ class AppRoutes{
   static const verify = '/Otp';
   static const homeScreen = '/Home';
   static const profileScreen = '/Profile';
+  static const userScreen = '/UserProfile';
+
 
 
   static  get routes => [
@@ -21,6 +24,7 @@ class AppRoutes{
     GetPage(name: verify, page: () =>   Otp()),
     GetPage(name: homeScreen,middlewares: [EnsureAuthMiddleware()], page: () =>  const Home()),
     GetPage(name: profileScreen, page: () =>  const ProfilePage()),
+    GetPage(name: userScreen, page: () =>   UserProfile()),
 
   ];
 }
