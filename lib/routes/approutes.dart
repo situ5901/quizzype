@@ -20,7 +20,7 @@ class AppRoutes{
     GetPage(name: login, page: () =>  Login_Page()),
     GetPage(name: verify, page: () =>   Otp()),
     GetPage(name: homeScreen,middlewares: [EnsureAuthMiddleware()], page: () =>  const Home()),
-    GetPage(name: profileScreen, page: () =>   ProfilePage()),
+    GetPage(name: profileScreen, page: () =>  const ProfilePage()),
 
   ];
 }

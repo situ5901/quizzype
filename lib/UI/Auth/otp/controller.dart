@@ -72,6 +72,7 @@ class OtpController extends GetxController {
 
       showToast(message: 'Otp Verified');
 
+
      // token = response.data['token']; // Store the token
      // await databaseService.putAccessToken(token!); // Save the token securely // Call the method with token
       // token = databaseService.accessToken; // Retrieve the token using the getter method

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/routes/approutes.dart';
+import 'package:quizzype001/routes/navigator_service.dart';
 import 'domain/service/app/app_service_imports.dart';
 
 import 'localization/app_localization.dart';
@@ -30,11 +31,11 @@ class MyApp extends StatelessWidget {
     TempContext.context = context;
     return GetMaterialApp(
       title: 'Campus Admin',
-      //navigatorKey: NavigatorService.navigatorKey,
+      navigatorKey: NavigatorService.navigatorKey,
       translations: AppLocalization(),
       locale: Get.deviceLocale, //for setting localization strings
       fallbackLocale: const Locale('en', 'US'),
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.homeScreen,
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
     );

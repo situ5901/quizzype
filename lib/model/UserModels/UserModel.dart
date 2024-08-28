@@ -12,14 +12,14 @@ class UserModel {
   final String id;
 
   UserModel({
-    this.fullname,
-    this.address,
-    this.email,
-    this.city,
-    this.state,
-    this.pincode,
+   this.fullname,
+   this.address,
+   this.email,
+   this.city,
+   this.state,
+   this.pincode,
     required this.phoneNumber,
-    this.dob,
+   this.dob,
     required this.id,
   });
 
@@ -32,9 +32,9 @@ class UserModel {
       city: json['city'],
       state: json['state'],
       pincode: json['pincode'],
-      phoneNumber: json['phoneNumber'] ?? '',
+      phoneNumber: json['phoneNumber'] ,
       dob: json['dob'],
-      id: json['_id'] ?? '',
+      id: json['_id'] ,
     );
   }
 
