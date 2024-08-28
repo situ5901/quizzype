@@ -1,25 +1,25 @@
 import 'dart:convert';
 
 class UserModel {
-  final String fullname;
-  final String address;
-  final String email;
-  final String city;
-  final String state;
-  final String pincode;
+  final String? fullname;
+  final String? address;
+  final String? email;
+  final String? city;
+  final String? state;
+  final String? pincode;
   final String phoneNumber;
-  final String dob;
+  final String? dob;
   final String id;
 
   UserModel({
-    required this.fullname,
-    required this.address,
-    required this.email,
-    required this.city,
-    required this.state,
-    required this.pincode,
+    this.fullname,
+    this.address,
+    this.email,
+    this.city,
+    this.state,
+    this.pincode,
     required this.phoneNumber,
-    required this.dob,
+    this.dob,
     required this.id,
   });
 
@@ -32,9 +32,9 @@ class UserModel {
       city: json['city'],
       state: json['state'],
       pincode: json['pincode'],
-      phoneNumber: json['phoneNumber'],
+      phoneNumber: json['phoneNumber'] ?? '',
       dob: json['dob'],
-      id: json['_id'],
+      id: json['_id'] ?? '',
     );
   }
 

@@ -65,7 +65,7 @@ class OtpController extends GetxController {
         return;
       }
 
-      final response = await authRepository.verifyOtp(
+       await authRepository.verifyOtp(
         phone: phone,
         otp: otpController.text,
       );

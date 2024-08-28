@@ -17,6 +17,7 @@ class EnsureAuthMiddleware extends GetMiddleware {
 
       if (isAccessTokenAvailable) {
         var user = db.user;
+        print("user: $user");
         // var user ;
         if (user == null) {
           return const RouteSettings(name: AppRoutes.profileScreen);

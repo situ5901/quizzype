@@ -22,13 +22,13 @@ class AuthRepository {
     try {
      // DeviceInfoModel deviceInfo = await deviceInfoService.getDeviceInfo();
       final response = await authApi.verifyOtp(phone: phone, otp: otp, );
-      var user = response.data['data'];
+      var user = response.data['user'];
       var token = response.data['token'];
       print("data: $user");
 
       if (token != null) {
         await databaseService.putAccessToken(token);
-        await databaseService.putUser(UserModel.fromJson(user['user']));
+        await databaseService.putUser(UserModel.fromJson(user));
         await databaseService.putIsLogin(true);
       }
       return true;

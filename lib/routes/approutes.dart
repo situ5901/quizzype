@@ -19,8 +19,8 @@ class AppRoutes{
   static  get routes => [
     GetPage(name: login, page: () =>  Login_Page()),
     GetPage(name: verify, page: () =>   Otp()),
-    GetPage(name: homeScreen, page: () =>  const Home()),
-    GetPage(name: profileScreen,middlewares: [EnsureAuthMiddleware()], page: () =>   ProfilePage()),
+    GetPage(name: homeScreen,middlewares: [EnsureAuthMiddleware()], page: () =>  const Home()),
+    GetPage(name: profileScreen, page: () =>   ProfilePage()),
 
   ];
 }
