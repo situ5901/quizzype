@@ -394,7 +394,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                controller.selectEducation = selectedValue! ;
                                controller.fullname = fullnameController.text;
                              controller.address =  addressController.text ;
-                              controller.phoneNumber = int.parse(phoneNumberController.text);
+                              controller.phoneNumber = phoneNumberController.text;
 
                               controller.schoolName =schoolNameController.text;
                                controller.schoolAddress = schoolAddressController.text;

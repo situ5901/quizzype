@@ -25,4 +25,3 @@ part 'app_service.dart';
 part 'database_service.dart';
 // part 'device_info_service.dart';
 // part 'location_service.dart';
-part 'messaging_service.dart';

@@ -1,16 +1,17 @@
 import 'dart:convert';
 
-class UserDetails {
-  var fullname;
-  var address;
-  var email;
-  var city;
-  var state;
-  var pincode;
-  var phoneNumber;
-  var dob;
+class UserModel {
+  final String fullname;
+  final String address;
+  final String email;
+  final String city;
+  final String state;
+  final String pincode;
+  final String phoneNumber;
+  final String dob;
+  final String id;
 
-  UserDetails({
+  UserModel({
     required this.fullname,
     required this.address,
     required this.email,
@@ -19,11 +20,12 @@ class UserDetails {
     required this.pincode,
     required this.phoneNumber,
     required this.dob,
+    required this.id,
   });
 
-  // Factory method to create a UserDetails instance from a JSON map
-  factory UserDetails.fromJson(Map<String, dynamic> json) {
-    return UserDetails(
+  // Factory method to create a UserModel from JSON
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       fullname: json['fullname'],
       address: json['address'],
       email: json['email'],
@@ -32,10 +34,11 @@ class UserDetails {
       pincode: json['pincode'],
       phoneNumber: json['phoneNumber'],
       dob: json['dob'],
+      id: json['_id'],
     );
   }
 
-  // Method to convert a UserDetails instance to a JSON map
+  // Method to convert a UserModel to JSON
   Map<String, dynamic> toJson() {
     return {
       'fullname': fullname,
@@ -46,10 +49,11 @@ class UserDetails {
       'pincode': pincode,
       'phoneNumber': phoneNumber,
       'dob': dob,
+      '_id': id,
     };
   }
 
   String toRawJson() => json.encode(toJson());
-  factory UserDetails.fromRawJson(String str) =>
-      UserDetails.fromJson(json.decode(str));
+  factory UserModel.fromRawJson(String str) =>
+      UserModel.fromJson(json.decode(str));
 }

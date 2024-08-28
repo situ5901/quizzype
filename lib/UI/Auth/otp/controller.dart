@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../domain/repository/repository_imports.dart';
-import '../../../App routes/approutes.dart';
+
 import '../../../domain/service/app/app_service_imports.dart';
+import '../../../routes/approutes.dart';
 import '../../widgets/Toast/toast.dart';
 
 class OtpController extends GetxController {
@@ -71,12 +72,12 @@ class OtpController extends GetxController {
 
       showToast(message: 'Otp Verified');
 
-      token = response.data['token']; // Store the token
-      await databaseService.putAccessToken(token!); // Save the token securely // Call the method with token
-
-      Get.offAllNamed(AppRoutes.profileScreen);
-      token = databaseService.accessToken; // Retrieve the token using the getter method
-      print("Retrieved token: $token"); // Print the token to the console
+     // token = response.data['token']; // Store the token
+     // await databaseService.putAccessToken(token!); // Save the token securely // Call the method with token
+      // token = databaseService.accessToken; // Retrieve the token using the getter method
+      // print("Retrieved token: $token");
+      Get.offAllNamed(AppRoutes.homeScreen);
+       // Print the token to the console
 
     } catch (error) {
       showToast(message: error.toString());

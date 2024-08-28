@@ -5,6 +5,7 @@ import '../UI/Auth/login/Login.dart';
 import '../UI/Auth/otp/Otp.dart';
 import '../UI/Home.dart';
 import '../UI/Profile/Profile.dart';
+import 'middleware.dart';
 
 
 class AppRoutes{
@@ -19,7 +20,7 @@ class AppRoutes{
     GetPage(name: login, page: () =>  Login_Page()),
     GetPage(name: verify, page: () =>   Otp()),
     GetPage(name: homeScreen, page: () =>  const Home()),
-    GetPage(name: profileScreen, page: () =>   ProfilePage()),
+    GetPage(name: profileScreen,middlewares: [EnsureAuthMiddleware()], page: () =>   ProfilePage()),
 
   ];
 }

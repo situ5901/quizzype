@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
-import 'package:quizzype001/model/UserModels/StudentModel.dart';
-import 'package:quizzype001/model/UserModels/UserModel.dart';
 
-import '../../App routes/approutes.dart';
 import '../../domain/repository/repository_imports.dart';
 import '../../domain/service/app/app_service_imports.dart';
+import '../../routes/approutes.dart';
 import '../widgets/Toast/toast.dart';
 
 class ProfileController extends GetxController {
@@ -12,7 +10,7 @@ class ProfileController extends GetxController {
   late String selectEducation;
   late String fullname;
   late String address;
-  late int phoneNumber;
+  late String phoneNumber;
   late String phoneNumber1;
   late String schoolName;
   late String schoolAddress;

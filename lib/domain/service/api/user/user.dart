@@ -5,9 +5,19 @@ class UserApi {
   UserApi(this.dio);
   final String basePath = ''; // Add your base path here if needed
 
-  // Replace with your actual token
 
+  //to get user
+  Future<Response> getUser({
+    required String phoneNumber
+}) async {
+    try {
+      return await dio.get('$basePath/getdetails?phoneNumber=$phoneNumber');
+    } catch (e) {
+      rethrow;
+    }
+  }
 
+  //post user details
   Future<Response> postUserDetails({
     required String token,
     required String fullname,
@@ -54,6 +64,9 @@ class UserApi {
     }
   }
 
+
+
+  //post student details
   Future<Response> postStudentDetails({
     required String token,
     required var selectEducation,
@@ -75,9 +88,9 @@ class UserApi {
     print("schoolAddress: ${schoolAddress}");
     print("aadharcard: ${aadharcard}");
     print("classvalue: ${classvalue}");
-    print("selectedBoard: $selectEducation");
-    print("selectedMedium: ${mediumName}");
-    print("selectedboardOption: ${boardOption}");
+    print("selectEducation: $selectEducation");
+    print("mediumName: ${mediumName}");
+    print("boardOption: ${boardOption}");
     final String endpoint = '/student/add';
 
     try {

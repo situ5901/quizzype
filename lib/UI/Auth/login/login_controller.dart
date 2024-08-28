@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 
 import '../../../../../domain/repository/repository_imports.dart';
-import '../../../../../domain/service/app/app_service_imports.dart';
-import '../../../App routes/approutes.dart';
+
+import '../../../routes/approutes.dart';
 import '../../widgets/Toast/toast.dart';
 
 

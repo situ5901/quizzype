@@ -65,11 +65,11 @@ class DatabaseService {
   Future<void> putIsSignedIn(bool value) async => await putBoolPref(_preferenceKeys.isSignedIn, value);
   bool? get isSignedIn => getBoolPref(_preferenceKeys.isSignedIn);
 
-  Future<void> putAccessToken(String value) async => await putStringPref(_preferenceKeys.accessToken, value);
-  String? get accessToken => getStringPref(_preferenceKeys.accessToken) ;
+   Future<void> putAccessToken(String value) async => await putStringPref(_preferenceKeys.accessToken, value);
+   String? get accessToken => getStringPref(_preferenceKeys.accessToken) ;
 
-   // Future<void> putUser(UserDetails value) async => await putStringPref(_preferenceKeys.user, value.toRawJson());
-   // UserDetails? get user => getStringPref(_preferenceKeys.user) == null ? null : UserDetails.fromRawJson(getStringPref(_preferenceKeys.user)!);
+   Future<void> putUser(UserModel value) async => await putStringPref(_preferenceKeys.user, value.toRawJson());
+    UserModel? get user => getStringPref(_preferenceKeys.user) == null ? null : UserModel.fromRawJson(getStringPref(_preferenceKeys.user)!);
    // Future<void> putStudent(StudentDetails value) async => await putStringPref(_preferenceKeys.user, value.toRawJson());
    // StudentDetails? get student => getStringPref(_preferenceKeys.user) == null ? null : StudentDetails.fromRawJson(getStringPref(_preferenceKeys.user)!);
 
