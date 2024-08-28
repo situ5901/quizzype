@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../domain/service/app/app_service_imports.dart';
 import 'approutes.dart';
 
-
 class EnsureAuthMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
@@ -53,5 +52,3 @@ class EnsureAuthMiddleware extends GetMiddleware {
     }
   }
 }
-
-

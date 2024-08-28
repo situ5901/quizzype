@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizzype001/UI/Home.dart';
+import 'package:quizzype001/UI/HomeScreen/Home.dart';
 
 import 'package:quizzype001/UI/MegaContest.dart';
 import 'package:quizzype001/UI/Auth/otp/Otp.dart';

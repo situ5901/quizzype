@@ -13,10 +13,10 @@ import 'package:quizzype001/UI/Auth/otp/Otp.dart';
 import 'package:quizzype001/UI/Profile/Profile.dart';
 import 'package:quizzype001/UI/Shareing.dart';
 import 'package:quizzype001/UI/SideBar.dart';
-import '../Common/Colors.dart';
-import 'Add_CASH.dart';
-import 'Live_Contest/LiveContest.dart';
-import 'PracticeContest.dart';
+import '../../Common/Colors.dart';
+import '../Add_CASH.dart';
+import '../Live_Contest/LiveContest.dart';
+import '../PracticeContest.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

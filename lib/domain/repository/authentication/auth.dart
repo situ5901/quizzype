@@ -14,14 +14,16 @@ class AuthRepository {
     }
   }
 
-
-  Future<bool> verifyOtp(
-      {required String phone,
-        required String otp,
-       }) async {
+  Future<bool> verifyOtp({
+    required String phone,
+    required String otp,
+  }) async {
     try {
-     // DeviceInfoModel deviceInfo = await deviceInfoService.getDeviceInfo();
-      final response = await authApi.verifyOtp(phone: phone, otp: otp, );
+      // DeviceInfoModel deviceInfo = await deviceInfoService.getDeviceInfo();
+      final response = await authApi.verifyOtp(
+        phone: phone,
+        otp: otp,
+      );
       var user = response.data['user'];
       var token = response.data['token'];
       print("data: $user");
@@ -36,5 +38,4 @@ class AuthRepository {
       rethrow;
     }
   }
-
 }

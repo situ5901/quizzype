@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizzype001/Common/BoldText.dart';
 import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/UI/Contest_Details.dart';
-import 'package:quizzype001/UI/Home.dart';
+import 'package:quizzype001/UI/HomeScreen/Home.dart';
 import '../Common/PlainText.dart'; // Make sure to import your HomePage class
 
 class MegaContest extends StatefulWidget {

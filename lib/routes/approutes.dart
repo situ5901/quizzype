@@ -1,9 +1,9 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:quizzype001/UI/Home.dart';
+import 'package:quizzype001/UI/HomeScreen/Home.dart';
 
 import '../UI/Auth/login/Login.dart';
 import '../UI/Auth/otp/Otp.dart';
-import '../UI/Home.dart';
+import '../UI/HomeScreen/Home.dart';
 import '../UI/Profile/Profile.dart';
 import 'middleware.dart';
 

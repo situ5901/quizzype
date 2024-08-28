@@ -5,11 +5,8 @@ class UserApi {
   UserApi(this.dio);
   final String basePath = ''; // Add your base path here if needed
 
-
   //to get user
-  Future<Response> getUser({
-    required String phoneNumber
-}) async {
+  Future<Response> getUser({required String phoneNumber}) async {
     try {
       return await dio.get('$basePath/getdetails?phoneNumber=$phoneNumber');
     } catch (e) {
@@ -36,15 +33,14 @@ class UserApi {
       final response = await dio.post(
         '$basePath$endpoint',
         data: {
-          "fullname" : fullname,
-          "address":address,
-          "email":email,
-          "city":city,
-          "state":state,
-          "pincode":pincode,
-          "phoneNumber":phoneNumber,
-          "dob":dob
-
+          "fullname": fullname,
+          "address": address,
+          "email": email,
+          "city": city,
+          "state": state,
+          "pincode": pincode,
+          "phoneNumber": phoneNumber,
+          "dob": dob
         },
         options: Options(
           headers: {
@@ -57,14 +53,13 @@ class UserApi {
       return response;
     } catch (e) {
       if (e is DioError) {
-        throw Exception('Failed to post user details: ${e.response?.statusCode} ${e.message}');
+        throw Exception(
+            'Failed to post user details: ${e.response?.statusCode} ${e.message}');
       } else {
         throw Exception('Unexpected error: $e');
       }
     }
   }
-
-
 
   //post student details
   Future<Response> postStudentDetails({
@@ -79,8 +74,7 @@ class UserApi {
     required var classvalue,
     required var mediumName,
     required var aadharcard,
-
-}) async {
+  }) async {
     print("fullname: ${fullname}");
     print("address: ${address}");
     print("phoneNumber: ${phoneNumber}");
@@ -125,6 +119,5 @@ class UserApi {
       }
       rethrow;
     }
-
   }
 }

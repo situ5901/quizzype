@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/Common/TapButton.dart';
-import 'package:quizzype001/UI/Home.dart';
+import 'package:quizzype001/UI/HomeScreen/Home.dart';
 
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/Navbar.dart';
