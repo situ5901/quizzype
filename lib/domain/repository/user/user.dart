@@ -4,6 +4,8 @@ class UserRepository {
   final UserApi userApi = Get.find<UserApi>();
   final DatabaseService databaseService = Get.find<DatabaseService>();
 
+
+
   //post User from details
   Future<bool> postUserDetails({
     required String token,
@@ -30,7 +32,7 @@ class UserRepository {
           dob: dob);
 
       // Extract the data from the response
-      var responseData = response.data['formDetails'];
+       var responseData = response.data['formDetails'];
 
       // Save the received user data to the local database
       await databaseService.putUser(UserModel.fromJson(responseData));
@@ -41,6 +43,7 @@ class UserRepository {
       rethrow;
     }
   }
+
 
   Future<bool> postStudentDetails({
     required String token,
@@ -54,6 +57,7 @@ class UserRepository {
     required var classvalue,
     required var mediumName,
     required var aadharcard,
+
   }) async {
     try {
       // Send the user details to the server via the API
@@ -74,7 +78,7 @@ class UserRepository {
       var responseData = response.data['data'];
 
       // Save the received user data to the local database
-      // await databaseService.putStudent(StudentDetails.fromJson(responseData));
+     // await databaseService.putStudent(StudentDetails.fromJson(responseData));
 
       return true;
     } catch (e) {
@@ -83,13 +87,13 @@ class UserRepository {
     }
   }
 
+
   //to get user details
   Future<Map<String, dynamic>?> getUser(String phoneNumber) async {
     try {
-      final response = await userApi.getUser(phoneNumber: phoneNumber);
+      final response = await userApi.getUser( phoneNumber: phoneNumber);
       if (response.statusCode == 200 && response.data != null) {
-        await databaseService
-            .putUser(UserModel.fromJson(response.data['data']));
+        await databaseService.putUser(UserModel.fromJson(response.data['data']));
         return response.data;
       } else {
         print("Error fetching user: ${response.statusMessage}");
