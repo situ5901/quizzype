@@ -13,14 +13,13 @@ Future<void> main() async {
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
   await Get.putAsync(() => AppService().init());
-  runApp(const MyApp()
-
-
-  );
+  runApp(const MyApp());
 }
+
 class TempContext {
   static late BuildContext context;
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -41,6 +40,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-

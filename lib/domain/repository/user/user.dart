@@ -32,7 +32,7 @@ class UserRepository {
           dob: dob);
 
       // Extract the data from the response
-       var responseData = response.data['data'];
+       var responseData = response.data['formDetails'];
 
       // Save the received user data to the local database
       await databaseService.putUser(UserModel.fromJson(responseData));

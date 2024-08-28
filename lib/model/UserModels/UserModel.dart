@@ -9,7 +9,7 @@ class UserModel {
   final String? pincode;
   final String phoneNumber;
   final String? dob;
-  final String id;
+  final String? id;
 
   UserModel({
    this.fullname,
@@ -20,7 +20,7 @@ class UserModel {
    this.pincode,
     required this.phoneNumber,
    this.dob,
-    required this.id,
+     this.id,
   });
 
   // Factory method to create a UserModel from JSON
