@@ -1,4 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:quizzype001/UI/GK%20Quiz/GK_QUIZ.dart';
 import 'package:quizzype001/UI/HomeScreen/Home.dart';
 import 'package:quizzype001/UI/userProfie/userProfile.dart';
 
@@ -16,6 +17,7 @@ class AppRoutes{
   static const homeScreen = '/Home';
   static const profileScreen = '/Profile';
   static const userScreen = '/UserProfile';
+  static const gK_Question = '/GK_QUIZ';
 
 
 
@@ -25,6 +27,7 @@ class AppRoutes{
     GetPage(name: homeScreen,middlewares: [EnsureAuthMiddleware()], page: () =>  const Home()),
     GetPage(name: profileScreen, page: () =>  const ProfilePage()),
     GetPage(name: userScreen, page: () =>   UserProfile()),
+    GetPage(name: gK_Question, page: () =>   GK_QUIZ()),
 
   ];
 }
