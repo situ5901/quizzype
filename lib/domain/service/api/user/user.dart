@@ -120,4 +120,28 @@ class UserApi {
       rethrow;
     }
   }
+
+
+  // API method to fetch question
+  Future<Response> getQuestion({required String token, required String combineID}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/other/question',
+        data: {
+          "combineId": combineID,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching question: $e");
+      rethrow;
+    }
+  }
+
 }

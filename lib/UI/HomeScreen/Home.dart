@@ -10,6 +10,7 @@ import 'package:quizzype001/UI/HomeScreen/controller.dart';
 
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/MegaContest.dart';
+import 'package:quizzype001/domain/repository/repository_imports.dart';
 
 import '../../Common/Colors.dart';
 import '../../routes/approutes.dart';
@@ -124,6 +125,9 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   ListTile(
+                    onTap: (){
+                      UserRepository().fetchQuestion();
+                    },
                     leading: Icon(Icons.score),
                     title: Text("Score"),
                   ),

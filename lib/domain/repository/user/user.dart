@@ -104,4 +104,35 @@ class UserRepository {
       return null;
     }
   }
+
+
+
+
+// Service method to get question data
+  Future<QuizQuestion?> fetchQuestion() async {
+    try {
+      final userId = databaseService.user?.id;
+      final token = databaseService.accessToken;
+
+      if (userId == null || token == null) {
+        print('User ID or token is null');
+        return null;
+      }
+
+      final response = await userApi.getQuestion(token: token, combineID: userId);
+      final data = response.data['randomQuestion'];
+
+      if (data != null && data is Map<String, dynamic>) {
+        return QuizQuestion.fromJson(data);
+      } else {
+        print('No question data available');
+        return null;
+      }
+    } catch (e) {
+      print("Exception fetching question: $e");
+      return null;
+    }
+  }
+
+
 }
