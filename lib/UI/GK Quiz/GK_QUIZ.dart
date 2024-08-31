@@ -51,7 +51,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                   IconButton(
                     icon: Icon(Icons.close),
                     onPressed: () {
-                      Navigator.of(context).pop(); // Close the bottom sheet
+                      Navigator.of(context).pop();
                     },
                   ),
                 ],
@@ -65,7 +65,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
               ElevatedButton(
                 child: Text('OK'),
                 onPressed: () {
-                  Navigator.of(context).pop(); // Close the bottom sheet
+                  Navigator.of(context).pop();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => MegaContest()),
@@ -99,15 +99,14 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                     children: [
                       Text(
                         'Are you sure you want to leave the quiz?',
-                        style: TextStyle(
-                            fontSize: 16),
+                        style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
                   IconButton(
                     icon: Icon(Icons.close),
                     onPressed: () {
-                      Navigator.of(context).pop(); // Close the bottom sheet
+                      Navigator.of(context).pop();
                     },
                   ),
                 ],
@@ -123,14 +122,14 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop(); // Close the bottom sheet
+                      Navigator.of(context).pop();
                     },
                     child: Text('Stay'),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop(); // Close the bottom sheet
-                      Navigator.of(context).pop(); // Go back to the previous screen
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                     child: Text('Leave'),
                   ),
@@ -148,10 +147,9 @@ class _GK_QUIZState extends State<GK_QUIZ> {
     return WillPopScope(
       onWillPop: () async {
         _showExitConfirmationBottomSheet();
-        return false; // Prevent the default back button behavior
+        return false;
       },
-      child: GetBuilder(
-        init: GkQuizController(),
+      child: GetBuilder<GkQuizController>(
         builder: (controller) {
           return Scaffold(
             appBar: AppBar(
@@ -166,7 +164,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
               child: Column(
                 children: [
                   Container(
-                    height: 100, // Increased height to accommodate the count
+                    height: 100,
                     width: double.infinity,
                     color: appColor,
                     child: Column(
@@ -183,7 +181,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                             );
                           }),
                         ),
-                        SizedBox(height: 8), // Add some spacing between dots and text
+                        SizedBox(height: 8),
                         BoldText(
                           name: '$_questionNumber out of 10',
                           color: Colors.white,
@@ -219,9 +217,10 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                         _buildListAnswer(
                           controller.quizQuestion?.options ?? [],
                               (selectedOption) {
-                            // Handle answer selection logic here
+                            controller.selectOption(selectedOption);
                             print("Selected: $selectedOption");
                           },
+                          controller.selectedOption, // Pass the selected option here
                         ),
                         SizedBox(
                           height: 16,
@@ -229,7 +228,10 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                         Align(
                           alignment: Alignment.topRight,
                           child: GestureDetector(
-                            onTap: () {
+                            onTap: () async {
+                              if (controller.selectedOption != null) {
+                                await controller.postAnswer();
+                              }
                               setState(() {
                                 if (_questionNumber < 10) {
                                   _questionNumber++;
@@ -259,21 +261,30 @@ class _GK_QUIZState extends State<GK_QUIZ> {
   }
 }
 
-Widget _buildListAnswer(List<String> options, Function(String) onSelected) {
+Widget _buildListAnswer(List<String> options, Function(String) onSelected, String? selectedOption) {
   return Column(
     children: options.map((option) {
+      final bool isSelected = option == selectedOption;
       return GestureDetector(
         onTap: () => onSelected(option),
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 5.0),
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           decoration: BoxDecoration(
+            color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.transparent, // Add a light blue background to selected option
             borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(color: Colors.blue, width: 2.0),
+            border: Border.all(
+              color: isSelected ? Colors.blue : Colors.grey, // Change border color if selected
+              width: 2.0,
+            ),
           ),
           child: Text(
             option,
-            style: TextStyle(fontSize: 18.0, color: Colors.black),
+            style: TextStyle(
+              fontSize: 18.0,
+              color: isSelected ? Colors.blue : Colors.black, // Change text color if selected
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, // Bold text if selected
+            ),
           ),
         ),
       );
