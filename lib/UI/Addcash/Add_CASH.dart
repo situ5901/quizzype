@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:quizzype001/Common/TapButton.dart';
 import 'package:quizzype001/UI/GK%20Quiz/GK_QUIZ.dart';
 
-import '../Common/BoldText.dart';
-import '../Common/Colors.dart';
+import '../../Common/BoldText.dart';
+import '../../Common/Colors.dart';
 
 class ADD_CASh extends StatefulWidget {
   const ADD_CASh({super.key});
