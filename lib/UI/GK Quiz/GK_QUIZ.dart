@@ -160,7 +160,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
               title: BoldText(name: "GK QUIZ", fontsize: 22, color: Colors.white),
               leading: Icon(Icons.menu, color: Colors.white),
             ),
-            body: controller.isLoading.value
+            body: controller.isLoading
                 ? Center(child: CircularProgressIndicator())
                 : SingleChildScrollView(
               child: Column(
@@ -233,7 +233,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                               setState(() {
                                 if (_questionNumber < 10) {
                                   _questionNumber++;
-                                  controller.getNextQuestion();
+                                  controller.loadData();
                                 } else {
                                   _showResultBottomSheet();
                                 }

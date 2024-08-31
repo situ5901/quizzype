@@ -4,28 +4,36 @@ import '../../model/Questionmodel/questionModel.dart';
 
 class GkQuizController extends GetxController {
   QuizQuestion? quizQuestion;
-  var isLoading = false.obs; // Observable for loading state
+  bool isLoading = true; // Observable for loading state
   final repository = UserRepository();
+
 
   @override
   void onInit() {
     super.onInit();
-    getQuestion();
+    loadData();
   }
+
 
   Future<void> getQuestion() async {
     try {
-      isLoading(true); // Set loading to true
       quizQuestion = await repository.fetchQuestion();
 
-      isLoading(false);
+      isLoading = false;
     } catch (e) {
       print("Error fetching question: $e");
-    } finally {
-      isLoading(false); // Set loading to false
+      isLoading = false;
     }
   }
 
+
+  Future<void> loadData() async {
+    await Future.wait([
+      getNextQuestion()
+    ]);
+    isLoading = false;
+    update();
+  }
   Future<void> getNextQuestion() async {
     await getQuestion();
   }
