@@ -286,6 +286,29 @@ class UserApi {
       rethrow;
     }
   }
+  Future<Response> getLeaderBoard({
+    required String token,
+    required String combineID,
+  }) async {
+    try {
+      final response = await dio.get(
+        '$basePath/game/result',
+        data: {
+          "combineId":combineID
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching to get LeaderBoard: $e");
+      rethrow;
+    }
+  }
 
 
 }
