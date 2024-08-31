@@ -201,18 +201,15 @@ class UserApi {
     required String token,
     required String contestId,
     required String combineID,
-    required String gkQuestionId,
-    required String selectedOption,
     required String name}) async {
     try {
       final response = await dio.post(
         '$basePath/join-game',
         data: {
           "contestId":contestId,
-          "combineId":combineID,
-          "gkquestionId":gkQuestionId,
-          "selectedOption": selectedOption,
-          "combineuser":name
+          "newcombineId":combineID,
+          "combineuser":name,
+          "gameAmount": 100
         },
         options: Options(
           headers: {
@@ -223,9 +220,72 @@ class UserApi {
       );
       return response;
     } catch (e) {
-      print("Error fetching ContestId: $e");
+      print("Error fetching to join game: $e");
       rethrow;
     }
   }
+
+
+
+  Future<Response> compare({
+    required String token,
+    required String contestId,
+    required String combineID1,
+    required String combineID2,
+    required String name}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/game/compare',
+        data: {
+          "contestId": contestId,
+          "combineId1":combineID1,
+          "combineId2":combineID2,
+          "winningAmount":"200"
+
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching : $e");
+      rethrow;
+    }
+  }
+
+
+  Future<Response> getResult({
+    required String token,
+    required String contestId,
+    required String combineID1,
+    required String combineID2,
+   }) async {
+    try {
+      final response = await dio.post(
+        '$basePath/game/result',
+        data: {
+          "contestId": contestId,
+          "combineId1":combineID1,
+          "combineId2":combineID2
+
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching get Result: $e");
+      rethrow;
+    }
+  }
+
 
 }
