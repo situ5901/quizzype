@@ -28,5 +28,7 @@ class PreferenceKeys{
 
   final String isSignedIn = 'isSignedIn';
 
+  final String isContestId = 'isContestId';
+
 
 }

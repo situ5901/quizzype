@@ -120,7 +120,29 @@ class UserApi {
       rethrow;
     }
   }
-
+// API method to create contest
+  Future<Response> createContestId({required String token, required String combineID,required String name}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/create-contest',
+        data: {
+          "combineId": combineID,
+          "fullname":name,
+          "gameAmount":"0"
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching ContestId: $e");
+      rethrow;
+    }
+  }
 
   // API method to fetch question
   Future<Response> getQuestion({required String token, required String combineID}) async {

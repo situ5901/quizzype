@@ -12,6 +12,7 @@ class GkQuizController extends GetxController {
   void onInit() {
     super.onInit();
     loadData();
+
   }
 
 
@@ -19,22 +20,35 @@ class GkQuizController extends GetxController {
     try {
       quizQuestion = await repository.fetchQuestion();
 
+
       isLoading = false;
     } catch (e) {
       print("Error fetching question: $e");
       isLoading = false;
     }
   }
+  //
+  // Future<void> getContestId() async {
+  //   try {
+  //     await repository.createContestId();
+  //   } catch (e) {
+  //     print("Error fetching question: $e");
+  //    ;
+  //   }
+  // }
+
 
 
   Future<void> loadData() async {
     await Future.wait([
       getNextQuestion()
     ]);
+
     isLoading = false;
     update();
   }
   Future<void> getNextQuestion() async {
     await getQuestion();
+
   }
 }

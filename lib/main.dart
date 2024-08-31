@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:quizzype001/routes/approutes.dart';
 import 'package:quizzype001/routes/navigator_service.dart';
 import 'domain/service/app/app_service_imports.dart';
-
 import 'localization/app_localization.dart';
 
 Future<void> main() async {

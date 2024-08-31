@@ -106,7 +106,32 @@ class UserRepository {
   }
 
 
+// Service method to get contest id
+  Future <bool> createContestId() async {
+    try {
+      final userId = databaseService.user?.id;
+      final userName = databaseService.user?.fullname;
+      final token = databaseService.accessToken;
 
+      if (userId == null || token == null || userName == null) {
+        print('User ID or token is null');
+        return true;
+      }
+
+      final response = await userApi.createContestId(token: token, combineID: userId, name: userName);
+      final data = response.data['contestId'];
+
+      await databaseService.putContestId(data);
+
+      print(databaseService.isContestId);
+
+      return true;
+
+    } catch (e) {
+      print("Exception fetching question: $e");
+      rethrow;
+    }
+  }
 
 // Service method to get question data
   Future<QuizQuestion?> fetchQuestion() async {
