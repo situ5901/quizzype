@@ -30,5 +30,8 @@ class PreferenceKeys{
 
   final String isContestId = 'isContestId';
 
+  final String isScore = 'isScore';
+
+
 
 }

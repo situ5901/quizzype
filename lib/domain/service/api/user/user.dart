@@ -2,7 +2,9 @@ part of 'package:quizzype001/domain/service/api/api_import.dart';
 
 class UserApi {
   final Dio dio;
+
   UserApi(this.dio);
+
   final String basePath = ''; // Add your base path here if needed
 
   //to get user
@@ -54,7 +56,8 @@ class UserApi {
     } catch (e) {
       if (e is DioError) {
         throw Exception(
-            'Failed to post user details: ${e.response?.statusCode} ${e.message}');
+            'Failed to post user details: ${e.response?.statusCode} ${e
+                .message}');
       } else {
         throw Exception('Unexpected error: $e');
       }
@@ -120,15 +123,17 @@ class UserApi {
       rethrow;
     }
   }
+
 // API method to create contest
-  Future<Response> createContestId({required String token, required String combineID,required String name}) async {
+  Future<Response> createContestId(
+      {required String token, required String combineID, required String name}) async {
     try {
       final response = await dio.post(
         '$basePath/create-contest',
         data: {
           "combineId": combineID,
-          "fullname":name,
-          "gameAmount":"0"
+          "fullname": name,
+          "gameAmount": "0"
         },
         options: Options(
           headers: {
@@ -145,7 +150,8 @@ class UserApi {
   }
 
   // API method to fetch question
-  Future<Response> getQuestion({required String token, required String combineID}) async {
+  Future<Response> getQuestion(
+      {required String token, required String combineID}) async {
     try {
       final response = await dio.post(
         '$basePath/other/question',
@@ -177,11 +183,11 @@ class UserApi {
       final response = await dio.post(
         '$basePath/other/answer',
         data: {
-          "contestId":contestId,
-          "combineId":combineID,
-          "gkquestionId":gkQuestionId,
+          "contestId": contestId,
+          "combineId": combineID,
+          "gkquestionId": gkQuestionId,
           "selectedOption": selectedOption,
-          "combineuser":name
+          "combineuser": name
         },
         options: Options(
           headers: {
@@ -206,9 +212,9 @@ class UserApi {
       final response = await dio.post(
         '$basePath/join-game',
         data: {
-          "contestId":contestId,
-          "newcombineId":combineID,
-          "combineuser":name,
+          "contestId": contestId,
+          "newcombineId": combineID,
+          "combineuser": name,
           "gameAmount": 100
         },
         options: Options(
@@ -226,7 +232,6 @@ class UserApi {
   }
 
 
-
   Future<Response> compare({
     required String token,
     required String contestId,
@@ -238,10 +243,9 @@ class UserApi {
         '$basePath/game/compare',
         data: {
           "contestId": contestId,
-          "combineId1":combineID1,
-          "combineId2":combineID2,
-          "winningAmount":"200"
-
+          "combineId1": combineID1,
+          "combineId2": combineID2,
+          "winningAmount": "200"
         },
         options: Options(
           headers: {
@@ -263,15 +267,14 @@ class UserApi {
     required String contestId,
     required String combineID1,
     required String combineID2,
-   }) async {
+  }) async {
     try {
       final response = await dio.post(
         '$basePath/game/result',
         data: {
           "contestId": contestId,
-          "combineId1":combineID1,
-          "combineId2":combineID2
-
+          "combineId1": combineID1,
+          "combineId2": combineID2
         },
         options: Options(
           headers: {
@@ -286,6 +289,7 @@ class UserApi {
       rethrow;
     }
   }
+
   Future<Response> getLeaderBoard({
     required String token,
     required String combineID,
@@ -294,7 +298,7 @@ class UserApi {
       final response = await dio.get(
         '$basePath/game/result',
         data: {
-          "combineId":combineID
+          "combineId": combineID
         },
         options: Options(
           headers: {
@@ -311,4 +315,22 @@ class UserApi {
   }
 
 
+  Future<Response> getScore(
+      {required String token, required String combineId, required String contestId }) async {
+    try {
+      final response = await dio.get(
+        '$basePath/get/score?combineId=$combineId&contestId=$contestId',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching to score: $e");
+      rethrow;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/UI/GK%20Quiz/gkquizcontoller.dart';
+import 'package:quizzype001/domain/service/app/app_service_imports.dart';
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../MegaContest.dart';
@@ -23,6 +24,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
   }
 
   void _showResultBottomSheet() {
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -58,7 +60,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
               ),
               SizedBox(height: 16),
               Text(
-                'You have completed the quiz!',
+                'You have Scored! [${controller.score}]',
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 24),
@@ -237,6 +239,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                                   _questionNumber++;
                                   controller.loadData();
                                 } else {
+                                  controller.getScore();
                                   _showResultBottomSheet();
                                 }
                               });

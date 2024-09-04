@@ -168,19 +168,19 @@ class UserRepository {
       final userId = databaseService.user?.id;
       final userName = databaseService.user?.fullname;
       final token = databaseService.accessToken;
+      final contestId = databaseService.isContestId;
 
-      if (userId == null || token == null || userName == null) {
+      if (userId == null || token == null || userName == null || contestId == null)  {
         print('User ID or token is null');
         return true;
       }
 
-     final response = await userApi.createContestId(token: token, combineID: userId, name: userName);
-      final data = response.data['contestId'];
+
 
       //await databaseService.putContestId(data);
       await userApi.postAnswer(
           token: token,
-          contestId: data,
+          contestId: contestId,
           combineID: userId,
           gkQuestionId: gkQuestionId,
           selectedOption: selectedOption,
@@ -191,6 +191,43 @@ class UserRepository {
 
     } catch (e) {
       print("Exception fetching question: $e");
+      rethrow;
+    }
+  }
+
+
+
+  Future<bool> getScore() async {
+    try {
+      final userId = databaseService.user?.id;
+      final token = databaseService.accessToken;
+      final contestId = databaseService.isContestId;
+
+      if (userId == null || token == null || contestId == null) {
+        print('Some value is null');
+        return false;  // Returning false to indicate failure
+      }
+
+      // Make the API call to fetch the score
+      final response = await userApi.getScore(
+        token: token,
+        contestId: contestId,
+        combineId: userId,
+      );
+
+      // Access the score from the response and convert it to a string
+      final int score = response.data['score'];
+      final String scoreString = score.toString();
+
+      // Store the score as a string in the database
+      databaseService.putScore(scoreString);
+
+      print(databaseService.isContestId);
+
+      return true;
+
+    } catch (e) {
+      print("Exception fetching score: $e");
       rethrow;
     }
   }

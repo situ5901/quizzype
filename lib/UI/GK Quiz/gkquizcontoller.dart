@@ -1,23 +1,41 @@
 import 'package:get/get.dart';
 import 'package:quizzype001/domain/repository/repository_imports.dart';
+import '../../domain/service/app/app_service_imports.dart';
 import '../../model/Questionmodel/questionModel.dart';
 
 class GkQuizController extends GetxController {
   QuizQuestion? quizQuestion;
+  final DatabaseService databaseService = Get.find<DatabaseService>();
   bool isLoading = true;
   final repository = UserRepository();
 
   String? gkQuestionId;
   String? selectedOption;
+  String? score;
+
 
   @override
   void onInit() {
     super.onInit();
+    getContestId();
     loadData();
+  }
+
+
+
+  Future<void> getContestId() async {
+    try {
+
+      await repository.createContestId();
+    } catch (e) {
+      print("Error fetching contestId: $e");
+
+    }
   }
 
   Future<void> getQuestion() async {
     try {
+
       quizQuestion = await repository.fetchQuestion();
       gkQuestionId = quizQuestion?.id; // Set the question ID
       isLoading = false;
@@ -52,5 +70,11 @@ class GkQuizController extends GetxController {
   void selectOption(String option) {
     selectedOption = option; // Set the selected option
     update();
+  }
+
+
+  Future<void> getScore()async{
+    await repository.getScore();
+    score = databaseService.isScore;
   }
 }

@@ -11,6 +11,7 @@ import 'package:quizzype001/UI/HomeScreen/controller.dart';
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/MegaContest.dart';
 import 'package:quizzype001/domain/repository/repository_imports.dart';
+import 'package:quizzype001/domain/service/app/app_service_imports.dart';
 
 import '../../Common/Colors.dart';
 import '../../routes/approutes.dart';
@@ -140,6 +141,10 @@ class _HomeState extends State<Home> {
                     title: Text("Setting"),
                   ),
                   ListTile(
+                    onTap: (){
+                      DatabaseService().isContestId;
+                      UserRepository().getScore();
+                    },
                     leading: Icon(Icons.logout),
                     title: Text("Log Out"),
                   )

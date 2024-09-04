@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       translations: AppLocalization(),
       locale: Get.deviceLocale, //for setting localization strings
       fallbackLocale: const Locale('en', 'US'),
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.homeScreen,
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
     );

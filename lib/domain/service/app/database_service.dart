@@ -71,6 +71,10 @@ class DatabaseService {
    Future<void> putContestId(String value) async => await putStringPref(_preferenceKeys.isContestId, value);
    String? get isContestId => getStringPref(_preferenceKeys.isContestId) ;
 
+   Future<void> putScore(String value) async => await putStringPref(_preferenceKeys.isScore, value);
+   String? get isScore => getStringPref(_preferenceKeys.isScore) ;
+
+
    Future<void> putUser(UserModel value) async => await putStringPref(_preferenceKeys.user, value.toRawJson());
    UserModel? get user => getStringPref(_preferenceKeys.user) == null ? null : UserModel.fromRawJson(getStringPref(_preferenceKeys.user)!);
    // Future<void> putStudent(StudentDetails value) async => await putStringPref(_preferenceKeys.user, value.toRawJson());
