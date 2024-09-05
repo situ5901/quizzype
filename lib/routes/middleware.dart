@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../domain/service/app/app_service_imports.dart';
 import 'approutes.dart';
-
 class EnsureAuthMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
@@ -13,7 +12,7 @@ class EnsureAuthMiddleware extends GetMiddleware {
       var isAccessTokenAvailable = db.accessToken != null;
       print("Access Token Available: $isAccessTokenAvailable");
 
-      if(islogin == true){
+      if (islogin == true) {
         if (!isAccessTokenAvailable) {
           print("Redirecting to Login: Access token not available");
           return const RouteSettings(name: AppRoutes.login);
@@ -28,8 +27,6 @@ class EnsureAuthMiddleware extends GetMiddleware {
         }
 
         if (user.fullname != null && user.fullname!.isNotEmpty) {
-          // To avoid getting stuck on OTP or other screens, ensure this redirect
-          // only happens once or adjust the state.
           if (route == AppRoutes.homeScreen) {
             print("Already on Home Screen");
             return null; // No redirect needed
@@ -38,16 +35,16 @@ class EnsureAuthMiddleware extends GetMiddleware {
           print("Redirecting to Home Screen");
           return const RouteSettings(name: AppRoutes.homeScreen);
         } else {
-          // Avoid redirect loops by ensuring this condition isn't triggered
-          // once on the profile screen.
           if (route == AppRoutes.profileScreen) {
             print("Already on Profile Screen");
             return null; // No redirect needed
           }
-
           print("Redirecting to Profile Screen");
           return const RouteSettings(name: AppRoutes.profileScreen);
-        }else{
+        }
+      } else {
+        // If not logged in, redirect to login
+        print("Redirecting to Login: User not logged in");
         return const RouteSettings(name: AppRoutes.login);
       }
     } catch (e) {
@@ -56,3 +53,5 @@ class EnsureAuthMiddleware extends GetMiddleware {
     }
   }
 }
+
+

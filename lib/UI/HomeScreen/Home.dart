@@ -7,16 +7,13 @@ import 'package:quizzype001/Common/PlainText.dart';
 import 'package:quizzype001/Common/TapButton.dart';
 import 'package:quizzype001/UI/DailyContest.dart';
 import 'package:quizzype001/UI/HomeScreen/controller.dart';
-
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/MegaContest.dart';
 import 'package:quizzype001/domain/repository/repository_imports.dart';
 import 'package:quizzype001/domain/service/app/app_service_imports.dart';
-
 import '../../Common/Colors.dart';
 import '../../routes/approutes.dart';
 import '../Addcash/Add_CASH.dart';
-
 import '../PracticeContest.dart';
 
 class Home extends StatefulWidget {
@@ -145,6 +142,7 @@ class _HomeState extends State<Home> {
                   ListTile(
                     onTap: () async{
                       await databaseService.putIsLogin(false);
+                      Get.offAllNamed(AppRoutes.login);
                     },
                     leading: Icon(Icons.logout),
                     title: Text("Log Out"),
