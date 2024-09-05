@@ -48,6 +48,8 @@ class _HomeState extends State<Home> {
     });
   }
 
+  final DatabaseService databaseService = Get.find<DatabaseService>();
+
   @override
   Widget build(BuildContext context) {
     final Size = MediaQuery.of(context).size;
@@ -141,9 +143,8 @@ class _HomeState extends State<Home> {
                     title: Text("Setting"),
                   ),
                   ListTile(
-                    onTap: (){
-                      DatabaseService().isContestId;
-                      UserRepository().getScore();
+                    onTap: () async{
+                      await databaseService.putIsLogin(false);
                     },
                     leading: Icon(Icons.logout),
                     title: Text("Log Out"),
