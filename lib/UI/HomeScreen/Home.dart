@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
                   ),
                   ListTile(
                     leading: Icon(Icons.notifications),
-                    title: Text("Notificatoin"),
+                    title: Text("Notification"),
                   ),
                   ListTile(
                     leading: Icon(Icons.settings),
