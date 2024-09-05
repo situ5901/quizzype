@@ -197,7 +197,7 @@ class UserRepository {
 
 
 
-  Future<bool> getScore() async {
+  Future<Map<String, dynamic>> getScore() async {
     try {
       final userId = databaseService.user?.id;
       final token = databaseService.accessToken;
@@ -205,7 +205,7 @@ class UserRepository {
 
       if (userId == null || token == null || contestId == null) {
         print('Some value is null');
-        return false;  // Returning false to indicate failure
+        return {'success': false, 'score': null}; // Returning failure with no score
       }
 
       // Make the API call to fetch the score
@@ -224,12 +224,14 @@ class UserRepository {
 
       print(databaseService.isContestId);
 
-      return true;
+      // Return both success and the score
+      return {'success': true, 'score': score};
 
     } catch (e) {
       print("Exception fetching score: $e");
       rethrow;
     }
   }
+
 
 }

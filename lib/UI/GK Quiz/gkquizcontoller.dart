@@ -60,7 +60,6 @@ class GkQuizController extends GetxController {
   Future<void> loadData() async {
     await Future.wait([getNextQuestion()]);
     isLoading = false;
-    getScore();
     update();
   }
 
@@ -74,9 +73,9 @@ class GkQuizController extends GetxController {
   }
 
 
-  Future<void> getScore() async{
+  Future<void> getScore() async {
     await repository.getScore();
-    score = databaseService.isScore;
-    update();
+    score = databaseService.isScore;  // Fetch the score
+    update();  // Trigger the UI update
   }
 }

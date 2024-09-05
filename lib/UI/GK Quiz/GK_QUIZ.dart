@@ -234,15 +234,16 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                               if (controller.selectedOption != null) {
                                 await controller.postAnswer();
                               }
-                              setState(() {
-                                if (_questionNumber < 10) {
+
+                              if (_questionNumber < 10) {
+                                setState(() {
                                   _questionNumber++;
                                   controller.loadData();
-                                } else {
-                                  controller.getScore();
-                                  _showResultBottomSheet();
-                                }
-                              });
+                                });
+                              } else {
+                                await controller.getScore();  // Ensure score is fetched
+                                _showResultBottomSheet();     // Show the result after fetching the score
+                              }
                             },
                             child: BoldText(
                               name: "NEXT --->",
