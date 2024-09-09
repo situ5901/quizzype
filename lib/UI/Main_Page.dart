@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/UI/Gift_Voucher.dart';
-import 'package:quizzype001/UI/Home.dart';
+import 'package:quizzype001/UI/HomeScreen/Home.dart';
 import 'package:quizzype001/UI/Live_Contest/LiveContest.dart';
-import 'package:quizzype001/UI/Profile.dart';
+import 'package:quizzype001/UI/Profile/Profile.dart';
 import 'package:quizzype001/UI/Share&Earn.dart';
 
 class Main_Page extends StatefulWidget {

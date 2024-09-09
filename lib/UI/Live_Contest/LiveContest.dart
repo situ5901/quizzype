@@ -8,7 +8,7 @@ import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/Common/PlainText.dart';
 import 'package:quizzype001/UI/Live_Contest/GK_Contest.dart';
 
-import '../Add_CASH.dart';
+import '../Addcash/Add_CASH.dart';
 
 class LiveContest extends StatefulWidget {
   const LiveContest({super.key});

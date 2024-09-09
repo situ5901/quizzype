@@ -6,17 +6,12 @@ import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/Common/PlainText.dart';
 import 'package:quizzype001/Common/TapButton.dart';
 
-import 'Password.dart';
+import 'controller.dart';  // Import the OtpController
 
-class Otp extends StatefulWidget {
-  const Otp({super.key});
+class Otp extends StatelessWidget {
+  Otp({super.key});
 
-  @override
-  State<Otp> createState() => _OtpState();
-}
-
-class _OtpState extends State<Otp> {
-  List<String> otpDigits = List.filled(6, '');
+  final OtpController otpController = Get.put(OtpController());  // Instantiate the controller
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +48,9 @@ class _OtpState extends State<Otp> {
                     color: boxColor,
                   ),
                   PlainText(
-                      name: "AUTHORIZATION IS REQUIRED TO YOU ",
-                      fontsize: 18,),
+                    name: "AUTHORIZATION IS REQUIRED TO YOU ",
+                    fontsize: 18,
+                  ),
                   PlainText(name: 'TO GET IN.', fontsize: 18),
                   SizedBox(
                     height: 16,
@@ -66,24 +62,33 @@ class _OtpState extends State<Otp> {
                       children: List.generate(
                         4,
                             (index) => OTPDigitField(
-                          value: otpDigits[index],
-                          onChanged: (newValue) {
-                            setState(() {
-                              otpDigits[index] = newValue;
-                            });
-                          },
+                          controller: otpController,  // Pass the controller
+                          index: index,  // Pass the index
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: 12,),
+                  Obx(() => Text("Time remaining: ${otpController.remainTime.value}s")),  // Display remaining time
+                  SizedBox(height: 12,),
                   RoundedButton(
-                      buttonColor: boxColor,
-                      title: "SUBMIT",
+                    buttonColor: boxColor,
+                    title: "SUBMIT",
+                    fontsize: 28,
+                    onTap: () {
+                      otpController.verifyOtp();  // Call verifyOtp from the controller
+                    },
+                  ),
+                  SizedBox(height: 12,),
+                  if (otpController.isRetry)  // Show resend button if allowed
+                    RoundedButton(
+                      buttonColor: Colors.grey,
+                      title: "RESEND OTP",
                       fontsize: 28,
-                      onTap: (){
-                        Get.to(()=> PasswordUI());
-                      })
+                      onTap: () {
+                        otpController.resendOtp();  // Call resendOtp from the controller
+                      },
+                    ),
                 ],
               ),
             ),
@@ -95,13 +100,13 @@ class _OtpState extends State<Otp> {
 }
 
 class OTPDigitField extends StatelessWidget {
-  final String value;
-  final ValueChanged<String> onChanged;
+  final OtpController controller;
+  final int index;
 
-  const OTPDigitField({
+  OTPDigitField({
     Key? key,
-    required this.value,
-    required this.onChanged,
+    required this.controller,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -111,7 +116,7 @@ class OTPDigitField extends StatelessWidget {
       height: 60,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: value.isNotEmpty ? Colors.blue : Colors.white,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.black),
       ),
@@ -120,16 +125,37 @@ class OTPDigitField extends StatelessWidget {
         keyboardType: TextInputType.number,
         maxLength: 1,
         style: TextStyle(
-          color: Colors.white,
-          fontSize: 28// set text color to white
+          color: Colors.black,
+          fontSize: 28,
         ),
         decoration: InputDecoration(
           counterText: '',
           border: InputBorder.none,
         ),
-        onChanged: onChanged,
-        controller: TextEditingController(text: value),
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            controller.otpController.text =
+                controller.otpController.text.padRight(4, ' ');
+
+            // Convert the current OTP string to a list of characters
+            List<String> otpList = controller.otpController.text.split('');
+            otpList[index] = value;
+            controller.otpController.text = otpList.join('');
+
+            // Move focus to the next field automatically
+            if (index < 3) {
+              FocusScope.of(context).nextFocus();
+            }
+          }
+        },
+        controller: TextEditingController(
+          text: controller.otpController.text.length > index
+              ? controller.otpController.text[index]
+              : '',
+        ),
       ),
     );
   }
 }
+
+

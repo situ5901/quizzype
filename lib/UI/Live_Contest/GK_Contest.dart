@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../../Common/PlainText.dart';
-import '../Add_CASH.dart';
+import '../Addcash/Add_CASH.dart';
 
 class GK_Contest extends StatefulWidget {
   const GK_Contest({super.key});
