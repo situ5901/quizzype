@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quizzype001/Common/TapButton.dart';
 import 'package:quizzype001/UI/Addcash/controller.dart';
 import 'package:quizzype001/UI/GK%20Quiz/GK_QUIZ.dart';
+import 'package:quizzype001/UI/SideBar.dart';
 
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
@@ -25,6 +26,7 @@ class _ADD_CAShState extends State<ADD_CASh> {
       init: AddCashController(),
       builder: (controller) {
         return Scaffold(
+          drawer: SideBar(),
           appBar: AppBar(
             backgroundColor: appColor,
             centerTitle: true,
