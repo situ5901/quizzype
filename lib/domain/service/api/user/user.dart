@@ -126,14 +126,14 @@ class UserApi {
 
 // API method to create contest
   Future<Response> createContestId(
-      {required String token, required String combineID, required String name}) async {
+      {required String token, required String combineID, required String name,required int amount}) async {
     try {
       final response = await dio.post(
         '$basePath/create-contest',
         data: {
           "combineId": combineID,
           "fullname": name,
-          "gameAmount": "0"
+          "gameAmount": amount
         },
         options: Options(
           headers: {

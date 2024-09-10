@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/Common/TapButton.dart';
+import 'package:quizzype001/UI/Addcash/controller.dart';
 import 'package:quizzype001/UI/GK%20Quiz/GK_QUIZ.dart';
 
 import '../../Common/BoldText.dart';
@@ -15,183 +16,144 @@ class ADD_CASh extends StatefulWidget {
 }
 
 class _ADD_CAShState extends State<ADD_CASh> {
+  final TextEditingController _amountController = TextEditingController();
+  final _formKey = GlobalKey<FormState>(); // Key for the Form widget
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: appColor,
-        centerTitle: true,
-        title: BoldText(name: "ADD CASH", fontsize: 22, color: Colors.white),
-        leading: Icon(Icons.menu, color: Colors.white),
-        actions: [
-          Container(
-            height: 20,
-            width: 50,
-            color: Colors.white,
-            child: BoldText(name:" 100",fontsize: 18,color: Colors.yellow,),
+    return GetBuilder<AddCashController>(
+      init: AddCashController(),
+      builder: (controller) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: appColor,
+            centerTitle: true,
+            title: BoldText(name: "ADD CASH", fontsize: 22, color: Colors.white),
+            leading: Icon(Icons.menu, color: Colors.white),
+            actions: [
+              Container(
+                height: 20,
+                width: 50,
+                color: Colors.white,
+                child: BoldText(name:"₹${controller.balance}", fontsize: 18, color: Colors.yellow),
+              ),
+              CircleAvatar(
+                radius: 25,
+                backgroundColor: Colors.white,
+                child: Image.asset('Assets/Images/Money.png'),
+              )
+            ],
           ),
-          CircleAvatar(
-            radius: 25,
-            backgroundColor: Colors.white,
-            child: Image.asset('Assets/Images/Money.png',),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-       child: Column(
-          children: [
-            Container(
-              height: 80,
-              color: appColor,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Form(
+                key: _formKey, // Assign the key to the Form widget
+                child: Column(
                   children: [
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Container(
-                      color: Colors.yellow,
-                      child: Icon(Icons.menu),
-                    ), SizedBox(
-                      width: 12,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border:Border.all(
-                              width: 2,color: Colors.yellow
-                          )
+
+                    SizedBox(height: 30),
+                    TextFormField(
+                      controller: _amountController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        prefix: Text(
+                          "₹ ",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        hintText: 'ENTER AMOUNT',
+                        hintStyle: TextStyle(color: Colors.grey, fontSize: 25),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                      child: BoldText(name:" ALL ",color:Colors.white,fontsize: 18,),
+                      style: TextStyle(fontSize: 25),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter an amount';
+                        }
+                        final amount = int.tryParse(value);
+                        if (amount == null) {
+                          return 'Invalid amount';
+                        }
+                        if (amount < 10) {
+                          return 'Minimum amount is ₹10';
+                        }
+                        return null;
+                      },
                     ),
-                    SizedBox(
-                      width: 12,
+                    SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        amountButton('100', controller),
+                        amountButton('200', controller),
+                        amountButton('300', controller),
+                      ],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border:Border.all(
-                              width: 2,color: Colors.yellow
-                          )
+                    SizedBox(height: 30),
+                    InkWell(
+                      onTap: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          final amount = int.tryParse(_amountController.text) ?? 0;
+                          controller.addCashAndCreateContest(amount);
+                          _amountController.clear();
+                        }
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            BoldText(name: "PROCEED", fontsize: 22, color: Colors.yellow),
+                            Icon(Icons.arrow_forward, color: Colors.white),
+                          ],
+                        ),
                       ),
-                      child: BoldText(name:" 4 PLAYERS - 1 WINNER ",color: Colors.white,fontsize: 18,),
-                    ), SizedBox(
-                      width: 12,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border:Border.all(
-                              width: 2,color: Colors.yellow
-                          )
-                      ),
-                      child: BoldText(name:" 4 PLAYERS - 1 WINNER ",color: Colors.white,fontsize: 18,),
                     )
                   ],
                 ),
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  prefix: Icon(Icons.currency_rupee,color: Colors.black,),
-              hintText: 'ENTER AMOUNT',
-              hintStyle: TextStyle(color: Colors.grey,fontSize: 25),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10)
-              ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 12,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(12)
+          ),
+        );
+      },
+    );
+  }
 
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.currency_rupee,color: Colors.black,),
-                      BoldText(name: "100", fontsize: 22,color: Colors.yellow,),
-                      Icon(Icons.add_outlined,color: Colors.white,)
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(12)
-
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.currency_rupee,color: Colors.black,),
-                      BoldText(name: "200", fontsize: 22,color: Colors.yellow,),
-                      Icon(Icons.add_outlined,color: Colors.white,)
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(12)
-
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.currency_rupee,color: Colors.black,),
-                      BoldText(name: "300", fontsize: 22,color: Colors.yellow,),
-                      Icon(Icons.add_outlined,color: Colors.white,)
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            InkWell(onTap: (){
-              showCustomDialog(context);
-            },
-              child: Container(
-                height: 50,width: 150,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(12)
-
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    BoldText(name: "PROCEED", fontsize: 22,color: Colors.yellow,),
-                    Icon(Icons.arrow_forward,color: Colors.white,)
-                  ],
-                ),
-              ),
-            )
+  Widget amountButton(String amount, AddCashController controller) {
+    return GestureDetector(
+      onTap: () {
+        _amountController.text = amount; // Update the TextEditingController
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(Icons.currency_rupee, color: Colors.black),
+            BoldText(name: amount, fontsize: 22, color: Colors.yellow),
+            Icon(Icons.add_outlined, color: Colors.white),
           ],
-        )
-      )
+        ),
+      ),
     );
   }
 }
+
 class CustomDialog extends StatelessWidget {
+  final VoidCallback onJoinNow; // Add a callback parameter
+
+  CustomDialog({required this.onJoinNow}); // Initialize the callback
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -209,32 +171,25 @@ class CustomDialog extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children:[
-            Image.asset('Assets/Images/done.png',height: 150,width: 120,),
-            BoldText(name: "SUCCESSFULLY ADDED CASH IN WALLET", color:Colors.blue,fontsize: 16),
+          children: [
+            Image.asset('Assets/Images/done.png', height: 150, width: 120),
+            BoldText(name: "SUCCESSFULLY ADDED CASH IN WALLET", color: Colors.blue, fontsize: 16),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: RoundedButton(buttonColor: appColor,
-                  title: "JOIN NOW", onTap: (){
-                    Get.toNamed(AppRoutes.gK_Question);
-              }),
-            )
-        ]
+              child: RoundedButton(
+                buttonColor: appColor,
+                title: "JOIN NOW",
+                onTap: () {
+                  onJoinNow(); // Execute the callback
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-void showCustomDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CustomDialog();
-    },
-  );
-   // Close the dialog after 5 seconds
-  // Future.delayed(Duration(seconds: 10), () {
-  //   Navigator.of(context).pop();
-  // });
-}
+
+

@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
-                        "₹100",
+                        "₹${controller.balance}",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -136,6 +136,9 @@ class _HomeState extends State<Home> {
                       title: Text("Notification"),
                     ),
                     ListTile(
+                      onTap: (){
+                        UserRepository().getWalletBalance();
+                      },
                       leading: Icon(Icons.settings),
                       title: Text("Setting"),
                     ),

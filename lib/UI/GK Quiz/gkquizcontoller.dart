@@ -17,21 +17,13 @@ class GkQuizController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getContestId();
+ //   getContestId();
     loadData();
   }
 
 
 
-  Future<void> getContestId() async {
-    try {
 
-      await repository.createContestId();
-    } catch (e) {
-      print("Error fetching contestId: $e");
-
-    }
-  }
 
   Future<void> getQuestion() async {
     try {

@@ -135,7 +135,7 @@ class UserRepository {
 
 
 // Service method to get contest id
-  Future <bool> createContestId() async {
+  Future <bool> createContestId(int amount) async {
     try {
       final userId = databaseService.user?.id;
       final userName = databaseService.user?.fullname;
@@ -146,7 +146,7 @@ class UserRepository {
         return true;
       }
 
-      final response = await userApi.createContestId(token: token, combineID: userId, name: userName);
+      final response = await userApi.createContestId(token: token, combineID: userId, name: userName, amount:amount );
       final data = response.data['contestId'];
 
       await databaseService.putContestId(data);
