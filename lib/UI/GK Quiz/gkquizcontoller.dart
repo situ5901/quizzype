@@ -35,9 +35,8 @@ class GkQuizController extends GetxController {
 
   Future<void> getQuestion() async {
     try {
-
       quizQuestion = await repository.fetchQuestion();
-      gkQuestionId = quizQuestion?.id; // Set the question ID
+      gkQuestionId = quizQuestion?.id;  // Set the question ID from fetched question
       isLoading = false;
     } catch (e) {
       print("Error fetching question: $e");
@@ -45,17 +44,21 @@ class GkQuizController extends GetxController {
     }
   }
 
+
   Future<void> postAnswer() async {
     if (gkQuestionId != null && selectedOption != null) {
       try {
+        print("Posting answer: $selectedOption for question ID: $gkQuestionId");
         await repository.postAnswer(gkQuestionId!, selectedOption!);
       } catch (e) {
         print("Error posting answer: $e");
       }
     } else {
-      print("Question ID or selected option is null");
+      print("gkQuestionId or selectedOption is null");  // Already prints this, but double-check here
     }
   }
+
+
 
   Future<void> loadData() async {
     await Future.wait([getNextQuestion()]);
@@ -68,8 +71,8 @@ class GkQuizController extends GetxController {
   }
 
   void selectOption(String option) {
-    selectedOption = option; // Set the selected option
-    update();
+    selectedOption = option;  // Set the selected option
+    update();  // This should trigger the UI to update after the option is selected
   }
 
 
@@ -78,4 +81,6 @@ class GkQuizController extends GetxController {
     score = databaseService.isScore;  // Fetch the score
     update();  // Trigger the UI update
   }
+
+
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vibration/vibration.dart';  // Import vibration package
 import 'package:quizzype001/UI/GK%20Quiz/gkquizcontoller.dart';
 import 'package:quizzype001/domain/service/app/app_service_imports.dart';
 import '../../Common/BoldText.dart';
@@ -16,6 +17,9 @@ class GK_QUIZ extends StatefulWidget {
 class _GK_QUIZState extends State<GK_QUIZ> {
   int _questionNumber = 1;
   late GkQuizController controller;
+  String? selectedOption;
+  bool isAnswerSelected = false;
+  bool isAnswerCorrect = false;
 
   @override
   void initState() {
@@ -24,7 +28,6 @@ class _GK_QUIZState extends State<GK_QUIZ> {
   }
 
   void _showResultBottomSheet() {
-
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -143,6 +146,45 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       },
     );
   }
+  void _handleOptionSelection(String option) {
+    if (!isAnswerSelected) {
+      setState(() {
+        selectedOption = option;  // Ensure selectedOption is set here
+        isAnswerSelected = true;
+        isAnswerCorrect = selectedOption == controller.quizQuestion?.correctAnswer;
+
+        if (!isAnswerCorrect) {
+          Vibration.vibrate(duration: 500);
+        }
+      });
+
+      controller.selectOption(option);  // Also update in controller
+    }
+  }
+
+
+  void _handleNextQuestion() async {
+    if (selectedOption != null && controller.quizQuestion != null) {
+      await controller.postAnswer();
+
+      if (_questionNumber < 10) {
+        setState(() {
+          _questionNumber++;
+          isAnswerSelected = false;
+          selectedOption = null;
+          controller.loadData();  // Ensure this loads the next question correctly
+        });
+      } else {
+        await controller.getScore();
+        _showResultBottomSheet();
+      }
+    } else {
+      print("Question ID or selected option is null");
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +195,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       },
       child: GetBuilder<GkQuizController>(
         builder: (controller) {
+          final correctAnswer = controller.quizQuestion?.correctAnswer;
           return Scaffold(
             appBar: AppBar(
               backgroundColor: appColor,
@@ -198,8 +241,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                       children: [
                         SizedBox(height: 16),
                         Container(
-                          height: 150,
-                          width: double.infinity,
+                          width: double.infinity, // Full width
                           decoration: BoxDecoration(
                             border: Border.all(
                               width: 2,
@@ -207,51 +249,40 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Center(
-                            child: BoldText(
-                              name: controller.quizQuestion?.question ?? '',
-                              color: Colors.black,
-                              fontsize: 22,
+                          child: Padding(
+                            padding: EdgeInsets.all(10.0), // Add some padding for better appearance
+                            child: Text(
+                              "Q. ${controller.quizQuestion?.question ?? ''}", // Prefix "Q."
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                              softWrap: true, // Allows text to wrap within container width
                             ),
                           ),
                         ),
                         SizedBox(height: 12),
                         _buildListAnswer(
                           controller.quizQuestion?.options ?? [],
-                              (selectedOption) {
-                            controller.selectOption(selectedOption);
-                            print("Selected: $selectedOption");
-                          },
-                          controller.selectedOption, // Pass the selected option here
+                          _handleOptionSelection,
+                          selectedOption,
+                          correctAnswer, // Pass the correct answer here
                         ),
-                        SizedBox(
-                          height: 16,
-                        ),
+                        SizedBox(height: 16),
                         Align(
                           alignment: Alignment.topRight,
-                          child: GestureDetector(
-                            onTap: () async {
-                              if (controller.selectedOption != null) {
-                                await controller.postAnswer();
-                              }
-
-                              if (_questionNumber < 10) {
-                                setState(() {
-                                  _questionNumber++;
-                                  controller.loadData();
-                                });
-                              } else {
-                                await controller.getScore();  // Ensure score is fetched
-                                _showResultBottomSheet();     // Show the result after fetching the score
-                              }
-                            },
+                          child: isAnswerSelected
+                              ? GestureDetector(
+                            onTap: _handleNextQuestion,
                             child: BoldText(
                               name: "NEXT --->",
                               color: Colors.black,
                               fontsize: 20,
                             ),
-                          ),
-                        )
+                          )
+                              : SizedBox.shrink(), // Hide button if no answer is selected
+                        ),
                       ],
                     ),
                   )
@@ -265,30 +296,65 @@ class _GK_QUIZState extends State<GK_QUIZ> {
   }
 }
 
-Widget _buildListAnswer(List<String> options, Function(String) onSelected, String? selectedOption) {
+Widget _buildListAnswer(List<String> options, Function(String) onSelected, String? selectedOption, String? correctAnswer) {
   return Column(
-    children: options.map((option) {
+    children: options.asMap().entries.map((entry) {
+      int index = entry.key; // Get index for numbering
+      String option = entry.value;
+
       final bool isSelected = option == selectedOption;
+      final bool isOptionCorrect = option == correctAnswer;
+
       return GestureDetector(
         onTap: () => onSelected(option),
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 5.0),
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           decoration: BoxDecoration(
-            color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.transparent, // Add a light blue background to selected option
+            color: isSelected
+                ? isOptionCorrect
+                ? Colors.green.withOpacity(0.1) // Green for correct answer
+                : Colors.red.withOpacity(0.1) // Red for wrong answer
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(
-              color: isSelected ? Colors.blue : Colors.grey, // Change border color if selected
+              color: isSelected
+                  ? isOptionCorrect
+                  ? Colors.green
+                  : Colors.red
+                  : Colors.grey,
               width: 2.0,
             ),
           ),
-          child: Text(
-            option,
-            style: TextStyle(
-              fontSize: 18.0,
-              color: isSelected ? Colors.blue : Colors.black, // Change text color if selected
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, // Bold text if selected
-            ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Serial number part
+              Text(
+                "${index + 1}.",  // Displaying index + 1 for numbering
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(width: 10.0), // Add space between number and option
+
+              // Answer text part
+              Expanded(
+                child: Text(
+                  option,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: isSelected
+                        ? isOptionCorrect
+                        ? Colors.green
+                        : Colors.red
+                        : Colors.black,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       );
