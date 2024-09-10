@@ -270,14 +270,24 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                         ),
                         SizedBox(height: 16),
                         Align(
-                          alignment: Alignment.topRight,
+                          alignment: Alignment.center,
                           child: isAnswerSelected
                               ? GestureDetector(
                             onTap: _handleNextQuestion,
-                            child: BoldText(
-                              name: "NEXT --->",
-                              color: Colors.black,
-                              fontsize: 20,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 2.0,
+                                  ),
+                                borderRadius: BorderRadius.circular(15)
+                              ),
+                              child: BoldText(
+                                name: "NEXT",
+                                color: Colors.black,
+                                fontsize: 20,
+                              ),
                             ),
                           )
                               : SizedBox.shrink(), // Hide button if no answer is selected
