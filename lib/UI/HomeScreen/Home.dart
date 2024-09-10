@@ -51,547 +51,547 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final Size = MediaQuery.of(context).size;
     return GetBuilder(
-      init: HomeController(),
+        init: HomeController(),
         builder: (controller){
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: appColor,
-            centerTitle: true,
-            title: BoldText(
-              name: "QUIZYPE",
-              fontsize: 22,
-              color: Colors.white,
-            ),
-            actions: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 20,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      "₹100",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.yellow,
-                      ),
-                    ),
-                  ),
-                ],
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: appColor,
+              centerTitle: true,
+              title: BoldText(
+                name: "QUIZYPE",
+                fontsize: 22,
+                color: Colors.white,
               ),
-              InkWell(
-                onTap: () {
-                  Get.to(() => ADD_CASh());
-                },
-                child: CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.white,
-                  child: Image.asset(
-                    'Assets/Images/Money.png',
-                  ),
-                ),
-              )
-            ],
-          ),
-          drawer: Drawer(
-            width: 250, // Set the width of the Drawer
-            child: Container(
-              margin: EdgeInsets.only(bottom: 20), // Set the bottom margin to 20
-              child: ListView(
-                children: [
-                  UserAccountsDrawerHeader(
-                    accountName: Text(controller.userModel!.fullname?? ""),
-                    accountEmail: Text(controller.userModel!.email ?? ""),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundColor: Colors.indigo.shade900,
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                       child: Text(
-                        "SS",
-                        style: TextStyle(fontSize: 30, color: Colors.white),
+                        "₹100",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.yellow,
+                        ),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      Get.toNamed(AppRoutes.userScreen);
-                    },
-                    child: ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text("Profile"),
+                  ],
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.to(() => ADD_CASh());
+                  },
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.white,
+                    child: Image.asset(
+                      'Assets/Images/Money.png',
                     ),
                   ),
-                  ListTile(
-                    onTap: (){
-                      Get.toNamed(AppRoutes.leaderBoard);
-                    },
-                    leading: Icon(Icons.score),
-                    title: Text("Score"),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.notifications),
-                    title: Text("Notification"),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("Setting"),
-                  ),
-                  ListTile(
-                    onTap: () async{
-                      await databaseService.putIsLogin(false);
-                      Get.offAllNamed(AppRoutes.login);
-                    },
-                    leading: Icon(Icons.logout),
-                    title: Text("Log Out"),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
-          ),      body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        color: appColor,
-                        height: 200,
-                        child: Center(
-                          child: Container(
-                            height: 50,
-                            width: 140,
-                            decoration: BoxDecoration(
-                              color: boxColor,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                width: 2,
+            drawer: Drawer(
+              width: 250, // Set the width of the Drawer
+              child: Container(
+                margin: EdgeInsets.only(bottom: 20), // Set the bottom margin to 20
+                child: ListView(
+                  children: [
+                    UserAccountsDrawerHeader(
+                      accountName: Text(controller.userModel!.fullname?? ""),
+                      accountEmail: Text(controller.userModel!.email ?? ""),
+                      currentAccountPicture: CircleAvatar(
+                        backgroundColor: Colors.indigo.shade900,
+                        child: Text(
+                          "SS",
+                          style: TextStyle(fontSize: 30, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(AppRoutes.userScreen);
+                      },
+                      child: ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text("Profile"),
+                      ),
+                    ),
+                    ListTile(
+                      onTap: (){
+                        Get.toNamed(AppRoutes.leaderBoard);
+                      },
+                      leading: Icon(Icons.score),
+                      title: Text("Score"),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.notifications),
+                      title: Text("Notification"),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text("Setting"),
+                    ),
+                    ListTile(
+                      onTap: () async{
+                        await databaseService.putIsLogin(false);
+                        Get.offAllNamed(AppRoutes.login);
+                      },
+                      leading: Icon(Icons.logout),
+                      title: Text("Log Out"),
+                    )
+                  ],
+                ),
+              ),
+            ),      body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          color: appColor,
+                          height: 200,
+                          child: Center(
+                            child: Container(
+                              height: 50,
+                              width: 140,
+                              decoration: BoxDecoration(
                                 color: boxColor,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.white,
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 2),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  width: 2,
+                                  color: boxColor,
                                 ),
-                              ],
-                            ),
-                            child: Center(
-                              child: BoldText(
-                                name: "HI BUDDY",
-                                fontsize: 20,
-                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    spreadRadius: 3,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: BoldText(
+                                  name: "HI BUDDY",
+                                  fontsize: 20,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        height: 130,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                        Container(
+                          height: 130,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      bottom: 50,
+                      right: 0,
+                      left: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(40.0),
+                        child: Container(
+                          height: 90,
+                          width: Size.width * 0.6,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5,
+                                color: Colors.black,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  BoldText(
+                                    name: "PLAY QUIZYPE",
+                                    fontsize: 18,
+                                    color: Colors.black,
+                                  ),
+                                  BoldText(
+                                    name: "AND WIN UPTO",
+                                    fontsize: 18,
+                                    color: Colors.black,
+                                  ),
+                                  BoldText(
+                                    name: "1 CRORE CASH",
+                                    fontsize: 18,
+                                    color: Colors.yellow,
+                                  ),
+                                ],
+                              ),
+                              Image.asset('Assets/Images/img_1.png'),
+                              Image.asset('Assets/Images/img.png')
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          ),
                         ),
                       ),
-                    ],
+                    ),
+                  ],
+                ),
+                Center(
+                  child: Container(
+                    height: 40,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.greenAccent),
+                    ),
+                    child: Center(
+                      child: BoldText(
+                        name: 'CONTEST',
+                        color: Colors.green,
+                        fontsize: 22,
+                      ),
+                    ),
                   ),
-                  Positioned(
-                    bottom: 50,
-                    right: 0,
-                    left: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(40.0),
-                      child: Container(
-                        height: 90,
-                        width: Size.width * 0.6,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Colors.black,
-                              offset: Offset(0, 4),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 380,
+                    child: GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: MediaQuery.of(context).orientation ==
+                            Orientation.portrait
+                            ? 2
+                            : 4,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: 4,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            // Handle navigation based on the clicked item
+                            switch (index) {
+                              case 0:
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Main_Page()),
+                                );
+                                break;
+                              case 1:
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MegaContest()),
+                                );
+                                break;
+                              case 2:
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DailyContest()),
+                                );
+                                break;
+                              case 3:
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PracticeCont()),
+                                );
+                                break;
+                              default:
+                              // Handle default case or any additional items
+                                break;
+                            }
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              image: DecorationImage(
+                                image: AssetImage(imagePaths[
+                                index]), // Accessing image path based on index
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Center(
+                  child: Container(
+                    height: 40,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.greenAccent),
+                    ),
+                    child: Center(
+                      child: BoldText(
+                        name: 'DEMO CONTEST',
+                        color: Colors.green,
+                        fontsize: 22,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        width: 2,
+                        color: appColor,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        PlainText(
+                          name: '2 PLAYERS - WINNER',
+                          fontsize: 12,
+                          color: Colors.black,
                         ),
-                        child: Row(
+                        Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                BoldText(
-                                  name: "PLAY QUIZYPE",
-                                  fontsize: 18,
-                                  color: Colors.black,
-                                ),
-                                BoldText(
-                                  name: "AND WIN UPTO",
-                                  fontsize: 18,
-                                  color: Colors.black,
-                                ),
-                                BoldText(
-                                  name: "1 CRORE CASH",
-                                  fontsize: 18,
-                                  color: Colors.yellow,
-                                ),
+                                BoldText(name: 'PRIZE POOL', fontsize: 12),
+                                Text(
+                                  'Rs. 50',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: Colors.yellow,
+                                  ),
+                                )
                               ],
                             ),
-                            Image.asset('Assets/Images/img_1.png'),
-                            Image.asset('Assets/Images/img.png')
+                            Container(
+                              color: Colors.grey,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.watch_later_outlined),
+                                  Text("3M:05")
+                                ],
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                BoldText(name: 'FREE', fontsize: 12),
+                                Text(
+                                  'Rs. FREE',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: Colors.yellow,
+                                  ),
+                                )
+                              ],
+                            )
                           ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        width: 2,
+                        color: appColor,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        PlainText(
+                          name: '2 PLAYERS - WINNER',
+                          fontsize: 12,
+                          color: Colors.black,
+                        ),
+                        Divider(),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Center(
-                child: Container(
-                  height: 40,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.greenAccent),
-                  ),
-                  child: Center(
-                    child: BoldText(
-                      name: 'CONTEST',
-                      color: Colors.green,
-                      fontsize: 22,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 380,
-                  child: GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: MediaQuery.of(context).orientation ==
-                          Orientation.portrait
-                          ? 2
-                          : 4,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          // Handle navigation based on the clicked item
-                          switch (index) {
-                            case 0:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Main_Page()),
-                              );
-                              break;
-                            case 1:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MegaContest()),
-                              );
-                              break;
-                            case 2:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DailyContest()),
-                              );
-                              break;
-                            case 3:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PracticeCont()),
-                              );
-                              break;
-                            default:
-                            // Handle default case or any additional items
-                              break;
-                          }
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            image: DecorationImage(
-                              image: AssetImage(imagePaths[
-                              index]), // Accessing image path based on index
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Center(
-                child: Container(
-                  height: 40,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.greenAccent),
-                  ),
-                  child: Center(
-                    child: BoldText(
-                      name: 'DEMO CONTEST',
-                      color: Colors.green,
-                      fontsize: 22,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: appColor,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      PlainText(
-                        name: '2 PLAYERS - WINNER',
-                        fontsize: 12,
-                        color: Colors.black,
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              BoldText(name: 'PRIZE POOL', fontsize: 12),
-                              Text(
-                                'Rs. 50',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            color: Colors.grey,
-                            child: Row(
+                          children: [
+                            Column(
                               children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
+                                BoldText(name: 'PRIZE POOL', fontsize: 12),
+                                Text(
+                                  'Rs. 50',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: Colors.yellow,
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: appColor,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      PlainText(
-                        name: '2 PLAYERS - WINNER',
-                        fontsize: 12,
-                        color: Colors.black,
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              BoldText(name: 'PRIZE POOL', fontsize: 12),
-                              Text(
-                                'Rs. 50',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            color: Colors.grey,
-                            child: Row(
+                            Container(
+                              color: Colors.grey,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.watch_later_outlined),
+                                  Text("3M:05")
+                                ],
+                              ),
+                            ),
+                            Column(
                               children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
+                                BoldText(name: 'FREE', fontsize: 12),
+                                Text(
+                                  'Rs. FREE',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: Colors.yellow,
+                                  ),
+                                )
                               ],
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: appColor,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Loading",
+                            )
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 120,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: appColor,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        width: 2,
+                        color: appColor,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Loading",
+                      ),
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("01 "),
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: appColor,
-                            child: Icon(Icons.person),
-                          ),
-                          Text("MANASH MISHRA "),
-                          Text(
-                            'WINNER     ',
-                            style: TextStyle(
-                              backgroundColor: Colors.yellow,
-                            ),
-                          )
-                        ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 120,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        width: 2,
+                        color: appColor,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("02"),
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: appColor,
-                            child: Icon(Icons.person),
-                          ),
-                          Text("MANASH MISHRA"),
-                          Text(
-                            'RUNNER UP',
-                            style: TextStyle(
-                              backgroundColor: Colors.yellow,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("01 "),
+                            CircleAvatar(
+                              radius: 15,
+                              backgroundColor: appColor,
+                              child: Icon(Icons.person),
                             ),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("03"),
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: appColor,
-                            child: Icon(Icons.person),
-                          ),
-                          Text("MANASH MISHRA"),
-                          Text(
-                            'RUNNER UP',
-                            style: TextStyle(
-                              backgroundColor: Colors.yellow,
+                            Text("MANASH MISHRA "),
+                            Text(
+                              'WINNER     ',
+                              style: TextStyle(
+                                backgroundColor: Colors.yellow,
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("02"),
+                            CircleAvatar(
+                              radius: 15,
+                              backgroundColor: appColor,
+                              child: Icon(Icons.person),
                             ),
-                          )
-                        ],
-                      )
-                    ],
+                            Text("MANASH MISHRA"),
+                            Text(
+                              'RUNNER UP',
+                              style: TextStyle(
+                                backgroundColor: Colors.yellow,
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("03"),
+                            CircleAvatar(
+                              radius: 15,
+                              backgroundColor: appColor,
+                              child: Icon(Icons.person),
+                            ),
+                            Text("MANASH MISHRA"),
+                            Text(
+                              'RUNNER UP',
+                              style: TextStyle(
+                                backgroundColor: Colors.yellow,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 12,
-              )
-            ],
+                SizedBox(
+                  height: 12,
+                )
+              ],
+            ),
           ),
-        ),
-        );
+          );
 
         });
   }

@@ -281,7 +281,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                                     color: Colors.grey,
                                     width: 2.0,
                                   ),
-                                borderRadius: BorderRadius.circular(15)
+                                  borderRadius: BorderRadius.circular(15)
                               ),
                               child: BoldText(
                                 name: "NEXT",
