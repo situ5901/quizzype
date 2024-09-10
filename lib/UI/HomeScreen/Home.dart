@@ -9,6 +9,7 @@ import 'package:quizzype001/UI/DailyContest.dart';
 import 'package:quizzype001/UI/HomeScreen/controller.dart';
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/MegaContest.dart';
+import 'package:quizzype001/UI/SideBar.dart';
 import 'package:quizzype001/domain/repository/repository_imports.dart';
 import 'package:quizzype001/domain/service/app/app_service_imports.dart';
 import '../../Common/Colors.dart';
@@ -98,62 +99,7 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-            drawer: Drawer(
-              width: 250, // Set the width of the Drawer
-              child: Container(
-                margin: EdgeInsets.only(bottom: 20), // Set the bottom margin to 20
-                child: ListView(
-                  children: [
-                    UserAccountsDrawerHeader(
-                      accountName: Text(controller.userModel!.fullname?? ""),
-                      accountEmail: Text(controller.userModel!.email ?? ""),
-                      currentAccountPicture: CircleAvatar(
-                        backgroundColor: Colors.indigo.shade900,
-                        child: Text(
-                          "SS",
-                          style: TextStyle(fontSize: 30, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.userScreen);
-                      },
-                      child: ListTile(
-                        leading: Icon(Icons.person),
-                        title: Text("Profile"),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.leaderBoard);
-                      },
-                      leading: Icon(Icons.score),
-                      title: Text("Score"),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.notifications),
-                      title: Text("Notification"),
-                    ),
-                    ListTile(
-                      onTap: (){
-                        UserRepository().getWalletBalance();
-                      },
-                      leading: Icon(Icons.settings),
-                      title: Text("Setting"),
-                    ),
-                    ListTile(
-                      onTap: () async{
-                        await databaseService.putIsLogin(false);
-                        Get.offAllNamed(AppRoutes.login);
-                      },
-                      leading: Icon(Icons.logout),
-                      title: Text("Log Out"),
-                    )
-                  ],
-                ),
-              ),
-            ),      body: SingleChildScrollView(
+            drawer: SideBar(),      body: SingleChildScrollView(
             child: Column(
               children: [
                 Stack(
