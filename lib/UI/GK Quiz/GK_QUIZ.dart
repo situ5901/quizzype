@@ -8,6 +8,7 @@ import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../MegaContest.dart';
 
+
 class GK_QUIZ extends StatefulWidget {
   const GK_QUIZ({super.key});
 
@@ -112,7 +113,6 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                       Navigator.of(context).pop();
                     },
                   ),
-
                 ],
               ),
               SizedBox(height: 8),
@@ -313,6 +313,7 @@ Widget _buildListAnswer(List<String> options, Function(String) onSelected, Strin
 
       final bool isSelected = option == selectedOption;
       final bool isOptionCorrect = option == correctAnswer;
+      final bool showCorrectAnswer = selectedOption != null && selectedOption != correctAnswer;
 
       return GestureDetector(
         onTap: () => onSelected(option),
@@ -323,7 +324,9 @@ Widget _buildListAnswer(List<String> options, Function(String) onSelected, Strin
             color: isSelected
                 ? isOptionCorrect
                 ? Colors.green.withOpacity(0.1) // Green for correct answer
-                : Colors.red.withOpacity(0.1) // Red for wrong answer
+                : Colors.red.withOpacity(0.1)   // Red for wrong answer
+                : (showCorrectAnswer && isOptionCorrect)
+                ? Colors.green.withOpacity(0.1) // Green for correct answer when wrong answer is selected
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(
@@ -331,6 +334,8 @@ Widget _buildListAnswer(List<String> options, Function(String) onSelected, Strin
                   ? isOptionCorrect
                   ? Colors.green
                   : Colors.red
+                  : (showCorrectAnswer && isOptionCorrect)
+                  ? Colors.green
                   : Colors.grey,
               width: 2.0,
             ),
@@ -358,8 +363,12 @@ Widget _buildListAnswer(List<String> options, Function(String) onSelected, Strin
                         ? isOptionCorrect
                         ? Colors.green
                         : Colors.red
+                        : (showCorrectAnswer && isOptionCorrect)
+                        ? Colors.green
                         : Colors.black,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: isSelected || (showCorrectAnswer && isOptionCorrect)
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                 ),
               ),
