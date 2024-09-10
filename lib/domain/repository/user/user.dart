@@ -135,7 +135,7 @@ class UserRepository {
 
 
 // Service method to get contest id
-  Future <bool> createContestId() async {
+  Future <bool> createContestId(int amount) async {
     try {
       final userId = databaseService.user?.id;
       final userName = databaseService.user?.fullname;
@@ -146,7 +146,7 @@ class UserRepository {
         return true;
       }
 
-      final response = await userApi.createContestId(token: token, combineID: userId, name: userName);
+      final response = await userApi.createContestId(token: token, combineID: userId, name: userName, amount:amount );
       final data = response.data['contestId'];
 
       await databaseService.putContestId(data);
@@ -230,6 +230,60 @@ class UserRepository {
     } catch (e) {
       print("Exception fetching score: $e");
       rethrow;
+    }
+  }
+
+
+  Future<Map<String, dynamic>> getLeaderBoard() async {
+    try {
+      final userId = databaseService.user?.id;
+      final token = databaseService.accessToken;
+
+      if (userId == null || token == null) {
+        print('User ID or token is null');
+        throw Exception('User ID or token is null');
+      }
+
+      var response = await userApi.getLeaderBoard(
+        token: token,
+        combineID: userId,
+      );
+
+      // Ensure response.data is of type Map<String, dynamic>
+      if (response.data is Map<String, dynamic>) {
+        return response.data as Map<String, dynamic>;
+      } else {
+        throw Exception('Unexpected response format');
+      }
+    } catch (e) {
+      print("Exception fetching leaderboard: $e");
+      rethrow;
+    }
+  }
+
+
+  Future<String> getWalletBalance() async {
+    try {
+      final userId = databaseService.user?.id;
+
+      if (userId == null) {
+        print('User ID is null');
+        throw Exception('User ID not found');
+      }
+
+      var response = await userApi.fetchWalletBalance(
+        combineId: userId,
+      );
+
+      // Check the response format and handle balance
+      if (response.data != null && response.data['balance'] != null) {
+        return response.data['balance'].toString(); // Returning the balance as a String
+      } else {
+        throw Exception('Failed to fetch balance');
+      }
+    } catch (e) {
+      print("Exception fetching Balance: $e");
+      rethrow; // Rethrow to let calling code handle it as well
     }
   }
 

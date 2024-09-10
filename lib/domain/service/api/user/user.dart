@@ -126,14 +126,14 @@ class UserApi {
 
 // API method to create contest
   Future<Response> createContestId(
-      {required String token, required String combineID, required String name}) async {
+      {required String token, required String combineID, required String name,required int amount}) async {
     try {
       final response = await dio.post(
         '$basePath/create-contest',
         data: {
           "combineId": combineID,
           "fullname": name,
-          "gameAmount": "0"
+          "gameAmount": amount
         },
         options: Options(
           headers: {
@@ -296,7 +296,7 @@ class UserApi {
   }) async {
     try {
       final response = await dio.get(
-        '$basePath/game/result',
+        '$basePath/leaderboard',
         data: {
           "combineId": combineID
         },
@@ -333,4 +333,18 @@ class UserApi {
       rethrow;
     }
   }
+
+
+  Future<Response> fetchWalletBalance({required String combineId}) async {
+    try {
+      final response = await dio.get(
+        '$basePath/getAmount?combineId=$combineId',
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching wallet balance: $e");
+      rethrow;
+    }
+  }
+
 }

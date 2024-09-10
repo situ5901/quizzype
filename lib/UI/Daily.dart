@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzype001/UI/Contest_Details.dart';
-import 'package:quizzype001/UI/Leaderboard.dart';
+import 'package:quizzype001/UI/LeaderBoard/Leaderboard.dart';
 
 
 void main() => runApp(Daily());
