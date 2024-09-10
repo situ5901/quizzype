@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/Common/TapButton.dart';
 import 'package:quizzype001/UI/GK%20Quiz/GK_QUIZ.dart';
+import 'package:quizzype001/routes/approutes.dart';
 
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
@@ -215,7 +216,7 @@ class CustomDialog extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: RoundedButton(buttonColor: appColor,
                   title: "JOIN NOW", onTap: (){
-Get.to(()=>GK_QUIZ());
+                Get.toNamed(AppRoutes.gK_Question);
               }),
             )
         ]
@@ -233,7 +234,7 @@ void showCustomDialog(BuildContext context) {
     },
   );
   // Close the dialog after 5 seconds
-  Future.delayed(Duration(seconds: 10), () {
-    Navigator.of(context).pop();
-  });
+  // Future.delayed(Duration(seconds: 10), () {
+  //   Navigator.of(context).pop();
+  // });
 }

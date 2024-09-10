@@ -296,7 +296,7 @@ class UserApi {
   }) async {
     try {
       final response = await dio.get(
-        '$basePath/game/result',
+        '$basePath/leaderboard',
         data: {
           "combineId": combineID
         },

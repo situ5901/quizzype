@@ -126,7 +126,7 @@ class _HomeState extends State<Home> {
                   ),
                   ListTile(
                     onTap: (){
-                      UserRepository().fetchQuestion();
+                      Get.toNamed(AppRoutes.leaderBoard);
                     },
                     leading: Icon(Icons.score),
                     title: Text("Score"),

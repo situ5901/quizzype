@@ -234,4 +234,31 @@ class UserRepository {
   }
 
 
+  Future<Map<String, dynamic>> getLeaderBoard() async {
+    try {
+      final userId = databaseService.user?.id;
+      final token = databaseService.accessToken;
+
+      if (userId == null || token == null) {
+        print('User ID or token is null');
+        throw Exception('User ID or token is null');
+      }
+
+      var response = await userApi.getLeaderBoard(
+        token: token,
+        combineID: userId,
+      );
+
+      // Ensure response.data is of type Map<String, dynamic>
+      if (response.data is Map<String, dynamic>) {
+        return response.data as Map<String, dynamic>;
+      } else {
+        throw Exception('Unexpected response format');
+      }
+    } catch (e) {
+      print("Exception fetching leaderboard: $e");
+      rethrow;
+    }
+  }
+
 }

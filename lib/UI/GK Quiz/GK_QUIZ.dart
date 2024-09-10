@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quizzype001/routes/approutes.dart';
 import 'package:vibration/vibration.dart';  // Import vibration package
 import 'package:quizzype001/UI/GK%20Quiz/gkquizcontoller.dart';
 import 'package:quizzype001/domain/service/app/app_service_imports.dart';
@@ -71,10 +72,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                 child: Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => MegaContest()),
-                  );
+                  Get.offNamed(AppRoutes.leaderBoard);
                 },
               ),
             ],
@@ -114,6 +112,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                       Navigator.of(context).pop();
                     },
                   ),
+
                 ],
               ),
               SizedBox(height: 8),
