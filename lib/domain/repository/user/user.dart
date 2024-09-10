@@ -261,4 +261,31 @@ class UserRepository {
     }
   }
 
+
+  Future<String> getWalletBalance() async {
+    try {
+      final userId = databaseService.user?.id;
+
+      if (userId == null) {
+        print('User ID is null');
+        throw Exception('User ID not found');
+      }
+
+      var response = await userApi.fetchWalletBalance(
+        combineId: userId,
+      );
+
+      // Check the response format and handle balance
+      if (response.data != null && response.data['balance'] != null) {
+        return response.data['balance'].toString(); // Returning the balance as a String
+      } else {
+        throw Exception('Failed to fetch balance');
+      }
+    } catch (e) {
+      print("Exception fetching Balance: $e");
+      rethrow; // Rethrow to let calling code handle it as well
+    }
+  }
+
+
 }

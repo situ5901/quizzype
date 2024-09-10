@@ -333,4 +333,18 @@ class UserApi {
       rethrow;
     }
   }
+
+
+  Future<Response> fetchWalletBalance({required String combineId}) async {
+    try {
+      final response = await dio.get(
+        '$basePath/getAmount?combineId=$combineId',
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching wallet balance: $e");
+      rethrow;
+    }
+  }
+
 }
