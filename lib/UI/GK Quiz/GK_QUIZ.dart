@@ -181,10 +181,6 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       print("Question ID or selected option is null");
     }
   }
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -201,6 +197,32 @@ class _GK_QUIZState extends State<GK_QUIZ> {
               centerTitle: true,
               title: BoldText(name: "GK QUIZ", fontsize: 22, color: Colors.white),
               leading: Icon(Icons.menu, color: Colors.white),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: CircularProgressIndicator(
+                          value: controller.progress, // The progress value for the timer
+                          backgroundColor: Colors.grey,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                        ),
+                      ),
+                      Text(
+                        '${controller.timeLeft}', // Display the remaining time in seconds
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             body: controller.isLoading
                 ? Center(child: CircularProgressIndicator())

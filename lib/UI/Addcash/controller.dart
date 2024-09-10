@@ -4,10 +4,9 @@ import 'package:quizzype001/routes/approutes.dart';
 import '../../domain/repository/repository_imports.dart';
 import 'Add_CASH.dart';
 
-
 class AddCashController extends GetxController {
   final repository = UserRepository();
-  String? balance = "0";
+  String balance = "0"; // Initialize with "0"
   int? amount;
 
   @override
@@ -18,12 +17,11 @@ class AddCashController extends GetxController {
 
   void load() async {
     await getBalance();
-    update();
   }
 
   Future<void> getBalance() async {
     try {
-      balance = await repository.getWalletBalance();
+      balance = await repository.getWalletBalance() ?? "0";
       print("Balance: $balance");
       update();  // Notify listeners of the updated balance
     } catch (e) {
@@ -33,12 +31,7 @@ class AddCashController extends GetxController {
 
   Future<void> addCashAndCreateContest(int enteredAmount) async {
     try {
-      if (balance == null) {
-        print('Balance not loaded');
-        return;
-      }
-
-      final currentBalance = int.tryParse(balance!) ?? 0;
+      final currentBalance = int.tryParse(balance) ?? 0;
 
       if (enteredAmount > currentBalance) {
         Get.snackbar('Insufficient Balance', 'Your balance is too low to add this amount');
@@ -48,14 +41,12 @@ class AddCashController extends GetxController {
       // Show success dialog
       Get.dialog(CustomDialog(onJoinNow: () async {
         await repository.createContestId(enteredAmount);
-        Get.back();// Close the dialog
+        Get.back(); // Close the dialog
+        await getBalance(); // Reload balance after successful transaction
         Get.toNamed(AppRoutes.gK_Question);
-      },));
-      // Reload balance after successful transaction
-      await getBalance();
+      }));
     } catch (e) {
       print("Error adding cash or creating contest: $e");
     }
   }
-
 }

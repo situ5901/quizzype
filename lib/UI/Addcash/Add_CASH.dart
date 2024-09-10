@@ -190,6 +190,3 @@ class CustomDialog extends StatelessWidget {
     );
   }
 }
-
-
-
