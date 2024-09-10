@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quizzype001/UI/widgets/quizzDoneAppdiloagbox/DoneDiloagbox.dart';
 import 'package:quizzype001/routes/approutes.dart';
 import 'package:vibration/vibration.dart';  // Import vibration package
 import 'package:quizzype001/UI/GK%20Quiz/gkquizcontoller.dart';
@@ -174,13 +175,29 @@ class _GK_QUIZState extends State<GK_QUIZ> {
           controller.loadData();  // Ensure this loads the next question correctly
         });
       } else {
+        // Mark the quiz as completed
+        controller.isQuizCompleted = true;
+        controller.timer?.cancel();  // Stop the timer
+
         await controller.getScore();
-        _showResultBottomSheet();
+
+        if (controller.score != null) {
+          Get.dialog(
+            DoneDialog(
+              score: int.parse(controller.score),
+            ),
+            barrierDismissible: false, // Prevent closing by tapping outside
+          );
+        } else {
+          print("Score is null or invalid");
+        }
       }
     } else {
       print("Question ID or selected option is null");
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

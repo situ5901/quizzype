@@ -11,6 +11,7 @@ import '../UI/Auth/login/Login.dart';
 import '../UI/Auth/otp/Otp.dart';
 import '../UI/HomeScreen/Home.dart';
 import '../UI/LeaderBoard/Leaderboard.dart';
+import '../UI/Navbar.dart';
 import '../UI/Profile/Profile.dart';
 import 'middleware.dart';
 
@@ -34,7 +35,7 @@ class AppRoutes{
   static  get routes => [
     GetPage(name: login, page: () =>  Login_Page()),
     GetPage(name: verify, page: () =>   Otp()),
-    GetPage(name: homeScreen,middlewares: [EnsureAuthMiddleware()], page: () =>  const Home()),
+    GetPage(name: homeScreen,middlewares: [EnsureAuthMiddleware()], page: () =>   Navbar()),
     GetPage(name: profileScreen, page: () =>  const ProfilePage()),
     GetPage(name: userScreen, page: () =>   UserProfile()),
     GetPage(name: gK_Question, page: () =>   GK_QUIZ()),

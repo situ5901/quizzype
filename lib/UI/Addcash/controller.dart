@@ -21,7 +21,7 @@ class AddCashController extends GetxController {
 
   Future<void> getBalance() async {
     try {
-      balance = await repository.getWalletBalance() ?? "0";
+      balance = await repository.getWalletBalance() ;
       print("Balance: $balance");
       update();  // Notify listeners of the updated balance
     } catch (e) {

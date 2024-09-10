@@ -6,6 +6,7 @@ import 'package:quizzype001/UI/Auth/otp/Otp.dart';
 import 'package:quizzype001/UI/Profile/Profile.dart';
 import 'package:quizzype001/UI/Live_Contest/LiveContest.dart';
 import '../Common/Colors.dart';
+import 'Gift_Voucher.dart';
 import 'Share&Earn.dart';
 import 'Shareing.dart';
 
@@ -26,7 +27,7 @@ class Navbar extends StatefulWidget {
 }
 
 class NavbarState extends State<Navbar> {
-  var _pageData = [Otp(),Home(),Shareing()];
+  var _pageData = [Gift_Voucher(),Home(),Shareing()];
   int _selectedIteam = 1;
   String _appBarTitle = 'Dashboard'; // Add a variable to store the app bar title
 

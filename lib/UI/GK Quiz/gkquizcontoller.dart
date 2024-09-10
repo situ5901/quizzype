@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/domain/repository/repository_imports.dart';
 import '../../domain/service/app/app_service_imports.dart';
 import '../../model/Questionmodel/questionModel.dart';
 import '../../routes/approutes.dart';
+import '../widgets/TimesupAppdialog/timesUp.dart';
 
 class GkQuizController extends GetxController {
   QuizQuestion? quizQuestion;
@@ -13,11 +15,12 @@ class GkQuizController extends GetxController {
 
   String? gkQuestionId;
   String? selectedOption;
-  String? score;
+  String score = "0";
 
   Timer? timer;
-  int timeLeft = 60; // Countdown timer in seconds
+  int timeLeft =60; // Countdown timer in seconds
   double progress = 1.0; // Initial value for the circular progress indicator
+  bool isQuizCompleted = false;  // Track if the quiz is completed
 
   @override
   void onInit() {
@@ -72,21 +75,35 @@ class GkQuizController extends GetxController {
   }
 
   Future<void> getScore() async {
-    await repository.getScore();
-    score = databaseService.isScore;  // Fetch the score
+    score =  await repository.getScore();
+
     update();  // Trigger the UI update
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (timeLeft > 0) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+      if (timeLeft > 0 && !isQuizCompleted) {  // Check if quiz is completed
         timeLeft--; // Decrease the time
         progress = timeLeft / 60; // Update the progress for circular indicator
         update(); // Update the UI
       } else {
         timer.cancel();
-        Get.offNamed(AppRoutes.leaderBoard); // Navigate to home screen after 60 seconds
+        if (!isQuizCompleted) {
+          await getScore(); // Fetch the score before showing the dialog
+          Get.offNamed(AppRoutes.leaderBoard);
+          if (Get.isDialogOpen == false && Get.context != null) {
+            Get.dialog(
+              TimesUpDialog(
+                score: int.parse(score),
+              ),
+              barrierDismissible: false, // Prevent closing by tapping outside
+            );
+          }
+        }
       }
     });
   }
+
+
+
 }
