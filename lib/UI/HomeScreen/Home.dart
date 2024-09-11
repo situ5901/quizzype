@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.to(() => ADD_CASh());
+                    Get.toNamed(AppRoutes.addCash);
                   },
                   child: CircleAvatar(
                     radius: 25,
@@ -99,7 +99,8 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-            drawer: SideBar(),      body: SingleChildScrollView(
+            drawer: SideBar(),
+            body: SingleChildScrollView(
             child: Column(
               children: [
                 Stack(

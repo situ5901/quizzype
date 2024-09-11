@@ -19,6 +19,19 @@ class ADD_CASh extends StatefulWidget {
 class _ADD_CAShState extends State<ADD_CASh> {
   final TextEditingController _amountController = TextEditingController();
   final _formKey = GlobalKey<FormState>(); // Key for the Form widget
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _isDrawerOpen = false;
+
+  void _toggleDrawer() {
+    if (_isDrawerOpen) {
+      _scaffoldKey.currentState?.openEndDrawer();
+    } else {
+      _scaffoldKey.currentState?.openDrawer();
+    }
+    setState(() {
+      _isDrawerOpen = !_isDrawerOpen;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +44,7 @@ class _ADD_CAShState extends State<ADD_CASh> {
             backgroundColor: appColor,
             centerTitle: true,
             title: BoldText(name: "ADD CASH", fontsize: 22, color: Colors.white),
-            leading: Icon(Icons.menu, color: Colors.white),
+            // leading: Icon(Icons.menu, color: Colors.white),
             actions: [
               Container(
                 height: 20,

@@ -7,7 +7,7 @@ class UserRepository {
 
 
   //post User from details
-  Future<bool> postUserDetails({
+  Future<Map<String, dynamic>?> postUserDetails({
     required String token,
     required String fullname,
     required String address,
@@ -32,12 +32,19 @@ class UserRepository {
           dob: dob);
 
       // Extract the data from the response
-       var responseData = response.data['formDetails'];
+      //  var responseData = response.data['userDetails']['formDetails'];
+      //  print(responseData);
+      //
+      // // Save the received user data to the local database
+      // await databaseService.putUser(UserModel.fromJson(responseData));
+       if (response.statusCode == 200 && response.data != null) {
+        await databaseService.putUser(UserModel.fromJson(response.data['userDetails']['formDetails']));
+        return response.data;
+      } else {
+        print("Error fetching user: ${response.statusMessage}");
+        return null;
+      }
 
-      // Save the received user data to the local database
-      await databaseService.putUser(UserModel.fromJson(responseData));
-
-      return true;
     } catch (e) {
       // Handle exceptions and rethrow if necessary
       rethrow;

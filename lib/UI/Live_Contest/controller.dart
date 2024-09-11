@@ -3,17 +3,15 @@ import 'package:quizzype001/domain/service/app/app_service_imports.dart';
 import 'package:quizzype001/model/UserModels/UserModel.dart';
 import '../../domain/repository/repository_imports.dart';
 
-class HomeController extends GetxController {
+class LiveController extends GetxController {
   var db = Get.find<DatabaseService>(); // Finding the DatabaseService
-  UserModel? userModel; // This will store the user data
-  final repository = UserRepository();
+final repository = UserRepository();
   String balance = "0"; // Default balance as string
 
   @override
   void onInit() {
     super.onInit();
-    getUser();  // Fetch the user data when the controller is initialized
-    update();
+     update();
     load();     // Fetch balance
   }
 
@@ -27,16 +25,6 @@ class HomeController extends GetxController {
     load();
     update();
 
-  }
-
-  void getUser() {
-    userModel = db.user;
-
-    if (userModel != null) {
-      print("User data fetched successfully: ${userModel!.fullname}");
-    } else {
-      print("User data is null");
-    }
   }
 
   Future<void> getBalance() async {

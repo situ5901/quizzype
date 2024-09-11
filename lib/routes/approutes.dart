@@ -1,4 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:quizzype001/UI/Addcash/Add_CASH.dart';
 import 'package:quizzype001/UI/Contest_Details.dart';
 import 'package:quizzype001/UI/Daily.dart';
 import 'package:quizzype001/UI/DailyContest.dart';
@@ -29,6 +30,7 @@ class AppRoutes{
   static const daily = '/Daily';
   static const contestDetails = '/Contest_details';
   static const dailyContest = '/DailyContest';
+  static const addCash = '/Add_Cash';
 
 
 
@@ -44,6 +46,7 @@ class AppRoutes{
     GetPage(name: daily, page: () =>   Daily()),
     GetPage(name: contestDetails, page: () =>   ContestDetails()),
     GetPage(name: dailyContest, page: () =>   DailyContest()),
+    GetPage(name: addCash, page: () =>   ADD_CASh()),
 
   ];
 }

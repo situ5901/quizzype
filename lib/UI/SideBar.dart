@@ -17,17 +17,17 @@ class SideBar extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 20), // Set the bottom margin to 20
         child: ListView(
           children: [
-            // UserAccountsDrawerHeader(
-            //   accountName: Text(controller.userModel!.fullname?? ""),
-            //   accountEmail: Text(controller.userModel!.email ?? ""),
-            //   currentAccountPicture: CircleAvatar(
-            //     backgroundColor: Colors.indigo.shade900,
-            //     child: Text(
-            //       "SS",
-            //       style: TextStyle(fontSize: 30, color: Colors.white),
-            //     ),
-            //   ),
-            // ),
+            UserAccountsDrawerHeader(
+              accountName: Text(databaseService.user!.fullname ?? "user"),
+              accountEmail: Text(databaseService.user!.email ?? "email"),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.indigo.shade900,
+                child: Text(
+                  "SS",
+                  style: TextStyle(fontSize: 30, color: Colors.white),
+                ),
+              ),
+            ),
             GestureDetector(
               onTap: (){
                 Get.toNamed(AppRoutes.userScreen);

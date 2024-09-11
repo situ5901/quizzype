@@ -33,31 +33,7 @@ class _Main_PageState extends State<Main_Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex], // Display the selected screen
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: appColor,
-        currentIndex: _selectedIndex,
-        selectedItemColor: boxColor,
-        onTap: _onItemTapped, // Call _onItemTapped when an item is tapped
-        items: [
-          BottomNavigationBarItem(icon:
-     CircleAvatar(
-        radius: 15,
-        backgroundColor: appColor,
-        child: Image.asset('Assets/Images/cup.png'), // Replace with your image asset
-      ),
-      label: "home"
-    ),
-          BottomNavigationBarItem(icon:
-          CircleAvatar(
-            radius: 15,
-            backgroundColor: appColor,
-            child: Image.asset('Assets/Images/HomeIcon.png'), // Replace with your image asset
-          ),
-label: "Home"
-          ),BottomNavigationBarItem(icon: Icon(Icons.person_add_alt),label: "Home"),
-
-        ],
-      ),
+      
     );
   }
 }

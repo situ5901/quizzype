@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:quizzype001/UI/HomeScreen/controller.dart';
 import 'package:quizzype001/routes/approutes.dart';
 
 import '../../domain/repository/repository_imports.dart';
@@ -48,5 +49,12 @@ class AddCashController extends GetxController {
     } catch (e) {
       print("Error adding cash or creating contest: $e");
     }
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    HomeController().load();
   }
 }
