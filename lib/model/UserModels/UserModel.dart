@@ -10,6 +10,7 @@ class UserModel {
   final String phoneNumber;
   final String? dob;
   final String? id;
+  final String? role;
 
   UserModel({
    this.fullname,
@@ -20,6 +21,7 @@ class UserModel {
    this.pincode,
     required this.phoneNumber,
    this.dob,
+   this.role,
      this.id,
   });
 
@@ -30,6 +32,7 @@ class UserModel {
       address: json['address'],
       email: json['email'],
       city: json['city'],
+      role: json['role'],
       state: json['state'],
       pincode: json['pincode'],
       phoneNumber: json['phoneNumber'] ,
@@ -46,6 +49,7 @@ class UserModel {
       'email': email,
       'city': city,
       'state': state,
+      'role': role,
       'pincode': pincode,
       'phoneNumber': phoneNumber,
       'dob': dob,

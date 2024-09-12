@@ -23,6 +23,7 @@ class UserApi {
     required String address,
     required String phoneNumber,
     required String email,
+    required String role,
     required String city,
     required String state,
     required String pincode,
@@ -40,6 +41,7 @@ class UserApi {
           "email": email,
           "city": city,
           "state": state,
+          "role": role,
           "pincode": pincode,
           "phoneNumber": phoneNumber,
           "dob": dob

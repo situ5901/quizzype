@@ -15,6 +15,7 @@ class UserRepository {
     required String email,
     required String city,
     required String state,
+    required String role,
     required String pincode,
     required String dob,
   }) async {
@@ -27,23 +28,26 @@ class UserRepository {
           phoneNumber: phoneNumber,
           email: email,
           city: city,
+          role: role,
           state: state,
           pincode: pincode,
           dob: dob);
 
       // Extract the data from the response
-      //  var responseData = response.data['userDetails']['formDetails'];
-      //  print(responseData);
+       var responseData = response.data['userDetails']['formDetails']["phoneNumber"];
+       print(responseData);
+       await getUser(responseData);
       //
       // // Save the received user data to the local database
       // await databaseService.putUser(UserModel.fromJson(responseData));
-       if (response.statusCode == 200 && response.data != null) {
-        await databaseService.putUser(UserModel.fromJson(response.data['userDetails']['formDetails']));
-        return response.data;
-      } else {
-        print("Error fetching user: ${response.statusMessage}");
-        return null;
-      }
+      //  if (response.statusCode == 200 && response.data != null) {
+      //   await databaseService.putUser(UserModel.fromJson(response.data['userDetails']['formDetails']));
+      //   return response.data;
+      // } else {
+      //   print("Error fetching user: ${response.statusMessage}");
+      //   return null;
+      // }
+      return null;
 
     } catch (e) {
       // Handle exceptions and rethrow if necessary
@@ -100,7 +104,7 @@ class UserRepository {
     try {
       final response = await userApi.getUser( phoneNumber: phoneNumber);
       if (response.statusCode == 200 && response.data != null) {
-        await databaseService.putUser(UserModel.fromJson(response.data['data']));
+        await databaseService.putUser(UserModel.fromJson(response.data['user']));
         return response.data;
       } else {
         print("Error fetching user: ${response.statusMessage}");

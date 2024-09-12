@@ -61,6 +61,7 @@ class ProfileController extends GetxController {
         token: token!,
         fullname: fullname,
         address: address,
+        role: 'other',
         phoneNumber: phoneNumber1,
         email: email,
         city: city,
