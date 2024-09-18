@@ -103,6 +103,8 @@ class UserApi {
           "schoolName": schoolName,
           "schoolAddress": schoolAddress,
           "boardOption": boardOption,
+
+          "role": "Student",
           "classvalue": classvalue,
           "mediumName": mediumName,
           "aadharcard": aadharcard

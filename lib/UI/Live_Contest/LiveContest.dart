@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -10,6 +12,7 @@ import 'package:quizzype001/UI/GK_Contest.dart';
 import 'package:quizzype001/UI/Live_Contest/controller.dart';
 import 'package:quizzype001/UI/SideBar.dart';
 
+import '../../model/leaderboard/leaderBoard.dart';
 import '../Addcash/Add_CASH.dart';
 
 class LiveContest extends StatefulWidget {
@@ -26,6 +29,47 @@ class _LiveContestState extends State<LiveContest> {
     "Assets/Images/coll.jpg",
     "Assets/Images/Com.jpg",
   ];
+
+
+
+  final ScrollController _scrollController = ScrollController();
+  final LiveController controller = Get.put(LiveController());
+  Timer? _autoScrollTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchLeaderboard();
+    _startAutoScroll();
+  }
+
+  @override
+  void dispose() {
+    _autoScrollTimer?.cancel();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  // Method to start auto-scrolling
+  void _startAutoScroll() {
+    _autoScrollTimer = Timer.periodic(Duration(seconds: 3), (timer) {
+      if (_scrollController.hasClients) {
+        double maxScrollExtent = _scrollController.position.maxScrollExtent;
+        double currentScroll = _scrollController.position.pixels;
+
+        if (currentScroll >= maxScrollExtent) {
+          _scrollController.jumpTo(0); // Jump back to the start
+        } else {
+          _scrollController.animateTo(
+            currentScroll + 300.0, // Scroll by 300 pixels
+            duration: Duration(seconds: 2),
+            curve: Curves.easeInOut,
+          );
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -92,134 +136,108 @@ class _LiveContestState extends State<LiveContest> {
                               SizedBox(
                                 height: 12,
                               ),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Container(
-                                            height:40,width: 300,
-                                            decoration:BoxDecoration(
-                                                borderRadius: BorderRadius.horizontal(
-                                                  right: Radius.circular(8), // Assuming 'radius' is a variable holding the radius value
-                                                  left: Radius.circular(8), // Assuming you want a fixed radius of 8 for the left side
-                                                ),
-                                                border:Border.all(
-                                                    width:2,color: Colors.white
-                                                )
+                          Obx(() {
+                            if (controller.isLoading.value) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+
+                            // Top 3 users
+                            List<TopUser> topUsers = controller.leaderboardData.take(3).toList();
+
+                            if (topUsers.isEmpty) {
+                              return Center(child: Text('No leaderboard data available.'));
+                            }
+
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              controller: _scrollController,
+                              child: Row(
+                                children: topUsers.map((user) {
+                                  return Column(
+                                    children: [
+                                      // Container showing 1st, 2nd, 3rd place
+                                      Container(
+                                        height: 40,
+                                        width: 300,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.horizontal(
+                                            right: Radius.circular(8),
+                                            left: Radius.circular(8),
+                                          ),
+                                          border: Border.all(width: 2, color: Colors.white),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            BoldText(
+                                              name: "${topUsers.indexOf(user) + 1}'st   ",
+                                              fontsize: 12,
+                                              color: Colors.white,
                                             ),
-                                            child:  Row(
+                                            BoldText(
+                                              name: 'WINNER  ',
+                                              color: Colors.white,
+                                              fontsize: 12,
+                                            ),
+                                            Image.asset('Assets/Images/WIN_YELO.png'),
+                                            Expanded(child: SizedBox()),
+                                            Image.asset('Assets/Images/kanak.png'),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 6),
+                                      // User details container
+                                      Container(
+                                        height: 70,
+                                        width: 300,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(width: 2, color: Colors.white),
+                                          borderRadius: BorderRadius.horizontal(
+                                            right: Radius.circular(8),
+                                            left: Radius.circular(8),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 22,
+                                              backgroundColor: Colors.black,
+                                              child: Image.asset(
+                                                'Assets/Images/Photo.png',
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                            SizedBox(width: 6),
+                                            BoldText(
+                                              name: user.combineUser,
+                                              fontsize: 18,
+                                              color: Colors.white,
+                                            ),
+                                            Expanded(child: SizedBox()),
+                                            Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                BoldText(name: " 1'st    ", fontsize: 12,color: Colors.white,),
-                                                BoldText(name: 'WINNER  ', color: Colors.white,fontsize: 12),
-                                                Image.asset('Assets/Images/WIN_YELO.png'),
-                                                Expanded(child: SizedBox()),
-                                                Image.asset('Assets/Images/kanak.png')
+                                                Image.asset(
+                                                  height: 18,
+                                                  width: 18,
+                                                  'Assets/Images/king.png',
+                                                ),
+                                                BoldText(
+                                                  name: "${user.wallet} LAKH",
+                                                  color: Colors.yellow,
+                                                  fontsize: 18,
+                                                ),
                                               ],
                                             )
+                                          ],
                                         ),
-                                        SizedBox(
-                                          height: 6,
-                                        ),
-                                        Container(
-                                          height: 70,width: 300,
-                                          decoration:BoxDecoration(
-                                            border: Border.all(
-                                                width: 2,color: Colors.white
-                                            ),
-                                            borderRadius: BorderRadius.horizontal(
-                                              right: Radius.circular(8), // Assuming 'radius' is a variable holding the radius value
-                                              left: Radius.circular(8), // Assuming you want a fixed radius of 8 for the left side
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 22,
-                                                backgroundColor: Colors.black,
-                                                child: Image.asset('Assets/Images/Photo.png',fit: BoxFit.contain,),
-                                              ),
-                                              SizedBox(width: 6,),
-                                              BoldText(name:"MANAS MISHRA",fontsize: 18,color: Colors.white,),
-                                              Expanded(child: SizedBox()),
-                                              Column(
-                                                children: [
-                                                  Image.asset(height: 18,width: 18,
-                                                      'Assets/Images/king.png'),
-                                                  BoldText(name: "50LAKH ",color: Colors.yellow, fontsize: 18),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 12,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Container(
-                                            height:40,width: 300,
-                                            decoration:BoxDecoration(
-                                                borderRadius: BorderRadius.horizontal(
-                                                  right: Radius.circular(8), // Assuming 'radius' is a variable holding the radius value
-                                                  left: Radius.circular(8), // Assuming you want a fixed radius of 8 for the left side
-                                                ),
-                                                border:Border.all(
-                                                    width:2,color: Colors.white
-                                                )
-                                            ),
-                                            child:  Row(
-                                              children: [
-                                                BoldText(name: " 1'st    ", fontsize: 12,color: Colors.white,),
-                                                BoldText(name: 'WINNER  ', color: Colors.white,fontsize: 12),
-                                                Image.asset('Assets/Images/WIN_YELO.png'),
-                                                Expanded(child: SizedBox()),
-                                                Image.asset('Assets/Images/kanak.png')
-                                              ],
-                                            )
-                                        ),
-                                        SizedBox(
-                                          height: 6,
-                                        ),
-                                        Container(
-                                          height: 70,width: 300,
-                                          decoration:BoxDecoration(
-                                            border: Border.all(
-                                                width: 2,color: Colors.white
-                                            ),
-                                            borderRadius: BorderRadius.horizontal(
-                                              right: Radius.circular(8), // Assuming 'radius' is a variable holding the radius value
-                                              left: Radius.circular(8), // Assuming you want a fixed radius of 8 for the left side
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 22,
-                                                backgroundColor: Colors.black,
-                                                child: Image.asset('Assets/Images/Photo.png',fit: BoxFit.contain,),
-                                              ),
-                                              SizedBox(width: 6,),
-                                              BoldText(name:"MANAS MISHRA",fontsize: 18,color: Colors.white,),
-                                              Expanded(child: SizedBox()),
-                                              Column(
-                                                children: [
-                                                  Image.asset(height: 18,width: 18,
-                                                      'Assets/Images/king.png'),
-                                                  BoldText(name: "50LAKH ",color: Colors.yellow, fontsize: 18),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }),
+
                             ],
                           ),
                         )

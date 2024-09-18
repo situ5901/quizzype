@@ -21,9 +21,9 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>(); // Form key for validation
-  String? selectedValue;
-  String? selectedMedium;
-  String? selectedBoard;
+  String selectedValue = '';
+  String selectedBoard = '';
+  String selectedMedium = '';
   final TextEditingController fullnameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
@@ -123,316 +123,223 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                RadioListTile<String>(
-                                  title: BoldText(name:'SCHOOL',fontsize: 16,color: boxColor,),
-                                  value: 'SCHOOL',
-                                  groupValue: selectedValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedValue = value;
-                                      selectedValue =controller.selectEducation;
-
-                                    });
-                                  },
-                                ),
-                                RadioListTile<String>(
-                                  title: BoldText(name:'COLLEGE',fontsize: 16,color: boxColor,),
-                                  value: 'COLLEGE',
-                                  groupValue: selectedValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedValue = value;
-                                      selectedValue =controller.selectEducation;
-
-                                    });
-                                  },
-                                ),
-                                RadioListTile<String>(
-                                  title: BoldText(name:'INSTITUTE',fontsize: 16,color: boxColor,),
-                                  value: 'INSTITUTE',
-                                  groupValue: selectedValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedValue = value;
-                                      selectedValue =controller.selectEducation;
-
-                                    });
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                BoldText(name: 'Full Name', fontsize: 20,color: boxColor,),
-
-                                Container(
-                                  height: 30,
-                                  child: TextFormField(
-                                 controller:fullnameController,
-                                    decoration: InputDecoration(
-                                      hintText: "--",
-                                    ),
-
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'SCHOOL', fontsize: 16, color: Colors.black),
+                                    value: 'SCHOOL',
+                                    groupValue: selectedValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedValue = value!;
+                                        controller.selectEducation = selectedValue;
+                                      });
+                                    },
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                BoldText(name: 'ADDRESS', fontsize: 20,color: boxColor,),
-
-                                Container(
-                                  height: 30,
-                                  child: TextFormField(
-                                    controller: addressController,
-                                    decoration: InputDecoration(
-                                      hintText: "--",
-                                    ),
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'COLLEGE', fontsize: 16, color: Colors.black),
+                                    value: 'COLLEGE',
+                                    groupValue: selectedValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedValue = value!;
+                                        controller.selectEducation = selectedValue;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'INSTITUTE', fontsize: 16, color: Colors.black),
+                                    value: 'INSTITUTE',
+                                    groupValue: selectedValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedValue = value!;
+                                        controller.selectEducation = selectedValue;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(height: 12),
+                                  BoldText(name: 'Full Name', fontsize: 20, color: Colors.black),
+                                  TextFormField(
+                                    controller: fullnameController,
+                                    decoration: InputDecoration(hintText: "--"),
                                     onChanged: (value) {
                                       controller.fullname = value;
                                     },
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                BoldText(name: 'MOBILE NUMBER', fontsize: 20,color: boxColor,),
-
-                                Container(
-                                  height: 30,
-                                  child: TextFormField(
-                                    controller: phoneNumberController,
-                                    decoration: InputDecoration(
-                                      hintText: "--",
-                                    ),
+                                  SizedBox(height: 12),
+                                  BoldText(name: 'ADDRESS', fontsize: 20, color: Colors.black),
+                                  TextFormField(
+                                    controller: addressController,
+                                    decoration: InputDecoration(hintText: "--"),
                                     onChanged: (value) {
-
+                                      controller.address = value;
                                     },
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                BoldText(name: 'SCHOOL NAME', fontsize: 20,color: boxColor,),
-
-                                Container(
-                                  height: 30,
-                                  child: TextFormField(
+                                  SizedBox(height: 12),
+                                  BoldText(name: 'MOBILE NUMBER', fontsize: 20, color: Colors.black),
+                                  TextFormField(
+                                    controller: phoneNumberController,
+                                    decoration: InputDecoration(hintText: "--"),
+                                    onChanged: (value) {
+                                      controller.phoneNumber = value;
+                                    },
+                                  ),
+                                  SizedBox(height: 12),
+                                  BoldText(name: 'SCHOOL NAME', fontsize: 20, color: Colors.black),
+                                  TextFormField(
                                     controller: schoolNameController,
-                                    decoration: InputDecoration(
-                                      hintText: "--",
-                                    ),
+                                    decoration: InputDecoration(hintText: "--"),
                                     onChanged: (value) {
                                       controller.schoolName = value;
                                     },
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                BoldText(name: 'SCHOOL ADDRESS', fontsize: 20,color: boxColor,),
-
-                                Container(
-                                  height: 30,
-                                  child: TextFormField(
-                                    controller:schoolAddressController,
-                                    decoration: InputDecoration(
-                                      hintText: "--",
-                                    ),
+                                  SizedBox(height: 12),
+                                  BoldText(name: 'SCHOOL ADDRESS', fontsize: 20, color: Colors.black),
+                                  TextFormField(
+                                    controller: schoolAddressController,
+                                    decoration: InputDecoration(hintText: "--"),
                                     onChanged: (value) {
                                       controller.schoolAddress = value;
                                     },
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                RadioListTile<String>(
-                                  title: BoldText(name:'CBSE BOARD',fontsize: 16,color: boxColor,),
-                                  value: 'CBSE_BOARD',
-                                  groupValue: selectedBoard,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedBoard = value;
-                                    });
-                                  },
-                                ),
-                                RadioListTile<String>(
-                                  title: BoldText(name:'ICSC BOARD',fontsize: 16,color: boxColor,),
-                                  value: 'ICSC_BOARD',
-                                  groupValue: selectedBoard,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedBoard = value;
-                                    });
-                                  },
-                                ),
-                                RadioListTile<String>(
-                                  title: BoldText(name:'OTHER',fontsize: 16,color: boxColor,),
-                                  value: 'Other', // Assuming this is the "OTHER" option
-                                  groupValue: selectedBoard,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedBoard = value;
-                                      if (value == 'Other') {
-                                        // Update the TextController when OTHER is selected
-
-
-
-                                        boardController.text = ''; // Clear existing text if any
-                                      }
-                                    });
-                                  },
-                                ),
-
-                                TextFormField(
-                                  controller: boardController,
-                                  decoration: InputDecoration(
-                                    hintText: "ENTER YOUR BOARD NAME",
+                                  SizedBox(height: 12),
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'CBSE BOARD', fontsize: 16, color: Colors.black),
+                                    value: 'CBSE_BOARD',
+                                    groupValue: selectedBoard,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedBoard = value!;
+                                        controller.boardOption = selectedBoard;
+                                      });
+                                    },
                                   ),
-                                  onChanged: (value) {
-                                    controller.boardOption = value;
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                BoldText(name: 'CLASS', fontsize: 20,color: boxColor,),
-
-                                Container(
-                                  height: 30,
-                                  child: TextFormField(
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'ICSC BOARD', fontsize: 16, color: Colors.black),
+                                    value: 'ICSC_BOARD',
+                                    groupValue: selectedBoard,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedBoard = value!;
+                                        controller.boardOption = selectedBoard;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'OTHER', fontsize: 16, color: Colors.black),
+                                    value: 'Other',
+                                    groupValue: selectedBoard,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedBoard = value!;
+                                        if (selectedBoard == 'Other') {
+                                          boardController.clear(); // Clear if OTHER is selected
+                                        }
+                                      });
+                                    },
+                                  ),
+                                  TextFormField(
+                                    controller: boardController,
+                                    decoration: InputDecoration(hintText: "ENTER YOUR BOARD NAME"),
+                                    onChanged: (value) {
+                                      controller.boardOption = value;
+                                    },
+                                  ),
+                                  SizedBox(height: 12),
+                                  BoldText(name: 'CLASS', fontsize: 20, color: Colors.black),
+                                  TextFormField(
                                     controller: classController,
-                                    decoration: InputDecoration(
-                                      hintText: "--",
-                                    ),
+                                    decoration: InputDecoration(hintText: "--"),
                                     onChanged: (value) {
                                       controller.classvalue = value;
                                     },
                                   ),
-                                ),
-                                RadioListTile<String>(
-                                  title: BoldText(name:'ENGLISH MEDIUM',fontsize: 16,color: boxColor,),
-                                  value: 'English_Medium',
-                                  groupValue: selectedMedium,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedMedium = value;
-                                    });
-                                  },
-                                ),
-                                RadioListTile<String>(
-                                  title: BoldText(name:'HINDI MEDIUM',fontsize: 16,color: boxColor,),
-                                  value: 'Hindi_Medium',
-                                  groupValue: selectedMedium,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedMedium = value;
-                                    });
-                                  },
-                                ),
-                                // For Medium Selection
-                                RadioListTile<String>(
-                                  title: BoldText(name:'OTHER',fontsize: 16,color: boxColor,),
-                                  value: 'Other', // Assuming this is the "OTHER" option
-                                  groupValue: selectedMedium,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedMedium = value;
-                                      if (value == 'Other') {
-
-
-
-
-                                        // Update the TextController when OTHER is selected
-                                        mediumController.text = ''; // Clear existing text if any
-                                      }
-                                    });
-                                  },
-                                ),
-                                Container(
-                                  height: 30,
-                                  child: TextFormField(
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'ENGLISH MEDIUM', fontsize: 16, color: Colors.black),
+                                    value: 'English_Medium',
+                                    groupValue: selectedMedium,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedMedium = value!;
+                                        controller.mediumName = selectedMedium;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'HINDI MEDIUM', fontsize: 16, color: Colors.black),
+                                    value: 'Hindi_Medium',
+                                    groupValue: selectedMedium,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedMedium = value!;
+                                        controller.mediumName = selectedMedium;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile<String>(
+                                    title: BoldText(name: 'OTHER', fontsize: 16, color: Colors.black),
+                                    value: 'Other',
+                                    groupValue: selectedMedium,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedMedium = value!;
+                                        if (selectedMedium == 'Other') {
+                                          mediumController.clear(); // Clear if OTHER is selected
+                                        }
+                                      });
+                                    },
+                                  ),
+                                  TextFormField(
                                     controller: mediumController,
-                                    decoration: InputDecoration(
-                                        hintText: 'ENTER YOUR MEDIUM NAME'
-                                    ),
+                                    decoration: InputDecoration(hintText: 'ENTER YOUR MEDIUM NAME'),
                                     onChanged: (value) {
                                       controller.mediumName = value;
                                     },
                                   ),
-                                ),
-
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                BoldText(name: 'Enter Adhar', fontsize: 20,color: boxColor,),
-
-                                Container(
-                                  height: 30,
-                                  child: TextFormField(
-                                    controller:aadharcardController,
-                                    decoration: InputDecoration(
-                                      hintText: "--",
-                                    ),
+                                  SizedBox(height: 12),
+                                  BoldText(name: 'Enter Aadhar', fontsize: 20, color: Colors.black),
+                                  TextFormField(
+                                    controller: aadharcardController,
+                                    decoration: InputDecoration(hintText: "--"),
                                     onChanged: (value) {
                                       controller.aadharcard = value;
                                     },
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                          RoundedButton(
-                            buttonColor: boxColor,
-                            title: "SUBMIT",
-                            onTap: () {
+                                  SizedBox(height: 8),
+                                  RoundedButton(buttonColor: boxColor,
+                                    title: 'SUBMIT',
+                                    onTap: () {
+                                      // Assign values before submission
+                                      controller.selectEducation = selectedValue;
+                                      controller.fullname = fullnameController.text;
+                                      controller.address = addressController.text;
+                                      controller.phoneNumber = phoneNumberController.text;
+                                      controller.schoolName = schoolNameController.text;
+                                      controller.schoolAddress = schoolAddressController.text;
+                                      controller.classvalue = classController.text;
+                                      controller.aadharcard = aadharcardController.text;
 
-                              // Assign values
-                               controller.selectEducation = selectedValue! ;
-                               controller.fullname = fullnameController.text;
-                             controller.address =  addressController.text ;
-                              controller.phoneNumber = phoneNumberController.text;
+                                      // Handle board and medium options
+                                      if (selectedBoard == 'Other') {
+                                        controller.boardOption = boardController.text;
+                                      }
+                                      if (selectedMedium == 'Other') {
+                                        controller.mediumName = mediumController.text;
+                                      }
 
-                              controller.schoolName =schoolNameController.text;
-                               controller.schoolAddress = schoolAddressController.text;
-                              controller.aadharcard = aadharcardController.text ;
-                               controller.classvalue = classController.text;
-
-                              // Update the selected board and medium
-                              if (selectedBoard == 'Other') {
-                                controller.boardOption = boardController.text ?? ''; // Use the text from the TextField
-                              } else {
-                                controller.boardOption = selectedBoard ?? ''; // Use the selected value
-                              }
-
-                              if (selectedMedium == 'Other') {
-                                controller.mediumName = mediumController.text ?? ''; // Use the text from the TextField
-                              } else {
-                                controller.mediumName = selectedMedium ?? ''; // Use the selected value
-                              }
-
-
-
-
-
-
-
-
-
-                              // Update the controller with the new details
-                              final profileController = Get.find<ProfileController>();
-
-                              profileController.postStudentDetails();
-                            },
-                          )
-
-
-                          ],
+                                      // Post details using controller method
+                                      controller.postStudentDetails();
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
+
                         ),
                       ),
                       // Contents of Tab 2
