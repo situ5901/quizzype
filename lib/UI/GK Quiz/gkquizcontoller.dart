@@ -18,7 +18,7 @@ class GkQuizController extends GetxController {
   String score = "0";
 
   Timer? timer;
-  int timeLeft =60; // Countdown timer in seconds
+  int timeLeft =140; // Countdown timer in seconds
   double progress = 1.0; // Initial value for the circular progress indicator
   bool isQuizCompleted = false;  // Track if the quiz is completed
 

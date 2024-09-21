@@ -1,14 +1,14 @@
+import 'dart:async';  // Import Timer
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vibration/vibration.dart';  // Import vibration package
 import 'package:quizzype001/UI/widgets/quizzDoneAppdiloagbox/DoneDiloagbox.dart';
 import 'package:quizzype001/routes/approutes.dart';
-import 'package:vibration/vibration.dart';  // Import vibration package
 import 'package:quizzype001/UI/GK%20Quiz/gkquizcontoller.dart';
 import 'package:quizzype001/domain/service/app/app_service_imports.dart';
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../MegaContest.dart';
-
 
 class GK_QUIZ extends StatefulWidget {
   const GK_QUIZ({super.key});
@@ -23,135 +23,45 @@ class _GK_QUIZState extends State<GK_QUIZ> {
   String? selectedOption;
   bool isAnswerSelected = false;
   bool isAnswerCorrect = false;
+  Timer? questionTimer;  // Timer for handling question timeout
+  int _timeRemaining = 10;  // 10 seconds for each question
 
   @override
   void initState() {
     super.initState();
     controller = Get.put(GkQuizController());
+    _startQuestionTimer();  // Start the timer for the first question
   }
 
-  void _showResultBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.check_circle, color: Colors.green),
-                      SizedBox(width: 10),
-                      Text(
-                        'Check Result',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              Text(
-                'You have Scored! [${controller.score}]',
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Get.offNamed(AppRoutes.leaderBoard);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  @override
+  void dispose() {
+    questionTimer?.cancel();  // Cancel the timer when widget is disposed
+    super.dispose();
   }
 
-  void _showExitConfirmationBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Are you sure you want to leave the quiz?',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
-              Text(
-                'You will lose your progress.',
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Stay'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Leave'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  // Start the question timer
+  void _startQuestionTimer() {
+    questionTimer?.cancel();  // Cancel any existing timer
+    _timeRemaining = 10;  // Reset the timer to 10 seconds
+    questionTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_timeRemaining > 0) {
+        setState(() {
+          _timeRemaining--;  // Decrease time
+        });
+      } else {
+        _handleNextQuestion();  // Move to next question when time runs out
+      }
+    });
   }
+
+  // Handle option selection
   void _handleOptionSelection(String option) {
     if (!isAnswerSelected) {
       setState(() {
         selectedOption = option;  // Ensure selectedOption is set here
         isAnswerSelected = true;
         isAnswerCorrect = selectedOption == controller.quizQuestion?.correctAnswer;
+        questionTimer?.cancel();  // Stop the timer as user has selected an option
 
         if (!isAnswerCorrect) {
           Vibration.vibrate(duration: 500);
@@ -159,12 +69,14 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       });
 
       controller.selectOption(option);  // Also update in controller
+
+      Future.delayed(Duration(seconds: 2), _handleNextQuestion);
     }
   }
 
-
+  // Move to the next question
   void _handleNextQuestion() async {
-    if (selectedOption != null && controller.quizQuestion != null) {
+    if (selectedOption != null || _timeRemaining == 0) {
       await controller.postAnswer();
 
       if (_questionNumber < 10) {
@@ -174,6 +86,8 @@ class _GK_QUIZState extends State<GK_QUIZ> {
           selectedOption = null;
           controller.loadData();  // Ensure this loads the next question correctly
         });
+
+        _startQuestionTimer();  // Restart the timer for the next question
       } else {
         // Mark the quiz as completed
         controller.isQuizCompleted = true;
@@ -186,7 +100,8 @@ class _GK_QUIZState extends State<GK_QUIZ> {
             DoneDialog(
               score: int.parse(controller.score),
             ),
-            barrierDismissible: false, // Prevent closing by tapping outside
+            barrierDismissible: false,
+            transitionDuration: Duration.zero, // Prevent closing by tapping outside
           );
         } else {
           print("Score is null or invalid");
@@ -196,7 +111,6 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       print("Question ID or selected option is null");
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -224,13 +138,13 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                         height: 40,
                         width: 40,
                         child: CircularProgressIndicator(
-                          value: controller.progress, // The progress value for the timer
+                          value: _timeRemaining / 10,  // Display progress of the timer
                           backgroundColor: Colors.grey,
                           valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                         ),
                       ),
                       Text(
-                        '${controller.timeLeft}', // Display the remaining time in seconds
+                        '$_timeRemaining',  // Display the remaining time
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -247,30 +161,15 @@ class _GK_QUIZState extends State<GK_QUIZ> {
               child: Column(
                 children: [
                   Container(
-                    height: 100,
-                    width: double.infinity,
-                    color: appColor,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(10, (index) {
-                            return Icon(
-                              Icons.circle,
-                              color: index < _questionNumber
-                                  ? Colors.yellow
-                                  : Colors.white,
-                            );
-                          }),
-                        ),
-                        SizedBox(height: 8),
-                        BoldText(
-                          name: '$_questionNumber out of 10',
-                          color: Colors.white,
-                          fontsize: 16,
-                        ),
-                      ],
+                    height: 200,
+                    width: double.infinity, // Full width of the parent
+                    padding: EdgeInsets.all(20.0), // Padding on all sides
+                    color: Colors.blue, // Set background color to blue
+                    child: Center(
+                      child: Text(
+                        'Container Content',
+                        style: TextStyle(color: Colors.white), // Optional: Set text color
+                      ),
                     ),
                   ),
                   Padding(
@@ -342,79 +241,143 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       ),
     );
   }
+
+  void _showExitConfirmationBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Are you sure you want to leave the quiz?',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Text(
+                'You will lose your progress.',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Stay'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Leave'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
 
 Widget _buildListAnswer(List<String> options, Function(String) onSelected, String? selectedOption, String? correctAnswer) {
   return Column(
-    children: options.asMap().entries.map((entry) {
-      int index = entry.key; // Get index for numbering
-      String option = entry.value;
+      children: options.asMap().entries.map((entry) {
+    int index = entry.key; // Get index for numbering
+    String option = entry.value;
 
-      final bool isSelected = option == selectedOption;
-      final bool isOptionCorrect = option == correctAnswer;
-      final bool showCorrectAnswer = selectedOption != null && selectedOption != correctAnswer;
+    final bool isSelected = option == selectedOption;
+    final bool isOptionCorrect = option == correctAnswer;
+    final bool showCorrectAnswer = selectedOption != null && selectedOption != correctAnswer;
 
-      return GestureDetector(
+    return GestureDetector(
         onTap: () => onSelected(option),
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 5.0),
-          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? isOptionCorrect
-                ? Colors.green.withOpacity(0.1) // Green for correct answer
-                : Colors.red.withOpacity(0.1)   // Red for wrong answer
-                : (showCorrectAnswer && isOptionCorrect)
-                ? Colors.green.withOpacity(0.1) // Green for correct answer when wrong answer is selected
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(
+  child: Container(
+    margin: EdgeInsets.symmetric(vertical: 5.0),
+    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+    decoration: BoxDecoration(
+      color: isSelected
+          ? isOptionCorrect
+          ? Colors.green.withOpacity(0.1) // Green for correct answer
+          : Colors.red.withOpacity(0.1)   // Red for wrong answer
+          : (showCorrectAnswer && isOptionCorrect)
+          ? Colors.green.withOpacity(0.1) // Green for correct answer when wrong answer is selected
+          : Colors.transparent,
+      borderRadius: BorderRadius.circular(8.0),
+      border: Border.all(
+        color: isSelected
+            ? isOptionCorrect
+            ? Colors.green
+            : Colors.red
+            : (showCorrectAnswer && isOptionCorrect)
+            ? Colors.green
+            : Colors.grey,
+        width: 2.0,
+      ),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Serial number part
+        Text(
+          "${index + 1}.",  // Displaying index + 1 for numbering
+          style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10.0), // Add space between number and option
+
+        // Answer text part
+        Expanded(
+          child: Text(
+            option,
+            style: TextStyle(
+              fontSize: 18.0,
               color: isSelected
                   ? isOptionCorrect
                   ? Colors.green
                   : Colors.red
                   : (showCorrectAnswer && isOptionCorrect)
                   ? Colors.green
-                  : Colors.grey,
-              width: 2.0,
+                  : Colors.black,
+              fontWeight: isSelected || (showCorrectAnswer && isOptionCorrect)
+                  ? FontWeight.bold
+                  : FontWeight.normal,
             ),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Serial number part
-              Text(
-                "${index + 1}.",  // Displaying index + 1 for numbering
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(width: 10.0), // Add space between number and option
-
-              // Answer text part
-              Expanded(
-                child: Text(
-                  option,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: isSelected
-                        ? isOptionCorrect
-                        ? Colors.green
-                        : Colors.red
-                        : (showCorrectAnswer && isOptionCorrect)
-                        ? Colors.green
-                        : Colors.black,
-                    fontWeight: isSelected || (showCorrectAnswer && isOptionCorrect)
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
-      );
-    }).toList(),
+      ],
+    ),
+  ),
+    );
+      }).toList(),
   );
 }
+
