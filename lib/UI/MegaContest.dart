@@ -20,7 +20,12 @@ class _MegaContestState extends State<MegaContest> {
         backgroundColor: boxColor,
         centerTitle: true,
         title: BoldText(name: 'MEGA CONTEST', fontsize: 22, color: Colors.white),
-        leading: Icon(Icons.menu, color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white), // Back arrow
+          onPressed: () {
+            Navigator.pop(context); // Navigate back when pressed
+          },
+        ),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 2.0), // Add margin to the right
@@ -40,7 +45,6 @@ class _MegaContestState extends State<MegaContest> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 12),
-                // BoldText(name: 'FEATURED EVENT IN \n QUIZZY', fontsize: 28, color: Colors.black),
                 Center(
                   child: Text(
                     'FEATURED EVENT IN QUIZZY',

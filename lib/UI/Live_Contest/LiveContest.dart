@@ -153,89 +153,98 @@ class _LiveContestState extends State<LiveContest> {
                               controller: _scrollController,
                               child: Row(
                                 children: topUsers.map((user) {
-                                  return Column(
-                                    children: [
-                                      // Container showing 1st, 2nd, 3rd place
-                                      Container(
-                                        height: 40,
-                                        width: 300,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.horizontal(
-                                            right: Radius.circular(8),
-                                            left: Radius.circular(8),
-                                          ),
-                                          border: Border.all(width: 2, color: Colors.white),
-                                        ),
-                                        child: Row(
+                                  return Container(
+                                    margin: EdgeInsets.only(right: 10),
+
+                                    child: Column(
+                                      children: [
+                                        // Container showing 1st, 2nd, 3rd place
+                                        Column(
                                           children: [
-                                            BoldText(
-                                              name: "${topUsers.indexOf(user) + 1}'st   ",
-                                              fontsize: 12,
-                                              color: Colors.white,
-                                            ),
-                                            BoldText(
-                                              name: 'WINNER  ',
-                                              color: Colors.white,
-                                              fontsize: 12,
-                                            ),
-                                            Image.asset('Assets/Images/WIN_YELO.png'),
-                                            Expanded(child: SizedBox()),
-                                            Image.asset('Assets/Images/kanak.png'),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 6),
-                                      // User details container
-                                      Container(
-                                        height: 70,
-                                        width: 300,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(width: 2, color: Colors.white),
-                                          borderRadius: BorderRadius.horizontal(
-                                            right: Radius.circular(8),
-                                            left: Radius.circular(8),
-                                          ),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 22,
-                                              backgroundColor: Colors.black,
-                                              child: Image.asset(
-                                                'Assets/Images/Photo.png',
-                                                fit: BoxFit.contain,
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              height: 40,
+                                              width: 290,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.horizontal(
+                                                  right: Radius.circular(8),
+                                                  left: Radius.circular(8),
+                                                ),
+                                                border: Border.all(width: 2, color: Colors.white),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  BoldText(
+                                                    name: "${topUsers.indexOf(user) + 1}'st   ",
+                                                    fontsize: 12,
+                                                    color: Colors.white,
+                                                  ),
+                                                  BoldText(
+                                                    name: 'WINNER  ',
+                                                    color: Colors.white,
+                                                    fontsize: 12,
+                                                  ),
+                                                  Image.asset('Assets/Images/WIN_YELO.png'),
+                                                  Expanded(child: SizedBox()),
+                                                  Image.asset('Assets/Images/kanak.png'),
+                                                ],
                                               ),
                                             ),
-                                            SizedBox(width: 6),
-                                            BoldText(
-                                              name: user.combineUser,
-                                              fontsize: 18,
-                                              color: Colors.white,
+                                            SizedBox(height: 6), // Gap between the two containers
+                                            Container(
+                                              height: 70,
+                                              width: 290,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(width: 2, color: Colors.white),
+                                                borderRadius: BorderRadius.horizontal(
+                                                  right: Radius.circular(8),
+                                                  left: Radius.circular(8),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: 22,
+                                                    backgroundColor: Colors.black,
+                                                    child: Image.asset(
+                                                      'Assets/Images/Photo.png',
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 6),
+                                                  BoldText(
+                                                    name: user.combineUser,
+                                                    fontsize: 18,
+                                                    color: Colors.white,
+                                                  ),
+                                                  Expanded(child: SizedBox()),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Image.asset(
+                                                        height: 18,
+                                                        width: 18,
+                                                        'Assets/Images/king.png',
+                                                      ),
+                                                      BoldText(
+                                                        name: "${user.wallet} LAKH",
+                                                        color: Colors.yellow,
+                                                        fontsize: 18,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                            Expanded(child: SizedBox()),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  height: 18,
-                                                  width: 18,
-                                                  'Assets/Images/king.png',
-                                                ),
-                                                BoldText(
-                                                  name: "${user.wallet} LAKH",
-                                                  color: Colors.yellow,
-                                                  fontsize: 18,
-                                                ),
-                                              ],
-                                            )
                                           ],
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   );
                                 }).toList(),
                               ),
                             );
+
                           }),
 
                             ],

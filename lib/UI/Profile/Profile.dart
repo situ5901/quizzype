@@ -221,8 +221,8 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     },
                                   ),
                                   RadioListTile<String>(
-                                    title: BoldText(name: 'ICSC BOARD', fontsize: 16, color: Colors.black),
-                                    value: 'ICSC_Board',
+                                    title: BoldText(name: 'ICSE BOARD', fontsize: 16, color: Colors.black),
+                                    value: 'ICSE_Board',
                                     groupValue: selectedBoard,
                                     onChanged: (value) {
                                       setState(() {
