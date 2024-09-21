@@ -58,16 +58,16 @@ class UserRepository {
 
   Future<bool> postStudentDetails({
     required String token,
-    required var selectEducation,
-    required var fullname,
-    required var address,
-    required var phoneNumber,
-    required var schoolName,
-    required var schoolAddress,
-    required var boardOption,
-    required var classvalue,
-    required var mediumName,
-    required var aadharcard,
+    required String selectEducation,
+    required String fullname,
+    required String address,
+    required String phoneNumber,
+    required String schoolName,
+    required String schoolAddress,
+    required String boardOption,
+    required String classvalue,
+    required String mediumName,
+    required String aadharcard,
 
   }) async {
     try {
@@ -86,7 +86,10 @@ class UserRepository {
           aadharcard: aadharcard);
 
       // Extract the data from the response
-      var responseData = response.data['data'];
+      var responseData = response.data['studentDetails']['studentDetails']["phoneNumber"];
+     /// var responseData = response.data['data'];
+        print(responseData);
+        await getUser(responseData.toString());
 
       // Save the received user data to the local database
      // await databaseService.putStudent(StudentDetails.fromJson(responseData));
@@ -123,21 +126,39 @@ class UserRepository {
     try {
       final userId = databaseService.user?.id;
       final token = databaseService.accessToken;
+      final role = databaseService.user?.role;
 
       if (userId == null || token == null) {
         print('User ID or token is null');
         return null;
       }
 
-      final response = await userApi.getQuestion(token: token, combineID: userId);
-      final data = response.data['randomQuestion'];
+      //for other
+      if(role == 'other'){
+        final response = await userApi.getQuestion(token: token, combineID: userId);
+        final data = response.data['randomQuestion'];
 
-      if (data != null && data is Map<String, dynamic>) {
-        return QuizQuestion.fromJson(data);
-      } else {
-        print('No question data available');
-        return null;
+        if (data != null && data is Map<String, dynamic>) {
+          return QuizQuestion.fromJson(data);
+        } else {
+          print('No question data available');
+
+        }
+      }else {
+        //for student
+        final response = await userApi.getStudentQuestion(token: token, combineID: userId);
+        final data = response.data;
+
+        if (data != null && data is Map<String, dynamic>) {
+          return QuizQuestion.fromJson(data);
+        } else {
+          print('No question data available for stdents');
+
+        }
       }
+
+
+      return null;
     } catch (e) {
       print("Exception fetching question: $e");
       return null;
@@ -180,6 +201,7 @@ class UserRepository {
       final userName = databaseService.user?.fullname;
       final token = databaseService.accessToken;
       final contestId = databaseService.isContestId;
+      final role = databaseService.user?.role;
 
       if (userId == null || token == null || userName == null || contestId == null)  {
         print('User ID or token is null');
@@ -189,13 +211,25 @@ class UserRepository {
 
 
       //await databaseService.putContestId(data);
-      await userApi.postAnswer(
-          token: token,
-          contestId: contestId,
-          combineID: userId,
-          gkQuestionId: gkQuestionId,
-          selectedOption: selectedOption,
-          name: userName);
+      if(role == 'other'){
+
+        await userApi.postAnswer(
+            token: token,
+            contestId: contestId,
+            combineID: userId,
+            gkQuestionId: gkQuestionId,
+            selectedOption: selectedOption,
+            name: userName);
+      }else{
+        await userApi.postStudentAnswer(
+            token: token,
+            contestId: contestId,
+            combineID: userId,
+            gkQuestionId: gkQuestionId,
+            selectedOption: selectedOption,
+            name: userName);
+
+      }
       print(databaseService.isContestId);
 
       return true;

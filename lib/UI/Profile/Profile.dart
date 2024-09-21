@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   String selectedMedium = '';
   final TextEditingController fullnameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+
   final TextEditingController schoolNameController = TextEditingController();
   final TextEditingController schoolAddressController = TextEditingController();
   final TextEditingController boardController = TextEditingController();
@@ -130,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 children: [
                                   RadioListTile<String>(
                                     title: BoldText(name: 'SCHOOL', fontsize: 16, color: Colors.black),
-                                    value: 'SCHOOL',
+                                    value: 'School',
                                     groupValue: selectedValue,
                                     onChanged: (value) {
                                       setState(() {
@@ -141,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   ),
                                   RadioListTile<String>(
                                     title: BoldText(name: 'COLLEGE', fontsize: 16, color: Colors.black),
-                                    value: 'COLLEGE',
+                                    value: 'College',
                                     groupValue: selectedValue,
                                     onChanged: (value) {
                                       setState(() {
@@ -152,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   ),
                                   RadioListTile<String>(
                                     title: BoldText(name: 'INSTITUTE', fontsize: 16, color: Colors.black),
-                                    value: 'INSTITUTE',
+                                    value: 'Institute',
                                     groupValue: selectedValue,
                                     onChanged: (value) {
                                       setState(() {
@@ -182,10 +182,12 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   SizedBox(height: 12),
                                   BoldText(name: 'MOBILE NUMBER', fontsize: 20, color: Colors.black),
                                   TextFormField(
-                                    controller: phoneNumberController,
+                                    initialValue: controller.phoneNumber,
+
                                     decoration: InputDecoration(hintText: "--"),
+                                    readOnly: true,
                                     onChanged: (value) {
-                                      controller.phoneNumber = value;
+                                      controller.phoneNumber ;
                                     },
                                   ),
                                   SizedBox(height: 12),
@@ -209,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   SizedBox(height: 12),
                                   RadioListTile<String>(
                                     title: BoldText(name: 'CBSE BOARD', fontsize: 16, color: Colors.black),
-                                    value: 'CBSE_BOARD',
+                                    value: 'CBSE_Board',
                                     groupValue: selectedBoard,
                                     onChanged: (value) {
                                       setState(() {
@@ -220,7 +222,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   ),
                                   RadioListTile<String>(
                                     title: BoldText(name: 'ICSC BOARD', fontsize: 16, color: Colors.black),
-                                    value: 'ICSC_BOARD',
+                                    value: 'ICSC_Board',
                                     groupValue: selectedBoard,
                                     onChanged: (value) {
                                       setState(() {
@@ -251,13 +253,23 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   ),
                                   SizedBox(height: 12),
                                   BoldText(name: 'CLASS', fontsize: 20, color: Colors.black),
-                                  TextFormField(
-                                    controller: classController,
+                                  DropdownButtonFormField<int>(
+                                    value: int.tryParse(classController.text),  // Initialize with the current value of classController
                                     decoration: InputDecoration(hintText: "--"),
+                                    items: List.generate(12, (index) {
+                                      return DropdownMenuItem(
+                                        value: index + 1,
+                                        child: Text((index + 1).toString()),
+                                      );
+                                    }),
                                     onChanged: (value) {
-                                      controller.classvalue = value;
+                                      if (value != null) {
+                                        classController.text = value.toString();  // Update classController with selected value
+                                        controller.classvalue = value.toString();  // Update controller with selected value
+                                      }
                                     },
                                   ),
+
                                   RadioListTile<String>(
                                     title: BoldText(name: 'ENGLISH MEDIUM', fontsize: 16, color: Colors.black),
                                     value: 'English_Medium',
@@ -317,7 +329,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                       controller.selectEducation = selectedValue;
                                       controller.fullname = fullnameController.text;
                                       controller.address = addressController.text;
-                                      controller.phoneNumber = phoneNumberController.text;
+
                                       controller.schoolName = schoolNameController.text;
                                       controller.schoolAddress = schoolAddressController.text;
                                       controller.classvalue = classController.text;
@@ -437,11 +449,14 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
 
                               Container(
                                 height: 30,
-                                child: TextFormField(
-                                  controller: phoneNumberController,
-                                  decoration: InputDecoration(
-                                    hintText: "--",
-                                  ),
+                                child:                                   TextFormField(
+                                  initialValue: controller.phoneNumber,
+
+                                  decoration: InputDecoration(hintText: "--"),
+                                  readOnly: true,
+                                  onChanged: (value) {
+                                    controller.phoneNumber ;
+                                  },
                                 ),
                               ),
                               SizedBox(
@@ -470,7 +485,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                     controller.city =  cityController.text;
                                     controller.state =  stateController.text;
                                     controller.dob =  dobController.text;
-                                    controller.phoneNumber1 =  phoneNumberController.text;
+
 
                                     // Update the controller with the new details
                                     final profileController = Get.find<ProfileController>();

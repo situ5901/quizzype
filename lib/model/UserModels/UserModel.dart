@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class UserModel {
+  // User Details
   final String? fullname;
   final String? address;
   final String? email;
@@ -12,32 +13,60 @@ class UserModel {
   final String? id;
   final String? role;
 
+  // Student Details
+  final String? selectEducation;
+  final String? schoolName;
+  final String? schoolAddress;
+  final String? boardOption;
+  final String? classValue;
+  final String? mediumName;
+  final String? aadharcard;
+
   UserModel({
-   this.fullname,
-   this.address,
-   this.email,
-   this.city,
-   this.state,
-   this.pincode,
+    // User Details
+    this.fullname,
+    this.address,
+    this.email,
+    this.city,
+    this.state,
+    this.pincode,
     required this.phoneNumber,
-   this.dob,
-   this.role,
-     this.id,
+    this.dob,
+    this.id,
+    this.role,
+
+    // Student Details
+    this.selectEducation,
+    this.schoolName,
+    this.schoolAddress,
+    this.boardOption,
+    this.classValue,
+    this.mediumName,
+    this.aadharcard,
   });
 
-  // Factory method to create a UserModel from JSON
+  // Factory method to create UserModel from JSON
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       fullname: json['fullname'],
       address: json['address'],
       email: json['email'],
       city: json['city'],
-      role: json['role'],
       state: json['state'],
       pincode: json['pincode'],
-      phoneNumber: json['phoneNumber'] ,
+      phoneNumber: json['phoneNumber'],
       dob: json['dob'],
-      id: json['_id'] ,
+      id: json['_id'],
+      role: json['role'],
+
+      // Student fields
+      selectEducation: json['selectEducation'],
+      schoolName: json['schoolName'],
+      schoolAddress: json['schoolAddress'],
+      boardOption: json['boardOption'],
+      classValue: json['classValue'],
+      mediumName: json['mediumName'],
+      aadharcard: json['aadharcard'],
     );
   }
 
@@ -49,15 +78,27 @@ class UserModel {
       'email': email,
       'city': city,
       'state': state,
-      'role': role,
       'pincode': pincode,
       'phoneNumber': phoneNumber,
       'dob': dob,
       '_id': id,
+      'role': role,
+
+      // Student fields
+      'selectEducation': selectEducation,
+      'schoolName': schoolName,
+      'schoolAddress': schoolAddress,
+      'boardOption': boardOption,
+      'classValue': classValue,
+      'mediumName': mediumName,
+      'aadharcard': aadharcard,
     };
   }
 
+  // Convert to JSON string
   String toRawJson() => json.encode(toJson());
+
+  // Create UserModel from JSON string
   factory UserModel.fromRawJson(String str) =>
       UserModel.fromJson(json.decode(str));
 }

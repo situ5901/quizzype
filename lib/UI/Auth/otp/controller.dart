@@ -77,7 +77,9 @@ class OtpController extends GetxController {
      // await databaseService.putAccessToken(token!); // Save the token securely // Call the method with token
       // token = databaseService.accessToken; // Retrieve the token using the getter method
       // print("Retrieved token: $token");
-      Get.offAllNamed(AppRoutes.homeScreen);
+      Get.offAllNamed(AppRoutes.homeScreen,arguments: {
+        phone
+      });
        // Print the token to the console
 
     } catch (error) {

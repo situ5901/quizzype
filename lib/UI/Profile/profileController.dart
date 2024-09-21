@@ -11,7 +11,7 @@ class ProfileController extends GetxController {
   late String fullname;
   late String address;
   late String phoneNumber;
-  late String phoneNumber1;
+
   late String schoolName;
   late String schoolAddress;
   late String boardOption;
@@ -32,7 +32,8 @@ class ProfileController extends GetxController {
     super.onInit();
     token = databaseService
         .accessToken; // Retrieve the token using the getter method
-    print("Retrieved token: $token"); // Print the token to the console
+    phoneNumber = databaseService.user!.phoneNumber;
+    print("Retrieved token: $phoneNumber"); // Print the token to the console
   }
 
   Future<void> postStudentDetails() async {
@@ -62,7 +63,7 @@ class ProfileController extends GetxController {
         fullname: fullname,
         address: address,
         role: 'other',
-        phoneNumber: phoneNumber1,
+        phoneNumber: phoneNumber,
         email: email,
         city: city,
         state: state,

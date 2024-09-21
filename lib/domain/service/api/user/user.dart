@@ -69,16 +69,16 @@ class UserApi {
   //post student details
   Future<Response> postStudentDetails({
     required String token,
-    required var selectEducation,
-    required var fullname,
-    required var address,
-    required var phoneNumber,
-    required var schoolName,
-    required var schoolAddress,
-    required var boardOption,
-    required var classvalue,
-    required var mediumName,
-    required var aadharcard,
+    required String selectEducation,
+    required String fullname,
+    required String address,
+    required String phoneNumber,
+    required String schoolName,
+    required String schoolAddress,
+    required String boardOption,
+    required String classvalue,
+    required String mediumName,
+    required String aadharcard,
   }) async {
     print("fullname: ${fullname}");
     print("address: ${address}");
@@ -103,8 +103,7 @@ class UserApi {
           "schoolName": schoolName,
           "schoolAddress": schoolAddress,
           "boardOption": boardOption,
-
-          "role": "Student",
+          "role": "student",
           "classvalue": classvalue,
           "mediumName": mediumName,
           "aadharcard": aadharcard
@@ -153,7 +152,7 @@ class UserApi {
     }
   }
 
-  // API method to fetch question
+  // API method to fetch question for other
   Future<Response> getQuestion(
       {required String token, required String combineID}) async {
     try {
@@ -176,6 +175,33 @@ class UserApi {
     }
   }
 
+  //for student
+  Future<Response> getStudentQuestion(
+      {required String token, required String combineID}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/question',
+        data: {
+          "combineId": combineID,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching question: $e");
+      rethrow;
+    }
+  }
+
+
+
+
+  //for other
   Future<Response> postAnswer({
     required String token,
     required String contestId,
@@ -206,6 +232,39 @@ class UserApi {
       rethrow;
     }
   }
+
+//for student
+  Future<Response> postStudentAnswer({
+    required String token,
+    required String contestId,
+    required String combineID,
+    required String gkQuestionId,
+    required String selectedOption,
+    required String name}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/answer',
+        data: {
+          "contestId": contestId,
+          "combineId": combineID,
+          "questionId": gkQuestionId,
+          "selectedOption": selectedOption,
+          "combineuser": name
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching ContestId: $e");
+      rethrow;
+    }
+  }
+
 
   Future<Response> joinGame({
     required String token,
