@@ -108,35 +108,58 @@ class _HomeState extends State<Home> {
                     Column(
                       children: [
                         Container(
-                          color: appColor,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Colors.blue.shade900, Colors.white], // Define your gradient colors here
+                              begin: Alignment.topLeft, // Adjust the gradient's start position
+                              end: Alignment.bottomRight, // Adjust the gradient's end position
+                            ),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10), // Border radius for the bottom left corner
+                              bottomRight: Radius.circular(10), // Border radius for the bottom right corner
+                            ),
+                          ),
                           height: 200,
                           child: Center(
-                            child: Container(
-                              height: 50,
-                              width: 140,
-                              decoration: BoxDecoration(
-                                color: boxColor,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  width: 2,
-                                  color: boxColor,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.white,
-                                    spreadRadius: 3,
-                                    blurRadius: 7,
-                                    offset: Offset(0, 2),
+                            child: Column( // Use a Column to stack widgets vertically
+                              mainAxisAlignment: MainAxisAlignment.center, // Center the Column's contents
+                              children: [
+                                Text(
+                                  "Play Game and Earn Money!", // Text above the button
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white, // Text color
                                   ),
-                                ],
-                              ),
-                              child: Center(
-                                child: BoldText(
-                                  name: "HI BUDDY",
-                                  fontsize: 20,
-                                  color: Colors.white,
                                 ),
-                              ),
+                                SizedBox(height: 10), // Add space between the text and the button
+                                Container(
+                                  height: 50,
+                                  width: 140,
+                                  decoration: BoxDecoration(
+                                    color: boxColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      width: 2,
+                                      color: boxColor,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.white,
+                                        spreadRadius: 3,
+                                        blurRadius: 7,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Center(
+                                    child: BoldText(
+                                      name: "HI BUDDY",
+                                      fontsize: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -188,7 +211,7 @@ class _HomeState extends State<Home> {
                                   BoldText(
                                     name: "1 CRORE CASH",
                                     fontsize: 18,
-                                    color: Colors.yellow,
+                                    color: Colors.blue.shade900,
                                   ),
                                 ],
                               ),
@@ -219,12 +242,12 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 SizedBox(
-                  height: 16,
+                  height: 18,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    height: 400,
+                    height: 410,
                     child: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -293,256 +316,42 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 12,
                 ),
-                Center(
-                  child: Container(
-                    height: 40,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.greenAccent),
-                    ),
-                    child: Center(
-                      child: BoldText(
-                        name: 'DEMO CONTEST',
-                        color: Colors.green,
-                        fontsize: 22,
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  child: Card(
+                    elevation: 4,
+                    margin: EdgeInsets.all(10),
+                    child: Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Row(
+                        children: [
+                          // Left 50% - Text
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Lord V.K School Contest',
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            
+                          ),
+                          // Right 50% - Image
+                          Expanded(
+                            flex: 1,
+                            child: Image.asset(
+                              'Assets/Images/students.png', // Replace with your image URL
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 80,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        width: 2,
-                        color: appColor,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        PlainText(
-                          name: '2 PLAYERS - WINNER',
-                          fontsize: 12,
-                          color: Colors.black,
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                BoldText(name: 'PRIZE POOL', fontsize: 12),
-                                Text(
-                                  'Rs. 50',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    backgroundColor: Colors.yellow,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Container(
-                              color: Colors.grey,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.watch_later_outlined),
-                                  Text("3M:05")
-                                ],
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                BoldText(name: 'FREE', fontsize: 12),
-                                Text(
-                                  'Rs. FREE',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    backgroundColor: Colors.yellow,
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 80,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        width: 2,
-                        color: appColor,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        PlainText(
-                          name: '2 PLAYERS - WINNER',
-                          fontsize: 12,
-                          color: Colors.black,
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                BoldText(name: 'PRIZE POOL', fontsize: 12),
-                                Text(
-                                  'Rs. 50',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    backgroundColor: Colors.yellow,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Container(
-                              color: Colors.grey,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.watch_later_outlined),
-                                  Text("3M:05")
-                                ],
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                BoldText(name: 'FREE', fontsize: 12),
-                                Text(
-                                  'Rs. FREE',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    backgroundColor: Colors.yellow,
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 80,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        width: 2,
-                        color: appColor,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Loading",
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 120,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        width: 2,
-                        color: appColor,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text("01 "),
-                            CircleAvatar(
-                              radius: 15,
-                              backgroundColor: appColor,
-                              child: Icon(Icons.person),
-                            ),
-                            Text("MANASH MISHRA "),
-                            Text(
-                              'WINNER     ',
-                              style: TextStyle(
-                                backgroundColor: Colors.yellow,
-                              ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text("02"),
-                            CircleAvatar(
-                              radius: 15,
-                              backgroundColor: appColor,
-                              child: Icon(Icons.person),
-                            ),
-                            Text("MANASH MISHRA"),
-                            Text(
-                              'RUNNER UP',
-                              style: TextStyle(
-                                backgroundColor: Colors.yellow,
-                              ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text("03"),
-                            CircleAvatar(
-                              radius: 15,
-                              backgroundColor: appColor,
-                              child: Icon(Icons.person),
-                            ),
-                            Text("MANASH MISHRA"),
-                            Text(
-                              'RUNNER UP',
-                              style: TextStyle(
-                                backgroundColor: Colors.yellow,
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 12,
                 )
               ],
             ),
           ),
           );
-
         });
   }
 }

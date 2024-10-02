@@ -14,6 +14,9 @@ import 'package:quizzype001/UI/SideBar.dart';
 
 import '../../model/leaderboard/leaderBoard.dart';
 import '../Addcash/Add_CASH.dart';
+import '../Collage_Student/Collage_Student.dart';
+import '../1-12Class.dart';
+import '../Competitive.dart';
 
 class LiveContest extends StatefulWidget {
   const LiveContest({super.key});
@@ -78,10 +81,18 @@ class _LiveContestState extends State<LiveContest> {
 
           return Scaffold(
             drawer: SideBar(),
-            appBar:AppBar(
-              backgroundColor: appColor,
-              title: BoldText(name: "LIVE CONTEST",fontsize: 22,),
+            appBar: AppBar(
+              backgroundColor: Colors.blue,  // Set AppBar background color to white
+              title: BoldText(
+                name: "LIVE CONTEST",
+                fontsize: 22,
+                color: Colors.white,  // Ensure the text color remains white
+              ),
               centerTitle: true,
+              titleTextStyle: TextStyle(
+                color: Colors.white,  // Set AppBar title text color to white
+                fontSize: 22,
+              ),
               actions: [
                 Container(
                   height: 20,
@@ -92,20 +103,24 @@ class _LiveContestState extends State<LiveContest> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.yellow,
+                      color: Colors.yellow,  // Text color for the balance
                     ),
                   ),
                 ),
-                InkWell(onTap: (){
-                  Get.to(()=> ADD_CASh());
-                },
+                InkWell(
+                  onTap: () {
+                    Get.to(() => ADD_CASh());
+                  },
                   child: CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.white,
-                    child: Image.asset('Assets/Images/Money.png',),
+                    child: Image.asset('Assets/Images/Money.png'),
                   ),
-                )
+                ),
               ],
+              iconTheme: IconThemeData(
+                color: Colors.white,  // Ensures icons, like back button, stay white
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -295,19 +310,19 @@ class _LiveContestState extends State<LiveContest> {
                                     case 1:
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => GK_Contest()),
+                                        MaterialPageRoute(builder: (context) => Class()),
                                       );
                                       break;
                                     case 2:
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => GK_Contest()),
+                                        MaterialPageRoute(builder: (context) => CollageStudent()),
                                       );
                                       break;
                                     case 3:
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => GK_Contest()),
+                                        MaterialPageRoute(builder: (context) => Competitive()),
                                       );
                                       break;
                                     default:

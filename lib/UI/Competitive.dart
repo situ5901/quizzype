@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 void main() {
-  runApp(CollageStudent());
+  runApp(Competitive());
 }
 
-class CollageStudent extends StatelessWidget {
-  const CollageStudent({super.key});
+class Competitive extends StatelessWidget {
+  const Competitive({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class CollageStudent extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Collage Student",
+          title: const Text("Competitive Contest",
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.blue,

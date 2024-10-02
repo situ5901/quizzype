@@ -12,9 +12,9 @@ class SideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: 250, // Set the width of the Drawer
+      width: 250,
       child: Container(
-        margin: EdgeInsets.only(bottom: 20), // Set the bottom margin to 20
+        margin: EdgeInsets.only(bottom: 20),
         child: ListView(
           children: [
             UserAccountsDrawerHeader(

@@ -13,30 +13,35 @@ class GK_Contest extends StatefulWidget {
   @override
   State<GK_Contest> createState() => _GK_ContestState();
 }
-
 class _GK_ContestState extends State<GK_Contest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         backgroundColor: appColor,
-        title: BoldText(name: "GK CONTEST",color: Colors.white,fontsize: 25,),
+        title: BoldText(name: "GK CONTEST", color: Colors.white, fontsize: 25),
         centerTitle: true,
-        leading: Icon(Icons.menu),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: Colors.white,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         actions: [
           Container(
             height: 20,
             width: 50,
             color: Colors.white,
-            child: BoldText(name:" 100",fontsize: 18,color: Colors.yellow,),
+            child: BoldText(name: " 100", fontsize: 18, color: Colors.yellow),
           ),
-          InkWell(onTap: (){
-            Get.to(()=> ADD_CASh());
-          },
+          InkWell(
+            onTap: () {
+              Get.to(() => ADD_CASh());
+            },
             child: CircleAvatar(
               radius: 25,
               backgroundColor: Colors.white,
-              child: Image.asset('Assets/Images/Money.png',),
+              child: Image.asset('Assets/Images/Money.png'),
             ),
           )
         ],
@@ -45,55 +50,87 @@ class _GK_ContestState extends State<GK_Contest> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: 80,
-                color: appColor,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 100,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      width: 2,
+                      color: appColor,
+                    ),
+                  ),
+                  child: Column(
                     children: [
-                      SizedBox(
-                        width: 12,
+                      PlainText(
+                        name: '2 PLAYERS - WINNER',
+                        fontsize: 12,
+                        color: Colors.black,
                       ),
-                      Container(
-                        color: Colors.yellow,
-                        child: Icon(Icons.menu),
-                      ), SizedBox(
-                        width: 12,
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            children: [
+                              BoldText(name: 'PRIZE POOL', fontsize: 12),
+                              Text(
+                                'Rs. 25',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  backgroundColor: Colors.blue.shade900,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade700,
+                              borderRadius: BorderRadius.circular(10), // Set border radius to 10
+                            ),
+                            padding: EdgeInsets.all(8), // Optional padding for spacing
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.white, // Set icon color to white
+                                ),
+                                SizedBox(width: 5), // Add space between the icon and the text
+                                Text(
+                                  "Online",
+                                  style: TextStyle(
+                                    color: Colors.white, // Set text color to white
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Button with red background and white text
+                          ElevatedButton(
+                            onPressed: () {
+                              // Action to be performed when the button is pressed
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => ADD_CASh()), // Replace with your LoginPage widget
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red, // Red background
+                            ),
+                            child: Text(
+                              'Join',
+                              style: TextStyle(
+                                color: Colors.white, // White text
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border:Border.all(
-                            width: 2,color: Colors.yellow
-                          )
-                        ),
-                        child: BoldText(name:" ALL ",color:Colors.white,fontsize: 18,),
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border:Border.all(
-                                width: 2,color: Colors.yellow
-                            )
-                        ),
-                        child: BoldText(name:" 4 PLAYERS - 1 WINNER ",color: Colors.white,fontsize: 18,),
-                      ), SizedBox(
-                        width: 12,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border:Border.all(
-                                width: 2,color: Colors.yellow
-                            )
-                        ),
-                        child: BoldText(name:" 4 PLAYERS - 1 WINNER ",color: Colors.white,fontsize: 18,),
-                      )
                     ],
                   ),
                 ),
@@ -101,7 +138,7 @@ class _GK_ContestState extends State<GK_Contest> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: 80,
+                  height: 100,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -125,39 +162,61 @@ class _GK_ContestState extends State<GK_Contest> {
                             children: [
                               BoldText(name: 'PRIZE POOL', fontsize: 12),
                               Text(
-                                'Rs. 50',
+                                'Rs. 25',
                                 style: TextStyle(
                                   fontSize: 12,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
+                                  backgroundColor: Colors.blue.shade900,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           Container(
-                            color: Colors.grey,
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade700,
+                              borderRadius: BorderRadius.circular(10), // Set b
+                              // order radius to 10
+                            ),
+                            padding: EdgeInsets.all(8), // Optional padding for spacing
                             child: Row(
                               children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.white, // Set icon color to white
+                                ),
+                                SizedBox(width: 5), // Add space between the icon and the text
+                                Text(
+                                  "Online",
+                                  style: TextStyle(
+                                    color: Colors.white, // Set text color to white
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
+                          // Button with red background and white text
+                          ElevatedButton(
+                            onPressed: () {
+                              // Action to be performed when the button is pressed
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => ADD_CASh()), // Replace with your LoginPage widget
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red, // Red background
+                            ),
+                            child: Text(
+                              'Join',
+                              style: TextStyle(
+                                color: Colors.white, // White text
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -165,7 +224,7 @@ class _GK_ContestState extends State<GK_Contest> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: 80,
+                  height: 100,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -189,46 +248,67 @@ class _GK_ContestState extends State<GK_Contest> {
                             children: [
                               BoldText(name: 'PRIZE POOL', fontsize: 12),
                               Text(
-                                'Rs. 50',
+                                'Rs. 25',
                                 style: TextStyle(
                                   fontSize: 12,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
+                                  backgroundColor: Colors.blue.shade900,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           Container(
-                            color: Colors.grey,
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade700,
+                              borderRadius: BorderRadius.circular(10), // Set border radius to 10
+                            ),
+                            padding: EdgeInsets.all(8), // Optional padding for spacing
                             child: Row(
                               children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.white, // Set icon color to white
+                                ),
+                                SizedBox(width: 5), // Add space between the icon and the text
+                                Text(
+                                  "Online",
+                                  style: TextStyle(
+                                    color: Colors.white, // Set text color to white
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
+                          // Button with red background and white text
+                          ElevatedButton(
+                            onPressed: () {
+                              // Action to be performed when the button is pressed
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => ADD_CASh()), // Replace with your LoginPage widget
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red, // Red background
+                            ),
+                            child: Text(
+                              'Join',
+                              style: TextStyle(
+                                color: Colors.white, // White text
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
-              ), Padding(
+              ),Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: 80,
+                  height: 100,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -252,291 +332,60 @@ class _GK_ContestState extends State<GK_Contest> {
                             children: [
                               BoldText(name: 'PRIZE POOL', fontsize: 12),
                               Text(
-                                'Rs. 50',
+                                'Rs. 25',
                                 style: TextStyle(
                                   fontSize: 12,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
+                                  backgroundColor: Colors.blue.shade900,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           Container(
-                            color: Colors.grey,
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade700,
+                              borderRadius: BorderRadius.circular(10), // Set border radius to 10
+                            ),
+                            padding: EdgeInsets.all(8), // Optional padding for spacing
                             child: Row(
                               children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.white, // Set icon color to white
+                                ),
+                                SizedBox(width: 5), // Add space between the icon and the text
+                                Text(
+                                  "Online",
+                                  style: TextStyle(
+                                    color: Colors.white, // Set text color to white
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
+                          // Button with red background and white text
+                          ElevatedButton(
+                            onPressed: () {
+                              // Action to be performed when the button is pressed
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => ADD_CASh()), // Replace with your LoginPage widget
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red, // Red background
+                            ),
+                            child: Text(
+                              'Join',
+                              style: TextStyle(
+                                color: Colors.white, // White text
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                         ],
-                      )
-                    ],
-                  ),
-                ),
-              ), Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: appColor,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      PlainText(
-                        name: '2 PLAYERS - WINNER',
-                        fontsize: 12,
-                        color: Colors.black,
                       ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              BoldText(name: 'PRIZE POOL', fontsize: 12),
-                              Text(
-                                'Rs. 50',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            color: Colors.grey,
-                            child: Row(
-                              children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
-                              ],
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ), Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: appColor,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      PlainText(
-                        name: '2 PLAYERS - WINNER',
-                        fontsize: 12,
-                        color: Colors.black,
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              BoldText(name: 'PRIZE POOL', fontsize: 12),
-                              Text(
-                                'Rs. 50',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            color: Colors.grey,
-                            child: Row(
-                              children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
-                              ],
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ), Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: appColor,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      PlainText(
-                        name: '2 PLAYERS - WINNER',
-                        fontsize: 12,
-                        color: Colors.black,
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              BoldText(name: 'PRIZE POOL', fontsize: 12),
-                              Text(
-                                'Rs. 50',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            color: Colors.grey,
-                            child: Row(
-                              children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
-                              ],
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ), Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: appColor,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      PlainText(
-                        name: '2 PLAYERS - WINNER',
-                        fontsize: 12,
-                        color: Colors.black,
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              BoldText(name: 'PRIZE POOL', fontsize: 12),
-                              Text(
-                                'Rs. 50',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            color: Colors.grey,
-                            child: Row(
-                              children: [
-                                Icon(Icons.watch_later_outlined),
-                                Text("3M:05")
-                              ],
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              BoldText(name: 'FREE', fontsize: 12),
-                              Text(
-                                'Rs. FREE',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
                     ],
                   ),
                 ),

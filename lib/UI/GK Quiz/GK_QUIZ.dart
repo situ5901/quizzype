@@ -24,7 +24,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
   bool isAnswerSelected = false;
   bool isAnswerCorrect = false;
   Timer? questionTimer;  // Timer for handling question timeout
-  int _timeRemaining = 10;  // 10 seconds for each question
+  int _timeRemaining = 15;  // 10 seconds for each question
 
   @override
   void initState() {

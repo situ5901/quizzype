@@ -140,7 +140,6 @@ class _ADD_CAShState extends State<ADD_CASh> {
       },
     );
   }
-
   Widget amountButton(String amount, AddCashController controller) {
     return GestureDetector(
       onTap: () {
