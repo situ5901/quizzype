@@ -462,7 +462,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               SizedBox(
                                 height: 12,
                               ),
-                              BoldText(name: 'DATE OF BIRTH', fontsize: 20,color: boxColor,),
+                              BoldText(name: 'DATE OF BIRTH', fontsize: 20, color: boxColor),
 
                               Container(
                                 height: 30,
@@ -470,9 +470,27 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                   controller: dobController,
                                   decoration: InputDecoration(
                                     hintText: "--",
+                                    suffixIcon: Icon(Icons.calendar_today),  // Icon for date picker
                                   ),
+                                  readOnly: true,  // Prevents manual editing
+                                  onTap: () async {
+                                    DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),  // Current date
+                                      firstDate: DateTime(1900),    // Earliest selectable date
+                                      lastDate: DateTime.now(),     // Latest selectable date
+                                    );
+
+                                    if (pickedDate != null) {
+                                      // Format the date as a string (e.g., dd/MM/yyyy)
+                                      String formattedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                                      dobController.text = formattedDate;  // Set the value in the controller
+                                      controller.dob = formattedDate;      // Update controller with the formatted date string
+                                    }
+                                  },
                                 ),
                               ),
+
                               SizedBox(
                                 height: 16,
                               ),

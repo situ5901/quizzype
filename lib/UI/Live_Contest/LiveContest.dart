@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:quizzype001/Common/BoldText.dart';
 import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/Common/PlainText.dart';
-import 'package:quizzype001/UI/GK_Contest.dart';
+import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/Live_Contest/controller.dart';
 import 'package:quizzype001/UI/SideBar.dart';
 
@@ -180,6 +180,7 @@ class _LiveContestState extends State<LiveContest> {
                                               margin: EdgeInsets.all(5),
                                               height: 40,
                                               width: 290,
+                                              padding: EdgeInsets.all(8),
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.horizontal(
                                                   right: Radius.circular(8),
@@ -209,6 +210,7 @@ class _LiveContestState extends State<LiveContest> {
                                             Container(
                                               height: 70,
                                               width: 290,
+                                              padding: EdgeInsets.all(8),
                                               decoration: BoxDecoration(
                                                 border: Border.all(width: 2, color: Colors.white),
                                                 borderRadius: BorderRadius.horizontal(
@@ -242,7 +244,7 @@ class _LiveContestState extends State<LiveContest> {
                                                         'Assets/Images/king.png',
                                                       ),
                                                       BoldText(
-                                                        name: "${user.wallet} LAKH",
+                                                        name: "${user.score}",
                                                         color: Colors.yellow,
                                                         fontsize: 18,
                                                       ),
@@ -316,7 +318,7 @@ class _LiveContestState extends State<LiveContest> {
                                     case 2:
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => CollageStudent()),
+                                        MaterialPageRoute(builder: (context) => Collage_Student()),
                                       );
                                       break;
                                     case 3:

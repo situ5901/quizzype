@@ -33,7 +33,7 @@ class ProfileController extends GetxController {
     token = databaseService
         .accessToken; // Retrieve the token using the getter method
     phoneNumber = databaseService.user!.phoneNumber;
-    print("Retrieved token: $phoneNumber"); // Print the token to the console
+    print("Retrieved PhoneNumber: $phoneNumber"); // Print the token to the console
   }
 
   Future<void> postStudentDetails() async {

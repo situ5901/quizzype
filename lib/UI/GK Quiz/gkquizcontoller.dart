@@ -6,6 +6,7 @@ import '../../domain/service/app/app_service_imports.dart';
 import '../../model/Questionmodel/questionModel.dart';
 import '../../routes/approutes.dart';
 import '../widgets/TimesupAppdialog/timesUp.dart';
+import '../widgets/quizzDoneAppdiloagbox/DoneDiloagbox.dart';
 
 class GkQuizController extends GetxController {
   QuizQuestion? quizQuestion;
@@ -18,27 +19,29 @@ class GkQuizController extends GetxController {
   String score = "0";
 
   Timer? timer;
-  int timeLeft =140; // Countdown timer in seconds
-  double progress = 1.0; // Initial value for the circular progress indicator
-  bool isQuizCompleted = false;  // Track if the quiz is completed
+  int timeLeft = 15; // 15 seconds per question
+  double progress = 1.0;
+  int questionNumber = 1;  // Current question number
+  bool isQuizCompleted = false;
+
 
   @override
   void onInit() {
     super.onInit();
     loadData();
-    startTimer(); // Start the timer when the controller is initialized
+    startTimer();
   }
 
   @override
   void onClose() {
-    timer?.cancel(); // Cancel the timer when the controller is closed
+    timer?.cancel(); // Cancel any existing timer
     super.onClose();
   }
 
   Future<void> getQuestion() async {
     try {
       quizQuestion = await repository.fetchQuestion();
-      gkQuestionId = quizQuestion?.id;  // Set the question ID from fetched question
+      gkQuestionId = quizQuestion?.id;
       isLoading = false;
     } catch (e) {
       print("Error fetching question: $e");
@@ -70,40 +73,71 @@ class GkQuizController extends GetxController {
   }
 
   void selectOption(String option) {
-    selectedOption = option;  // Set the selected option
-    update();  // This should trigger the UI to update after the option is selected
+    selectedOption = option;
+    update();
   }
 
   Future<void> getScore() async {
-    score =  await repository.getScore();
+    score = await repository.getScore();
+    update();
+  }
 
-    update();  // Trigger the UI update
+
+  Future<void> handleNextQuestion() async {
+    if (selectedOption != null) {
+      await postAnswer(); // Post the current answer
+      if (questionNumber < 10) {
+        questionNumber++;
+        await loadData(); // Load next question
+        startTimer(); // Start the timer for the next question
+      } else {
+        await getScore();
+        Get.dialog(
+          DoneDialog(
+            score: int.parse(score),
+          ),
+          barrierDismissible: false,
+        );
+        // Handle quiz completion, for example, show the results dialog
+      }
+    }
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-      if (timeLeft > 0 && !isQuizCompleted) {  // Check if quiz is completed
-        timeLeft--; // Decrease the time
-        progress = timeLeft / 60; // Update the progress for circular indicator
-        update(); // Update the UI
+    timeLeft = 15; // Reset to 15 seconds
+    progress = 1.0; // Reset progress
+
+    timer?.cancel(); // Cancel any existing timer to avoid multiple instances
+
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (timeLeft > 0) {
+        timeLeft--; // Decrease time
+        progress = timeLeft / 15; // Update progress
+        update();
       } else {
+        // Handle time up
         timer.cancel();
-        if (!isQuizCompleted) {
-          await getScore(); // Fetch the score before showing the dialog
-          Get.offNamed(AppRoutes.leaderBoard);
-          if (Get.isDialogOpen == false && Get.context != null) {
-            Get.dialog(
-              TimesUpDialog(
-                score: int.parse(score),
-              ),
-              barrierDismissible: false, // Prevent closing by tapping outside
-            );
-          }
-        }
+        handleTimeUp();
       }
     });
   }
 
-
-
+  void handleTimeUp() async {
+    await postAnswer();
+    if (questionNumber < 10) {
+      questionNumber++;
+      await loadData(); // Load next question
+      startTimer(); // Restart the timer
+    } else {
+      await getScore();
+      if (  Get.context != null) {
+        Get.dialog(
+          TimesUpDialog(
+            score: int.parse(score),
+          ),
+          barrierDismissible: false,
+        );
+      }
+    }
+  }
 }

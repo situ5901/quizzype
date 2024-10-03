@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../../routes/approutes.dart';
 
 class TimesUpDialog extends StatefulWidget {
   final int score; // Score to display
@@ -71,6 +75,8 @@ class _TimesUpDialogState extends State<TimesUpDialog> with SingleTickerProvider
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
+
+                  Get.offNamed(AppRoutes.leaderBoard);
                 },
                 child: Text(
                   'OK',

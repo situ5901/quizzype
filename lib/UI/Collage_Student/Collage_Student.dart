@@ -1,35 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-void main() {
-  runApp(CollageStudent());
-}
 
-class CollageStudent extends StatelessWidget {
-  const CollageStudent({super.key});
-
+class Collage_Student extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Collage Student",
+          title: Text(
+            'Collage_Student',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.blue, // Set the app bar color to blue
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white), // White arrow
+            icon: Icon(Icons.arrow_back,color: Colors.white,),
             onPressed: () {
-              Navigator.pop(context); // Go back to the previous page
+              Navigator.of(context).pop(); // Navigate back when the button is pressed
             },
           ),
         ),
         body: Center(
-          child:Lottie.asset('Assets/Images/Animation.json',
-            height: 300, // set the height
-            width: 300,  // set the width
-            fit: BoxFit.fill, ),
+          child: SizedBox(
+            child: Lottie.asset('Assets/Images/search.json'),
+          ),
         ),
       ),
     );
