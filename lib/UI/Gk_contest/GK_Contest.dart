@@ -1,20 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/UI/Gk_contest/controller.dart';
+import 'package:lottie/lottie.dart'; // Import Lottie package
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../../Common/PlainText.dart';
 import '../../routes/approutes.dart';
 
-class GK_Contest extends StatefulWidget {
+class GK_Contest extends StatelessWidget {
   const GK_Contest({super.key});
 
-  @override
-  State<GK_Contest> createState() => _GK_ContestState();
-}
-
-class _GK_ContestState extends State<GK_Contest> {
   @override
   Widget build(BuildContext context) {
     return GetX<GkContestController>(
@@ -122,10 +117,64 @@ class _GK_ContestState extends State<GK_Contest> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  controller.joinGame(contest.contestId);
+                                  // Show the dialog
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        elevation: 16,
+                                        child: Container(
+                                          width: double.maxFinite,
+                                          height: 250,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              // Left Side - Current User Name
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  '${controller.currentuser}', // Assuming you have currentUser accessible
+                                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                              // Center - Lottie Animation
+                                              Container(
+                                                width: 100, // Adjust as necessary
+                                                height: 100,
+                                                child: Lottie.asset('Assets/Images/battle.json'), // Path to your Lottie animation
+                                              ),
+                                              // Right Side - Players' Names
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  children: [
+                                                    for (var player in contest.players) // Assuming players is a list in Contest
+                                                      Text(
+                                                        player.fullname, // Display each player's name
+                                                        style: TextStyle(fontSize: 16),
+                                                      ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
 
+                                  // Join the game
+                                  controller.joinGame(contest.contestId);
                                   print(contest.contestId);
-                                  Get.toNamed(AppRoutes.gK_Question, arguments: contest.contestId.toString());
+
+                                  // Wait for 2 seconds before navigating to the next screen
+                                  Future.delayed(Duration(seconds: 2), () {
+                                    Navigator.of(context).pop(); // Close the dialog
+                                    Get.toNamed(AppRoutes.gK_Question, arguments: contest.contestId.toString());
+                                  });
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.red,

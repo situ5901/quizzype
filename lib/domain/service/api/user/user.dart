@@ -318,6 +318,8 @@ class UserApi {
     required String contestId,
     required String combineID1,
     required String combineID2,
+    required String amount,
+
     required String name}) async {
     try {
       final response = await dio.post(
@@ -326,7 +328,7 @@ class UserApi {
           "contestId": contestId,
           "combineId1": combineID1,
           "combineId2": combineID2,
-          "winningAmount": 25
+          "winningAmount": amount
         },
         options: Options(
           headers: {

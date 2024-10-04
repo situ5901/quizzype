@@ -2,15 +2,15 @@ class ContestResponse {
   List<Contest> contests;
   String message;
 
-  ContestResponse({required this.contests, required this.message});
+  ContestResponse({required this.contests, this.message = ''});
 
   factory ContestResponse.fromJson(Map<String, dynamic> json) {
-    var contestsList = json['contests'] as List<dynamic>? ?? []; // Use empty list if null
+    var contestsList = json['contests'] as List<dynamic>? ?? [];
     List<Contest> contestObjects = contestsList.map((contest) => Contest.fromJson(contest)).toList();
 
     return ContestResponse(
       contests: contestObjects,
-      message: json['message'] ?? '',  // Handle message field if present
+      message: json['message'] ?? '',
     );
   }
 
@@ -25,22 +25,28 @@ class ContestResponse {
 class Contest {
   String contestId;
   bool isFull;
-  ContestDetails contestDetails;
   int gameAmount;
+  int winningAmount;
+  List<Player> players;
 
   Contest({
     required this.contestId,
     required this.isFull,
-    required this.contestDetails,
     required this.gameAmount,
+    required this.winningAmount,
+    required this.players,
   });
 
   factory Contest.fromJson(Map<String, dynamic> json) {
+    var playersList = json['players'] as List<dynamic>? ?? [];
+    List<Player> playerObjects = playersList.map((player) => Player.fromJson(player)).toList();
+
     return Contest(
-      contestId: json['contestId'] ?? '',  // Default to empty string if null
-      isFull: json['isFull'] ?? false, // Default to false if null
-      contestDetails: ContestDetails.fromJson(json['contestDetails']),
-      gameAmount: json['gameAmount'] ?? 0, // Default to 0 if null
+      contestId: json['contestId'] ?? '',
+      isFull: json['isFull'] ?? false,
+      gameAmount: json['gameAmount'] ?? 0,
+      winningAmount: json['winningAmount'] ?? 0,
+      players: playerObjects,
     );
   }
 
@@ -48,82 +54,33 @@ class Contest {
     return {
       'contestId': contestId,
       'isFull': isFull,
-      'contestDetails': contestDetails.toJson(),
       'gameAmount': gameAmount,
+      'winningAmount': winningAmount,
+      'players': players.map((player) => player.toJson()).toList(),
     };
   }
 }
 
-class ContestDetails {
-  List<CombineId> combineId;
-
-  ContestDetails({required this.combineId});
-
-  factory ContestDetails.fromJson(Map<String, dynamic> json) {
-    var combineIdList = json['combineId'] as List<dynamic>? ?? []; // Use empty list if null
-    List<CombineId> combineIdObjects = combineIdList.map((combine) => CombineId.fromJson(combine)).toList();
-
-    return ContestDetails(
-      combineId: combineIdObjects,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'combineId': combineId.map((combine) => combine.toJson()).toList(),
-    };
-  }
-}
-
-class CombineId {
-  List<ParentArray> parentArray;
-
-  CombineId({required this.parentArray});
-
-  factory CombineId.fromJson(Map<String, dynamic> json) {
-    var parentArrayList = json['__parentArray'] as List<dynamic>? ?? []; // Use empty list if null
-    List<ParentArray> parentArrayObjects = parentArrayList.map((parent) => ParentArray.fromJson(parent)).toList();
-
-    return CombineId(
-      parentArray: parentArrayObjects,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      '__parentArray': parentArray.map((parent) => parent.toJson()).toList(),
-    };
-  }
-}
-
-class ParentArray {
-  String id;
-  String fullname;
-  int score;
+class Player {
   String combineId;
+  int score;
+  String fullname;
 
-  ParentArray({
-    required this.id,
-    required this.fullname,
-    required this.score,
-    required this.combineId,
-  });
+  Player({required this.combineId, required this.score, required this.fullname});
 
-  factory ParentArray.fromJson(Map<String, dynamic> json) {
-    return ParentArray(
-      id: json['id'] ?? '', // Default to empty string if null
-      fullname: json['fullname'] ?? '', // Default to empty string if null
-      score: json['score'] ?? 0, // Default to 0 if null
-      combineId: json['_id'] ?? '', // Default to empty string if null
+  factory Player.fromJson(Map<String, dynamic> json) {
+    return Player(
+      combineId: json['combineId'] ?? '',
+      score: json['score'] ?? 0,
+      fullname: json['fullname'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'fullname': fullname,
+      'combineId': combineId,
       'score': score,
-      '_id': combineId,
+      'fullname': fullname,
     };
   }
 }

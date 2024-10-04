@@ -184,7 +184,7 @@ class UserRepository {
 
       // Navigate through the response structure to extract the actual contestId
       final contestIdMap = data['contestId']; // This is a map containing 'id'
-      final contestId = contestIdMap['id']; // Extract the 'id' from the map
+      final contestId = contestIdMap['_id']; // Extract the 'id' from the map
 
       if (contestId is String) {
         return contestId; // Return the contest ID as a string
