@@ -16,6 +16,7 @@ import '../../Common/Colors.dart';
 import '../../routes/approutes.dart';
 import '../Addcash/Add_CASH.dart';
 import '../PracticeContest.dart';
+import '../School/Schoolcontest.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -326,21 +327,52 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.all(15),
                       child: Row(
                         children: [
-                          // Left 50% - Text
+                          // Left 50% - Text and Button
                           Expanded(
                             flex: 1,
-                            child: Text(
-                              'Lord V.K School Contest',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Lord V.K School Contest',
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Play Contest',
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Time 60s',
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.blue.shade600),
+                                ),
+                                SizedBox(height: 10), // Add spacing between the text and button
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SchoolContest(),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red, // Set background color to red
+                                  ),
+                                  child: Text('Join Contest',
+                                  style: TextStyle(color: Colors.white),),
+                                ),
+                              ],
                             ),
-                            
                           ),
                           // Right 50% - Image
                           Expanded(
                             flex: 1,
                             child: Image.asset(
-                              'Assets/Images/students.png', // Replace with your image URL
-                              fit: BoxFit.cover,
+                              'Assets/Images/students.png',
+                              height: double.infinity,
+                              width: double.infinity,
+                              fit: BoxFit.contain, // Ensures the entire image is visible
                             ),
                           ),
                         ],
@@ -348,6 +380,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 )
+
               ],
             ),
           ),
