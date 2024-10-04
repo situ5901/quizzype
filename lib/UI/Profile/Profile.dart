@@ -9,7 +9,6 @@ import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/Navbar.dart';
 import 'package:quizzype001/UI/Profile/profileController.dart';
 import '../../Common/BoldText.dart';
-import '../../model/UserModels/StudentModel.dart';
 import '../Auth/login/Login.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -109,8 +108,6 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     ),
                   ],
                 ),
-
-
 
                 Expanded(
                   child: TabBarView(
