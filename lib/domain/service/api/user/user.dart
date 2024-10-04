@@ -264,21 +264,39 @@ class UserApi {
       rethrow;
     }
   }
-
+  Future<Response> getContest({
+    required String token,}) async {
+    try {
+      final response = await dio.get(
+        '$basePath/contests',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching to join game: $e");
+      rethrow;
+    }
+  }
 
   Future<Response> joinGame({
     required String token,
     required String contestId,
     required String combineID,
+
     required String name}) async {
     try {
       final response = await dio.post(
-        '$basePath/join-game',
+        '$basePath/join-game/many',
         data: {
           "contestId": contestId,
           "newcombineId": combineID,
-          "combineuser": name,
-          "gameAmount": 100
+          "fullname": name,
+          "gameAmount": 10
         },
         options: Options(
           headers: {
@@ -308,7 +326,7 @@ class UserApi {
           "contestId": contestId,
           "combineId1": combineID1,
           "combineId2": combineID2,
-          "winningAmount": "200"
+          "winningAmount": 25
         },
         options: Options(
           headers: {

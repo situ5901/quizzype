@@ -50,7 +50,7 @@ class SideBar extends StatelessWidget {
             ),
             ListTile(
               onTap: (){
-                UserRepository().getWalletBalance();
+                UserRepository().getContest();
               },
               leading: Icon(Icons.settings),
               title: Text("Setting"),

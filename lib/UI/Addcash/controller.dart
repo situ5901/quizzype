@@ -29,7 +29,6 @@ class AddCashController extends GetxController {
       print("Error fetching balance: $e");
     }
   }
-
   Future<void> addCashAndCreateContest(int enteredAmount) async {
     try {
       final currentBalance = int.tryParse(balance) ?? 0;
@@ -41,13 +40,27 @@ class AddCashController extends GetxController {
 
       // Show success dialog
       Get.dialog(CustomDialog(onJoinNow: () async {
-        await repository.createContestId(enteredAmount);
+        final contestId = await repository.createContestId(enteredAmount); // Get the contest ID
         Get.back(); // Close the dialog
+        print(contestId.toString());
+        Get.toNamed(AppRoutes.gK_Question, arguments: contestId.toString());
         await getBalance(); // Reload balance after successful transaction
-        Get.toNamed(AppRoutes.gK_Question);
+
+
+       // Get.toNamed(AppRoutes.gK_Question, arguments: contestId); // Pass the contestId as an argument
       }));
+
     } catch (e) {
       print("Error adding cash or creating contest: $e");
+    }
+  }
+  Future<void> joinGame(String contestId) async {
+    try {
+      await repository.joingame(contestId);
+
+      print("Joined contest: $contestId");
+    } catch (e) {
+      print("Error joining Contest: $e");
     }
   }
 

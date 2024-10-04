@@ -2,12 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/UI/Gk_contest/controller.dart';
-
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../../Common/PlainText.dart';
 import '../../routes/approutes.dart';
-import '../Addcash/Add_CASH.dart';
 
 class GK_Contest extends StatefulWidget {
   const GK_Contest({super.key});
@@ -15,30 +13,37 @@ class GK_Contest extends StatefulWidget {
   @override
   State<GK_Contest> createState() => _GK_ContestState();
 }
+
 class _GK_ContestState extends State<GK_Contest> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
+    return GetX<GkContestController>(
       init: GkContestController(),
-      builder: (controller){
-        return  Scaffold(
+      builder: (controller) {
+        if (controller.contests.isEmpty) {
+          return Center(child: CircularProgressIndicator()); // Show loading indicator
+        }
+
+        // Filter contests that are online (isFull == false)
+        var onlineContests = controller.contests.where((contest) => !contest.isFull).toList();
+
+        return Scaffold(
           appBar: AppBar(
             backgroundColor: appColor,
             title: BoldText(name: "GK CONTEST", color: Colors.white, fontsize: 25),
             centerTitle: true,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back,color: Colors.white,),
+              icon: Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             actions: [
-
               Container(
                 height: 20,
                 width: 50,
                 color: Colors.white,
-                child: BoldText(name:"₹${controller.balance}", fontsize: 18, color: Colors.yellow),
+                child: BoldText(name: "₹${controller.balance}", fontsize: 18, color: Colors.yellow),
               ),
               InkWell(
                 onTap: () {
@@ -52,10 +57,10 @@ class _GK_ContestState extends State<GK_Contest> {
               )
             ],
           ),
-          body: Container(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                for (var contest in onlineContests) // Iterate only over online contests
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -83,7 +88,7 @@ class _GK_ContestState extends State<GK_Contest> {
                                 children: [
                                   BoldText(name: 'PRIZE POOL', fontsize: 12),
                                   Text(
-                                    'Rs. 25',
+                                    'Rs. ${contest.gameAmount}',
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white,
@@ -95,316 +100,56 @@ class _GK_ContestState extends State<GK_Contest> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.blue.shade700,
-                                  borderRadius: BorderRadius.circular(10), // Set border radius to 10
+                                  color: Colors.green, // Always green because these are online contests
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                padding: EdgeInsets.all(8), // Optional padding for spacing
+                                padding: EdgeInsets.all(8),
                                 child: Row(
                                   children: [
                                     Icon(
                                       Icons.person,
-                                      color: Colors.white, // Set icon color to white
-                                    ),
-                                    SizedBox(width: 5), // Add space between the icon and the text
-                                    Text(
-                                      "Online",
-                                      style: TextStyle(
-                                        color: Colors.white, // Set text color to white
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // Button with red background and white text
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Action to be performed when the button is pressed
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ADD_CASh()), // Replace with your LoginPage widget
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red, // Red background
-                                ),
-                                child: Text(
-                                  'Join',
-                                  style: TextStyle(
-                                    color: Colors.white, // White text
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 100,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          width: 2,
-                          color: appColor,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          PlainText(
-                            name: '2 PLAYERS - WINNER',
-                            fontsize: 12,
-                            color: Colors.black,
-                          ),
-                          Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  BoldText(name: 'PRIZE POOL', fontsize: 12),
-                                  Text(
-                                    'Rs. 25',
-                                    style: TextStyle(
-                                      fontSize: 12,
                                       color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      backgroundColor: Colors.blue.shade900,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.shade700,
-                                  borderRadius: BorderRadius.circular(10), // Set b
-                                  // order radius to 10
-                                ),
-                                padding: EdgeInsets.all(8), // Optional padding for spacing
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.person,
-                                      color: Colors.white, // Set icon color to white
-                                    ),
-                                    SizedBox(width: 5), // Add space between the icon and the text
+                                    SizedBox(width: 5),
                                     Text(
-                                      "Online",
+                                      "Online", // Always online
                                       style: TextStyle(
-                                        color: Colors.white, // Set text color to white
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              // Button with red background and white text
                               ElevatedButton(
                                 onPressed: () {
-                                  // Action to be performed when the button is pressed
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ADD_CASh()), // Replace with your LoginPage widget
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red, // Red background
-                                ),
-                                child: Text(
-                                  'Join',
-                                  style: TextStyle(
-                                    color: Colors.white, // White text
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 100,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          width: 2,
-                          color: appColor,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          PlainText(
-                            name: '2 PLAYERS - WINNER',
-                            fontsize: 12,
-                            color: Colors.black,
-                          ),
-                          Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  BoldText(name: 'PRIZE POOL', fontsize: 12),
-                                  Text(
-                                    'Rs. 25',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      backgroundColor: Colors.blue.shade900,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.shade700,
-                                  borderRadius: BorderRadius.circular(10), // Set border radius to 10
-                                ),
-                                padding: EdgeInsets.all(8), // Optional padding for spacing
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.person,
-                                      color: Colors.white, // Set icon color to white
-                                    ),
-                                    SizedBox(width: 5), // Add space between the icon and the text
-                                    Text(
-                                      "Online",
-                                      style: TextStyle(
-                                        color: Colors.white, // Set text color to white
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // Button with red background and white text
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Action to be performed when the button is pressed
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ADD_CASh()), // Replace with your LoginPage widget
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red, // Red background
-                                ),
-                                child: Text(
-                                  'Join',
-                                  style: TextStyle(
-                                    color: Colors.white, // White text
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 100,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          width: 2,
-                          color: appColor,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          PlainText(
-                            name: '2 PLAYERS - WINNER',
-                            fontsize: 12,
-                            color: Colors.black,
-                          ),
-                          Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  BoldText(name: 'PRIZE POOL', fontsize: 12),
-                                  Text(
-                                    'Rs. 25',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      backgroundColor: Colors.blue.shade900,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.shade700,
-                                  borderRadius: BorderRadius.circular(10), // Set border radius to 10
-                                ),
-                                padding: EdgeInsets.all(8), // Optional padding for spacing
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.person,
-                                      color: Colors.white, // Set icon color to white
-                                    ),
-                                    SizedBox(width: 5), // Add space between the icon and the text
-                                    Text(
-                                      "Online",
-                                      style: TextStyle(
-                                        color: Colors.white, // Set text color to white
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // Button with red background and white text
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Action to be performed when the button is pressed
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ADD_CASh()), // Replace with your LoginPage widget
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red, // Red background
-                                ),
-                                child: Text(
-                                  'Join',
-                                  style: TextStyle(
-                                    color: Colors.white, // White text
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 14,)
+                                  controller.joinGame(contest.contestId);
 
-                ],
-              ),
+                                  print(contest.contestId);
+                                  Get.toNamed(AppRoutes.gK_Question, arguments: contest.contestId.toString());
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                ),
+                                child: Text(
+                                  'Join',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                SizedBox(height: 14),
+              ],
             ),
           ),
         );
       },
-
     );
   }
 }

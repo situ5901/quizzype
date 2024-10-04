@@ -167,43 +167,51 @@ class UserRepository {
 
 
 // Service method to get contest id
-  Future <bool> createContestId(int amount) async {
+  Future<String> createContestId(int amount) async {
     try {
       final userId = databaseService.user?.id;
       final userName = databaseService.user?.fullname;
       final token = databaseService.accessToken;
 
       if (userId == null || token == null || userName == null) {
-        print('User ID or token is null');
-        return true;
+        print('User ID, token, or username is null');
+        return ''; // Return an empty string or handle this case appropriately
       }
 
-      final response = await userApi.createContestId(token: token, combineID: userId, name: userName, amount:amount );
-      final data = response.data['contestId'];
+      final response = await userApi.createContestId(token: token, combineID: userId, name: userName, amount: amount);
 
-      await databaseService.putContestId(data);
+      final data = response.data;
 
-      print(databaseService.isContestId);
+      // Navigate through the response structure to extract the actual contestId
+      final contestIdMap = data['contestId']; // This is a map containing 'id'
+      final contestId = contestIdMap['id']; // Extract the 'id' from the map
 
-      return true;
+      if (contestId is String) {
+        return contestId; // Return the contest ID as a string
+      } else {
+        print('Invalid contestId type: ${contestId.runtimeType}');
+        return ''; // Handle the case where contestId is not a string
+      }
 
     } catch (e) {
-      print("Exception fetching question: $e");
+      print("Exception fetching contestId: $e");
       rethrow;
     }
   }
 
 
+
+
 // Service method to get contest id
-  Future <bool> postAnswer(String gkQuestionId,String selectedOption) async {
+  Future <bool> postAnswer(String gkQuestionId,String selectedOption,String contestId ) async {
     try {
       final userId = databaseService.user?.id;
       final userName = databaseService.user?.fullname;
       final token = databaseService.accessToken;
-      final contestId = databaseService.isContestId;
+
       final role = databaseService.user?.role;
 
-      if (userId == null || token == null || userName == null || contestId == null)  {
+      if (userId == null || token == null || userName == null )  {
         print('User ID or token is null');
         return true;
       }
@@ -242,13 +250,13 @@ class UserRepository {
 
 
 
-  Future<String> getScore() async {
+  Future<String> getScore(String contestId) async {
     try {
       final userId = databaseService.user?.id;
       final token = databaseService.accessToken;
-      final contestId = databaseService.isContestId;
 
-      if (userId == null || token == null || contestId == null) {
+
+      if (userId == null || token == null ) {
         print('Some value is null');
         throw Exception({'success': false, 'score': null}); // Returning failure with no score
       }
@@ -336,5 +344,55 @@ class UserRepository {
     }
   }
 
+  Future<Map<String, dynamic>> getContest() async {
+    try {
 
+      final token = databaseService.accessToken;
+
+      if ( token == null) {
+        print('token is null');
+        throw Exception('token is null');
+      }
+
+      var response = await userApi.getContest(
+        token: token,
+      );
+
+      // Ensure response.data is of type Map<String, dynamic>
+      if (response.data is Map<String, dynamic>) {
+        return response.data as Map<String, dynamic>;
+      } else {
+        throw Exception('Unexpected response format');
+      }
+    } catch (e) {
+      print("Exception fetching leaderboard: $e");
+      rethrow;
+    }
+  }
+
+
+  Future <bool> joingame(String contestId) async {
+    try {
+      final userId = databaseService.user?.id;
+      final userName = databaseService.user?.fullname;
+      final token = databaseService.accessToken;
+
+      if (userId == null || token == null || userName == null) {
+        print('User ID or token is null');
+        return true;
+      }
+
+      print(" user id $userId");
+
+      final response = await userApi.joinGame(token: token, combineID: userId, name: userName, contestId: contestId, );
+
+
+
+      return true;
+
+    } catch (e) {
+      print("Exception fetching question: $e");
+      rethrow;
+    }
+  }
 }

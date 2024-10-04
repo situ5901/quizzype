@@ -24,10 +24,15 @@ class GkQuizController extends GetxController {
   int questionNumber = 1;  // Current question number
   bool isQuizCompleted = false;
 
+  // Store the contest ID
+  String? contestId;
 
   @override
   void onInit() {
     super.onInit();
+    // Retrieve the contest ID from the arguments
+    contestId = Get.arguments ; // Assuming contest ID is passed as String
+    print("Contest ID: $contestId"); // For debugging
     loadData();
     startTimer();
   }
@@ -40,7 +45,7 @@ class GkQuizController extends GetxController {
 
   Future<void> getQuestion() async {
     try {
-      quizQuestion = await repository.fetchQuestion();
+      quizQuestion = await repository.fetchQuestion(); // Fetch question based on contest ID if needed
       gkQuestionId = quizQuestion?.id;
       isLoading = false;
     } catch (e) {
@@ -53,7 +58,7 @@ class GkQuizController extends GetxController {
     if (gkQuestionId != null && selectedOption != null) {
       try {
         print("Posting answer: $selectedOption for question ID: $gkQuestionId");
-        await repository.postAnswer(gkQuestionId!, selectedOption!);
+        await repository.postAnswer(gkQuestionId!, selectedOption!,contestId!);
       } catch (e) {
         print("Error posting answer: $e");
       }
@@ -78,10 +83,9 @@ class GkQuizController extends GetxController {
   }
 
   Future<void> getScore() async {
-    score = await repository.getScore();
+    score = await repository.getScore(contestId!);
     update();
   }
-
 
   Future<void> handleNextQuestion() async {
     if (selectedOption != null) {
@@ -130,7 +134,7 @@ class GkQuizController extends GetxController {
       startTimer(); // Restart the timer
     } else {
       await getScore();
-      if (  Get.context != null) {
+      if (Get.context != null) {
         Get.dialog(
           TimesUpDialog(
             score: int.parse(score),
