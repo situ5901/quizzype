@@ -91,6 +91,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       },
     );
   }
+
   void _showExitConfirmationBottomSheet() {
     showModalBottomSheet(
       context: context,

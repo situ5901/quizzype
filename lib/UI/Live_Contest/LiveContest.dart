@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:quizzype001/Common/BoldText.dart';
 import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/Common/PlainText.dart';
+import 'package:quizzype001/UI/GK%20Quiz/ShowScore.dart';
 import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/Live_Contest/controller.dart';
 import 'package:quizzype001/UI/SideBar.dart';
@@ -312,7 +313,7 @@ class _LiveContestState extends State<LiveContest> {
                                     case 1:
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => Class()),
+                                        MaterialPageRoute(builder: (context) => Showscore()),
                                       );
                                       break;
                                     case 2:

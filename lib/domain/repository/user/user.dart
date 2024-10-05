@@ -199,9 +199,6 @@ class UserRepository {
     }
   }
 
-
-
-
 // Service method to get contest id
   Future <bool> postAnswer(String gkQuestionId,String selectedOption,String contestId ) async {
     try {
