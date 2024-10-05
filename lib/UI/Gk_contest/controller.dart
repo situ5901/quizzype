@@ -11,7 +11,6 @@ class GkContestController extends GetxController {
   String balance = "0"; // Initialize with "0"
   var contests = <Contest>[].obs; // List to store contests
   Timer? _timer; // Timer for refreshing contests
-  Timer? _joinTimer; // Timer for joining users
   String? currentuser;
   var db = Get.find<DatabaseService>();
   int _fetchInterval = 1; // Initial fetch interval
@@ -28,7 +27,6 @@ class GkContestController extends GetxController {
   @override
   void onClose() {
     _timer?.cancel(); // Stop the timer when the controller is closed
-    _joinTimer?.cancel(); // Stop the join timer when the controller is closed
     super.onClose();
   }
 
@@ -70,12 +68,6 @@ class GkContestController extends GetxController {
   }
 
   Future<void> checkPlayerStatus(String contestId) async {
-    // Start a timer for 10 seconds to check if a player joins
-    _joinTimer = Timer(Duration(seconds: 10), () {
-      // Redirect to GK questions if no players join
-      Get.offNamed(AppRoutes.gK_Question, arguments: contestId);
-    });
-
     Timer.periodic(Duration(seconds: 1), (timer) async {
       try {
         final contestDetails = await repository.getContestDetail(contestId);
@@ -89,10 +81,9 @@ class GkContestController extends GetxController {
 
           // Check if current user is a player and if there are exactly 2 players
           if (currentContest.players
-              .any((player) => player.fullname == currentuser) &&
+                  .any((player) => player.fullname == currentuser) &&
               currentContest.players.length == 2) {
             timer.cancel(); // Stop polling
-            _joinTimer?.cancel(); // Cancel the join timer
             Get.back(); // This will close the dialog
 
             Get.offNamed(AppRoutes.gK_Question,
