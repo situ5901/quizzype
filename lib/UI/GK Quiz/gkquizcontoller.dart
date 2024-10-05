@@ -95,10 +95,18 @@ class GkQuizController extends GetxController {
         await loadData(); // Load next question
         startTimer(); // Start the timer for the next question
       } else {
+        timer?.cancel(); // Cancel any existing timer to avoid multiple instances
+
         await getScore();
         Get.dialog(
           DoneDialog(
             score: int.parse(score),
+            onTap: (){
+              onClose();
+              Get.back();
+              Get.offNamed(AppRoutes.showscore,arguments: contestId);
+              onClose();
+            },
           ),
           barrierDismissible: false,
         );
@@ -138,6 +146,12 @@ class GkQuizController extends GetxController {
         Get.dialog(
           TimesUpDialog(
             score: int.parse(score),
+            onTap: (){
+
+              Get.back();
+              Get.offNamed(AppRoutes.showscore,arguments: contestId);
+              onClose();
+            },
           ),
           barrierDismissible: false,
         );

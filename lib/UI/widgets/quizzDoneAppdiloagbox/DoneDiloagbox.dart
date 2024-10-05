@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_common/get_reset.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:quizzype001/routes/approutes.dart';
 
 class DoneDialog extends StatefulWidget {
   final int score; // Score to display
+  final VoidCallback onTap;
 
   const DoneDialog({
     Key? key,
     required this.score,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -75,16 +74,12 @@ class _DoneDialogState extends State<DoneDialog> with SingleTickerProviderStateM
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'You have Scored! [${widget.score}]',
+                  'You have scored: ${widget.score}',
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-
-                    Navigator.pop(context);
-                    Get.offNamed(AppRoutes.leaderBoard);
-                  },
+                  onPressed: widget.onTap,
                   child: Text(
                     'OK',
                     style: TextStyle(color: Colors.black),

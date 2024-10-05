@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:get/get_connect/http/src/response/response.dart' as get_response;
+import 'package:quizzype001/model/ContestModel/contest_model.dart';
 
 //import '../../presentation/screen/common/app_dialog/app_dialog.dart';
 import '../../model/Questionmodel/questionModel.dart';

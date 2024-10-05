@@ -7,18 +7,20 @@ import '../../Common/Colors.dart';
 import '../../Common/PlainText.dart';
 import '../../routes/approutes.dart';
 
-class GK_Contest extends StatelessWidget {
+class GK_Contest extends StatefulWidget {
   const GK_Contest({super.key});
 
+  @override
+  State<GK_Contest> createState() => _GK_ContestState();
+}
+
+class _GK_ContestState extends State<GK_Contest> {
   @override
   Widget build(BuildContext context) {
     return GetX<GkContestController>(
       init: GkContestController(),
       builder: (controller) {
-
-        // Filter contests that are online (isFull == false)
         var onlineContests = controller.contests.where((contest) => !contest.isFull).toList();
-
 
         return Scaffold(
           appBar: AppBar(
@@ -47,18 +49,20 @@ class GK_Contest extends StatelessWidget {
                   backgroundColor: Colors.white,
                   child: Image.asset('Assets/Images/Money.png'),
                 ),
-              )
+              ),
             ],
           ),
-          body: onlineContests.isEmpty ? Center(
+          body: onlineContests.isEmpty
+              ? Center(
             child: Text(
               "No contest available",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ): SingleChildScrollView(
+          )
+              : SingleChildScrollView(
             child: Column(
               children: [
-                for (var contest in onlineContests) // Iterate only over online contests
+                for (var contest in onlineContests)
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -74,7 +78,7 @@ class GK_Contest extends StatelessWidget {
                       child: Column(
                         children: [
                           PlainText(
-                            name: '2 PLAYERS - WINNER',
+                            name: 'Join Players ${contest.players.length}',
                             fontsize: 12,
                             color: Colors.black,
                           ),
@@ -98,7 +102,7 @@ class GK_Contest extends StatelessWidget {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.green, // Always green because these are online contests
+                                  color: Colors.green,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 padding: EdgeInsets.all(8),
@@ -110,7 +114,7 @@ class GK_Contest extends StatelessWidget {
                                     ),
                                     SizedBox(width: 5),
                                     Text(
-                                      "Online", // Always online
+                                      "Online",
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
@@ -139,26 +143,32 @@ class GK_Contest extends StatelessWidget {
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Text(
-                                                  '${controller.currentuser}', // Assuming you have currentUser accessible
+                                                  '${controller.currentuser}',
                                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                                 ),
                                               ),
                                               // Center - Lottie Animation
                                               Container(
-                                                width: 100, // Adjust as necessary
+                                                width: 100,
                                                 height: 100,
-                                                child: Lottie.asset('Assets/Images/battle.json'), // Path to your Lottie animation
+                                                child: Lottie.asset('Assets/Images/battle.json'),
                                               ),
                                               // Right Side - Players' Names
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Column(
                                                   children: [
-                                                    for (var player in contest.players) // Assuming players is a list in Contest
-                                                      Text(
-                                                        player.fullname, // Display each player's name
-                                                        style: TextStyle(fontSize: 16),
-                                                      ),
+                                                    // Show dynamic player names
+                                                    Obx(() {
+                                                      return Column(
+                                                        children: [
+
+                                                          // Show waiting message with dots
+                                                          if (controller.players.length < 2)
+                                                            WaitingMessage(),
+                                                        ],
+                                                      );
+                                                    }),
                                                   ],
                                                 ),
                                               ),
@@ -169,15 +179,8 @@ class GK_Contest extends StatelessWidget {
                                     },
                                   );
 
-                                  // Join the game
+                                  // Join the game and start checking player status
                                   controller.joinGame(contest.contestId);
-                                  print(contest.contestId);
-
-                                  // Wait for 8 seconds before navigating to the next screen
-                                  Future.delayed(Duration(seconds: 4), () {
-                                    Navigator.of(context).pop(); // Close the dialog
-                                    Get.toNamed(AppRoutes.gK_Question, arguments: contest.contestId.toString());
-                                  });
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.red,
@@ -205,3 +208,52 @@ class GK_Contest extends StatelessWidget {
     );
   }
 }
+
+// New Widget for Animated Waiting Message
+class WaitingMessage extends StatefulWidget {
+  @override
+  _WaitingMessageState createState() => _WaitingMessageState();
+}
+
+class _WaitingMessageState extends State<WaitingMessage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..repeat(reverse: true); // Repeat the animation
+
+    _animation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Waiting for player"),
+        SizedBox(width: 5),
+        AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return Text(
+              '.' * (1 + (_animation.value * 3).round()),
+              style: TextStyle(fontSize: 16),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+

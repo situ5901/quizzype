@@ -10,6 +10,7 @@ import 'package:quizzype001/UI/userProfie/userProfile.dart';
 
 import '../UI/Auth/login/Login.dart';
 import '../UI/Auth/otp/Otp.dart';
+import '../UI/GK Quiz/ShowScore.dart';
 import '../UI/HomeScreen/Home.dart';
 import '../UI/LeaderBoard/Leaderboard.dart';
 import '../UI/Navbar.dart';
@@ -31,6 +32,7 @@ class AppRoutes{
   static const contestDetails = '/Contest_details';
   static const dailyContest = '/DailyContest';
   static const addCash = '/Add_Cash';
+  static const showscore = '/ShowScore.dart';
 
 
 
@@ -47,6 +49,7 @@ class AppRoutes{
     GetPage(name: contestDetails, page: () =>   ContestDetails()),
     GetPage(name: dailyContest, page: () =>   DailyContest()),
     GetPage(name: addCash, page: () =>   ADD_CASh()),
+    GetPage(name: showscore, page: () =>   Showscore()),
 
   ];
 }

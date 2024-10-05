@@ -318,9 +318,7 @@ class UserApi {
     required String contestId,
     required String combineID1,
     required String combineID2,
-    required String amount,
-
-    required String name}) async {
+    required String amount,}) async {
     try {
       final response = await dio.post(
         '$basePath/game/compare',
@@ -339,7 +337,7 @@ class UserApi {
       );
       return response;
     } catch (e) {
-      print("Error fetching : $e");
+      print("Error fetching winner: $e");
       rethrow;
     }
   }
@@ -413,6 +411,27 @@ class UserApi {
       return response;
     } catch (e) {
       print("Error fetching to score: $e");
+      rethrow;
+    }
+  }
+
+
+
+  Future<Response> getContestDetails(
+      {required String token,required String contestId }) async {
+    try {
+      final response = await dio.get(
+        '$basePath/contestdata?id=$contestId',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching to Details: $e");
       rethrow;
     }
   }

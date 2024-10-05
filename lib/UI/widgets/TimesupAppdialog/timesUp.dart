@@ -6,10 +6,11 @@ import '../../../routes/approutes.dart';
 
 class TimesUpDialog extends StatefulWidget {
   final int score; // Score to display
+  final VoidCallback onTap;
 
   const TimesUpDialog({
     Key? key,
-    required this.score,
+    required this.score, required this.onTap,
   }) : super(key: key);
 
   @override
@@ -73,11 +74,7 @@ class _TimesUpDialogState extends State<TimesUpDialog> with SingleTickerProvider
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-
-                  Get.offNamed(AppRoutes.leaderBoard);
-                },
+                onPressed: widget.onTap,
                 child: Text(
                   'OK',
                   style: TextStyle(color: Colors.white),

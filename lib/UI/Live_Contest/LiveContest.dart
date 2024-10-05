@@ -12,6 +12,7 @@ import 'package:quizzype001/UI/GK%20Quiz/ShowScore.dart';
 import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/Live_Contest/controller.dart';
 import 'package:quizzype001/UI/SideBar.dart';
+import 'package:quizzype001/routes/approutes.dart';
 
 import '../../model/leaderboard/leaderBoard.dart';
 import '../Addcash/Add_CASH.dart';
@@ -311,10 +312,7 @@ class _LiveContestState extends State<LiveContest> {
                                       );
                                       break;
                                     case 1:
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => Showscore()),
-                                      );
+                                      Get.toNamed(AppRoutes.showscore,arguments:"67010e080e0e156aee8829fb");
                                       break;
                                     case 2:
                                       Navigator.push(
