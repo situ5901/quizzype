@@ -43,115 +43,143 @@ class Showscore extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20), // Add space between text and container
-                Container(
-                  height: 250,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16.0),
-                  margin: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Score here",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(Icons.person, size: 50, color: Colors.white),
-                              const SizedBox(height: 8),
-                              Text(
-                                controller.winnerName, // Remove const
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          // Lottie Animation
-                          SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Lottie.asset(
-                              'Assets/Images/battle.json',
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(Icons.person, size: 50, color: Colors.white),
-                              const SizedBox(height: 8),
-                              Text(
-                                controller.loserName, // Remove const
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                        height: 60,
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12.0),
+
+                // If less than 2 players, show waiting message
+                if (controller.contest.players.length < 2)
+                  Text(
+                    "Waiting for another player...",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                else // Otherwise, show game result container
+                  Container(
+                    height: 250,
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16.0),
+                    margin: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Score here",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        child: Row(
+                        const SizedBox(height: 10),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                Icon(Icons.person, size: 50, color: Colors.white),
+                                const SizedBox(height: 8),
                                 Text(
-                                  "Score(${controller.winnerScore})", // Remove const
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const Text(
-                                  "Winner",
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  controller.winnerName, // Winner's name
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ],
                             ),
+                            // Lottie Animation
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Lottie.asset(
+                                'Assets/Images/battle.json',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                Icon(Icons.person, size: 50, color: Colors.white),
+                                const SizedBox(height: 8),
                                 Text(
-                                  "Score(${controller.loserScore})", // Remove const
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const Text(
-                                  "Fail",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  controller.loserName, // Loser's name
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 10),
+                        Container(
+                          height: 60,
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Score(${controller.winnerScore})", // Winner's score
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Winner",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Score(${controller.loserScore})", // Loser's score
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Fail",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+
+                // Show the message when the other player loses
+                if (controller.contest.players.length == 2 &&
+                    controller.loserScore > 0)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${controller.loserName} has lost the game.",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+
                 const SizedBox(height: 20), // Space between container and button
                 ElevatedButton(
                   onPressed: () {
