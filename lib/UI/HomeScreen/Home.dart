@@ -349,6 +349,7 @@ class _HomeState extends State<Home> {
                                 SizedBox(height: 10), // Add spacing between the text and button
                                 ElevatedButton(
                                   onPressed: () {
+
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -380,7 +381,6 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 )
-
               ],
             ),
           ),

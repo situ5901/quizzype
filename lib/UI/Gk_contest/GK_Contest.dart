@@ -15,12 +15,10 @@ class GK_Contest extends StatelessWidget {
     return GetX<GkContestController>(
       init: GkContestController(),
       builder: (controller) {
-        if (controller.contests.isEmpty) {
-          return Center(child: CircularProgressIndicator()); // Show loading indicator
-        }
 
         // Filter contests that are online (isFull == false)
         var onlineContests = controller.contests.where((contest) => !contest.isFull).toList();
+
 
         return Scaffold(
           appBar: AppBar(
@@ -52,7 +50,12 @@ class GK_Contest extends StatelessWidget {
               )
             ],
           ),
-          body: SingleChildScrollView(
+          body: onlineContests.isEmpty ? Center(
+            child: Text(
+              "No contest available",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ): SingleChildScrollView(
             child: Column(
               children: [
                 for (var contest in onlineContests) // Iterate only over online contests
@@ -170,8 +173,8 @@ class GK_Contest extends StatelessWidget {
                                   controller.joinGame(contest.contestId);
                                   print(contest.contestId);
 
-                                  // Wait for 2 seconds before navigating to the next screen
-                                  Future.delayed(Duration(seconds: 2), () {
+                                  // Wait for 8 seconds before navigating to the next screen
+                                  Future.delayed(Duration(seconds: 4), () {
                                     Navigator.of(context).pop(); // Close the dialog
                                     Get.toNamed(AppRoutes.gK_Question, arguments: contest.contestId.toString());
                                   });
