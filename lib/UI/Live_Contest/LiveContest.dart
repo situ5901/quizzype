@@ -8,16 +8,13 @@ import 'package:get/get.dart';
 import 'package:quizzype001/Common/BoldText.dart';
 import 'package:quizzype001/Common/Colors.dart';
 import 'package:quizzype001/Common/PlainText.dart';
-import 'package:quizzype001/UI/GK%20Quiz/ShowScore.dart';
 import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/Live_Contest/controller.dart';
 import 'package:quizzype001/UI/SideBar.dart';
 import 'package:quizzype001/routes/approutes.dart';
-
 import '../../model/leaderboard/leaderBoard.dart';
 import '../Addcash/Add_CASH.dart';
 import '../Collage_Student/Collage_Student.dart';
-import '../1-12Class.dart';
 import '../Competitive.dart';
 
 class LiveContest extends StatefulWidget {
@@ -80,7 +77,6 @@ class _LiveContestState extends State<LiveContest> {
     return GetBuilder(
         init: LiveController(),
         builder: (controller){
-
           return Scaffold(
             drawer: SideBar(),
             appBar: AppBar(

@@ -12,14 +12,16 @@ class GkContestController extends GetxController {
   var contests = <Contest>[].obs; // List to store contests
   Timer? _timer; // Timer for refreshing contests
   String? currentuser;
+  String? currentusername;
   var db = Get.find<DatabaseService>();
   int _fetchInterval = 1; // Initial fetch interval
   var players = <String>[].obs; // List to store players in the contest
-
+bool showWaitingMessage =true;
   @override
   void onInit() {
     super.onInit();
-    currentuser = db.user!.fullname;
+    currentuser = db.user!.id;
+    currentusername = db.user!.fullname;
     load();
     getContest(); // Fetch contests initially
   }
@@ -67,7 +69,8 @@ class GkContestController extends GetxController {
     }
   }
 
-  Future<void> checkPlayerStatus(String contestId) async {
+  // In your controller or the relevant place
+  void checkPlayerStatus(String contestId) async {
     Timer.periodic(Duration(seconds: 1), (timer) async {
       try {
         final contestDetails = await repository.getContestDetail(contestId);
@@ -76,18 +79,23 @@ class GkContestController extends GetxController {
           var currentContest = contestDetails.contests.first;
 
           // Update players list
-          players.value =
-              currentContest.players.map((player) => player.fullname).toList();
+          players.value = currentContest.players.map((player) => player.fullname).toList();
 
-          // Check if current user is a player and if there are exactly 2 players
-          if (currentContest.players
-                  .any((player) => player.fullname == currentuser) &&
-              currentContest.players.length == 2) {
+          // Check if there are 2 players, including the current user
+          if (currentContest.players.length == 2 &&
+              currentContest.players.any((player) => player.combineId == currentuser)) {
             timer.cancel(); // Stop polling
-            Get.back(); // This will close the dialog
 
-            Get.offNamed(AppRoutes.gK_Question,
-                arguments: contestId); // Navigate to GK questions
+            // Wait for 3 seconds and then navigate
+            Future.delayed(Duration(seconds: 3), () {
+              Get.back(); // Close the dialog
+              Get.offNamed(AppRoutes.gK_Question, arguments: contestId); // Navigate to GK questions
+            });
+          }
+
+          // Update the waiting message state
+          if (currentContest.players.length >= 2) {
+            showWaitingMessage = false; // Update this variable in your controller
           }
         }
       } catch (e) {
@@ -95,6 +103,7 @@ class GkContestController extends GetxController {
       }
     });
   }
+
 
   Future<void> joinGame(String contestId) async {
     try {

@@ -6,6 +6,7 @@ import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../../Common/PlainText.dart';
 import '../../routes/approutes.dart';
+import '../../model/ContestModel/contest_model.dart';
 
 class GK_Contest extends StatefulWidget {
   const GK_Contest({super.key});
@@ -15,6 +16,36 @@ class GK_Contest extends StatefulWidget {
 }
 
 class _GK_ContestState extends State<GK_Contest> {
+
+  // Confirmation Dialog on Exit
+  Future<void> _showExitConfirmation(BuildContext context) async {
+    final exit = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Exit Confirmation'),
+          content: Text('You lost the game. If you exit, do you want to continue?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false), // Do not exit
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true), // Exit
+              child: Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (exit == true) {
+      // Handle the exit logic here
+      // For example, pop the current screen or navigate back
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetX<GkContestController>(
@@ -124,55 +155,97 @@ class _GK_ContestState extends State<GK_Contest> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
+                                  String contestId = contest.contestId; // Ensure contest is defined
+
                                   // Show the dialog
                                   showDialog(
                                     context: context,
+                                    barrierDismissible: false,
                                     builder: (BuildContext context) {
                                       return Dialog(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(20),
                                         ),
                                         elevation: 16,
-                                        child: Container(
-                                          width: double.maxFinite,
-                                          height: 250,
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              // Left Side - Current User Name
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  '${controller.currentuser}',
-                                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                      child:  WillPopScope( // Intercept back button press
+                                          onWillPop: () async {
+                                            // Show a confirmation dialog when the user tries to exit
+                                            bool shouldExit = await showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: Text("Exit Game"),
+                                                content: Text("You will lose the game if you exit. Do you want to proceed?"),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () => Navigator.of(context).pop(false), // Don't exit
+                                                    child: Text("No"),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () => Navigator.of(context).pop(true), // Exit
+                                                    child: Text("Yes"),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                            return shouldExit; // Return true to exit, false to stay in the game
+                                          },
+                                          child: Container(
+                                            width: double.maxFinite,
+                                            height: 250,
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                // Display the current user's name at the top
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    '${controller.currentusername}',
+                                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                                  ),
                                                 ),
-                                              ),
-                                              // Center - Lottie Animation
-                                              Container(
-                                                width: 100,
-                                                height: 100,
-                                                child: Lottie.asset('Assets/Images/battle.json'),
-                                              ),
-                                              // Right Side - Players' Names
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  children: [
-                                                    // Show dynamic player names
-                                                    Obx(() {
-                                                      return Column(
-                                                        children: [
+                                                // Lottie Animation
+                                                Container(
+                                                  width: 100,
+                                                  height: 100,
+                                                  child: Lottie.asset('Assets/Images/battle.json'),
+                                                ),
+                                                // Dynamic Player Names and Waiting Message
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    children: [
+                                                      // Show dynamic player names with waiting message
+                                                      Obx(() {
+                                                        // Retrieve and sort the players based on contestId
+                                                        List<Player> sortedPlayers = controller.contests
+                                                            .firstWhere((contest) => contest.contestId == contestId)
+                                                            .players;
 
-                                                          // Show waiting message with dots
-                                                          if (controller.players.length < 2)
-                                                            WaitingMessage(),
-                                                        ],
-                                                      );
-                                                    }),
-                                                  ],
+                                                        // Sort players to display the current user at the top
+                                                        sortedPlayers.sort((a, b) {
+                                                          if (a.combineId == controller.currentuser) return -1;
+                                                          if (b.combineId == controller.currentuser) return 1;
+                                                          return 0;
+                                                        });
+
+                                                        return Column(
+                                                          children: [
+                                                            for (var player in sortedPlayers)
+                                                              Text(
+                                                                player.fullname,
+                                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                                              ),
+                                                            if (sortedPlayers.length < 2 && controller.showWaitingMessage)
+                                                              WaitingMessage(), // This condition checks the waiting message visibility
+                                                          ],
+                                                        );
+                                                      }),
+
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       );
@@ -180,7 +253,7 @@ class _GK_ContestState extends State<GK_Contest> {
                                   );
 
                                   // Join the game and start checking player status
-                                  controller.joinGame(contest.contestId);
+                                  controller.joinGame(contestId); // Ensure joinGame is functioning properly
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.red,
@@ -193,6 +266,8 @@ class _GK_ContestState extends State<GK_Contest> {
                                   ),
                                 ),
                               ),
+
+
                             ],
                           ),
                         ],
