@@ -7,6 +7,7 @@ import '../../model/Questionmodel/questionModel.dart';
 import '../../routes/approutes.dart';
 import '../widgets/TimesupAppdialog/timesUp.dart';
 import '../widgets/quizzDoneAppdiloagbox/DoneDiloagbox.dart';
+import '../../model/ContestModel/contest_model.dart';
 
 class GkQuizController extends GetxController {
   QuizQuestion? quizQuestion;
@@ -19,11 +20,11 @@ class GkQuizController extends GetxController {
   String score = "0";
 
   Timer? timer;
-  int timeLeft = 15; // 15 seconds per question
+  int timeLeft = 8; // 8 seconds per question
   double progress = 1.0;
-  int questionNumber = 1;  // Current question number
+  int questionNumber = 1; // Current question number
   bool isQuizCompleted = false;
-
+   Contest? contest; // To hold contest details
   // Store the contest ID
   String? contestId;
 
@@ -31,10 +32,11 @@ class GkQuizController extends GetxController {
   void onInit() {
     super.onInit();
     // Retrieve the contest ID from the arguments
-    contestId = Get.arguments ; // Assuming contest ID is passed as String
+    contestId = Get.arguments; // Assuming contest ID is passed as String
     print("Contest ID: $contestId"); // For debugging
-    loadData();
-    startTimer();
+    loadData().then((_) {
+      startTimer(); // Start the timer after loading data
+    });
   }
 
   @override
@@ -58,7 +60,7 @@ class GkQuizController extends GetxController {
     if (gkQuestionId != null && selectedOption != null) {
       try {
         print("Posting answer: $selectedOption for question ID: $gkQuestionId");
-        await repository.postAnswer(gkQuestionId!, selectedOption!,contestId!);
+        await repository.postAnswer(gkQuestionId!, selectedOption!, contestId!);
       } catch (e) {
         print("Error posting answer: $e");
       }
@@ -68,13 +70,15 @@ class GkQuizController extends GetxController {
   }
 
   Future<void> loadData() async {
+    getContestDetails();
     await Future.wait([getNextQuestion()]);
     isLoading = false;
     update();
   }
 
   Future<void> getNextQuestion() async {
-    await getQuestion();
+    await getQuestion(); // Fetch the question
+    startTimer(); // Start the timer for the new question
   }
 
   void selectOption(String option) {
@@ -101,11 +105,10 @@ class GkQuizController extends GetxController {
         Get.dialog(
           DoneDialog(
             score: int.parse(score),
-            onTap: (){
+            onTap: () {
               onClose();
               Get.back();
-              Get.offNamed(AppRoutes.showscore,arguments: contestId);
-              onClose();
+              Get.offNamed(AppRoutes.showscore, arguments: contestId);
             },
           ),
           barrierDismissible: false,
@@ -116,7 +119,8 @@ class GkQuizController extends GetxController {
   }
 
   void startTimer() {
-    timeLeft = 15; // Reset to 15 seconds
+    print("Starting timer...");
+    timeLeft = 8; // Reset to 8 seconds
     progress = 1.0; // Reset progress
 
     timer?.cancel(); // Cancel any existing timer to avoid multiple instances
@@ -124,7 +128,7 @@ class GkQuizController extends GetxController {
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (timeLeft > 0) {
         timeLeft--; // Decrease time
-        progress = timeLeft / 15; // Update progress
+        progress = timeLeft / 8; // Update progress
         update();
       } else {
         // Handle time up
@@ -146,10 +150,9 @@ class GkQuizController extends GetxController {
         Get.dialog(
           TimesUpDialog(
             score: int.parse(score),
-            onTap: (){
-
+            onTap: () {
               Get.back();
-              Get.offNamed(AppRoutes.showscore,arguments: contestId);
+              Get.offNamed(AppRoutes.showscore, arguments: contestId);
               onClose();
             },
           ),
@@ -157,5 +160,12 @@ class GkQuizController extends GetxController {
         );
       }
     }
+  }
+
+  Future<void> getContestDetails() async {
+    final contestDetails = await repository.getContestDetail(contestId!);
+    contest = contestDetails.contests.first; // Assuming we only care about the first contest
+    update(); // Update the UI after fetching details
+    isLoading = false;
   }
 }

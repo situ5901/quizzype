@@ -308,7 +308,7 @@ class _LiveContestState extends State<LiveContest> {
                                       );
                                       break;
                                     case 1:
-                                      Get.toNamed(AppRoutes.showscore,arguments:"67010e080e0e156aee8829fb");
+                                      Get.toNamed(AppRoutes.gK_Question,arguments:"670242c4d7fffe03d6e187e5");
                                       break;
                                     case 2:
                                       Navigator.push(

@@ -53,6 +53,7 @@ class _GK_ContestState extends State<GK_Contest> {
       builder: (controller) {
         var onlineContests = controller.contests.where((contest) => !contest.isFull).toList();
 
+
         return Scaffold(
           appBar: AppBar(
             backgroundColor: appColor,
@@ -83,7 +84,11 @@ class _GK_ContestState extends State<GK_Contest> {
               ),
             ],
           ),
-          body: onlineContests.isEmpty
+          body:  controller.isLoading
+              ? Center(
+            child: CircularProgressIndicator(), // Show loading spinner while loading
+          )
+              :onlineContests.isEmpty
               ? Center(
             child: Text(
               "No contest available",

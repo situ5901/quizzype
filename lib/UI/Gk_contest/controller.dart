@@ -12,6 +12,8 @@ class GkContestController extends GetxController {
   var contests = <Contest>[].obs; // List to store contests
   Timer? _timer; // Timer for refreshing contests
   String? currentuser;
+
+  bool isLoading = true;
   String? currentusername;
   var db = Get.find<DatabaseService>();
   int _fetchInterval = 1; // Initial fetch interval
@@ -58,13 +60,19 @@ bool showWaitingMessage =true;
           contests.value = newContests;
           print("Contests fetched: ${contests.length}");
           _fetchInterval = 10; // Reset interval on new data
+          isLoading = false;
         } else {
           _fetchInterval = (_fetchInterval * 2).clamp(30, 120);
+          isLoading = false;
         }
       } else {
         print("No contests found");
+        isLoading = false;
       }
+      isLoading = false;
+
     } catch (e) {
+      isLoading = false;
       print("Error fetching Contest: $e");
     }
   }
