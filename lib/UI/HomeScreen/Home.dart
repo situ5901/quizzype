@@ -3,20 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:quizzype001/Common/BoldText.dart';
-import 'package:quizzype001/Common/PlainText.dart';
-import 'package:quizzype001/Common/TapButton.dart';
-import 'package:quizzype001/UI/DailyContest.dart';
+import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/HomeScreen/controller.dart';
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/MegaContest.dart';
 import 'package:quizzype001/UI/SideBar.dart';
-import 'package:quizzype001/domain/repository/repository_imports.dart';
 import 'package:quizzype001/domain/service/app/app_service_imports.dart';
 import '../../Common/Colors.dart';
 import '../../routes/approutes.dart';
-import '../Addcash/Add_CASH.dart';
 import '../PracticeContest.dart';
-import '../School/Schoolcontest.dart';
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -248,7 +244,7 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    height: 410,
+                    height: 430,
                     child: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -277,21 +273,21 @@ class _HomeState extends State<Home> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MegaContest()),
+                                      builder: (context) => MEGACONTEST()),
                                 );
                                 break;
                               case 2:
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => DailyContest()),
+                                      builder: (context) => GK_Contest()),
                                 );
                                 break;
                               case 3:
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PracticeCont()),
+                                      builder: (context) => practiceContest()),
                                 );
                                 break;
                               default:
@@ -314,8 +310,45 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
+                InkWell(
+                  onTap: () {
+                    print("Container pressed!"); // Print before navigation
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => practiceContest(), // Ensure the context is passed
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 80,
+                    margin: EdgeInsets.all(10),
+                    width: double.infinity,
+                    padding: EdgeInsets.all(10), // Add padding
+                    decoration: BoxDecoration(
+                      color: Colors.blue, // Set background color
+                      borderRadius: BorderRadius.circular(12), // Add border radius
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center, // Center the row content
+                        children: [
+                          Icon(Icons.star, color: Colors.white), // Add icon
+                          SizedBox(width: 8), // Add space between icon and text
+                          Text(
+                            "Practice contest",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(
-                  height: 12,
+                  height: 2,
                 ),
                 Container(
                   width: double.infinity,
@@ -344,25 +377,11 @@ class _HomeState extends State<Home> {
                                 ),
                                 Text(
                                   'Time 60s',
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.blue.shade600),
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue.shade600),
                                 ),
                                 SizedBox(height: 10), // Add spacing between the text and button
-                                ElevatedButton(
-                                  onPressed: () {
 
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SchoolContest(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red, // Set background color to red
-                                  ),
-                                  child: Text('Join Contest',
-                                  style: TextStyle(color: Colors.white),),
-                                ),
+                                // ElevatedButton added here
                               ],
                             ),
                           ),

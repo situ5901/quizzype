@@ -1,100 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:quizzype001/Common/BoldText.dart';
-import 'package:quizzype001/Common/Colors.dart';
-import 'package:quizzype001/Common/PlainText.dart';
-import 'package:quizzype001/Common/TapButton.dart';
+import 'package:lottie/lottie.dart';
+import 'package:share_plus/share_plus.dart';
 
-class Shareing extends StatefulWidget {
+void main() {
+  runApp(const Shareing());
+}
+
+class Shareing extends StatelessWidget {
   const Shareing({super.key});
 
   @override
-  State<Shareing> createState() => _ShareingState();
-}
-
-class _ShareingState extends State<Shareing> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: BoldText(name: "INVITE FRIENDS",color: boxColor,fontsize: 22,),
-        leading: InkWell(
-          onTap:(){
-            Get.back();
-          },
-          child: CircleAvatar(
-            radius: 20,
-            child:Icon(Icons.arrow_back_outlined),
-          ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // Remove debug banner
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Shareing Page',
+            style: TextStyle(color: Colors.white),
+          ), // AppBar title
+          backgroundColor: Colors.blue,
         ),
-      ),
-      body: Padding(padding: EdgeInsets.symmetric(horizontal: 12),
-       child: SingleChildScrollView(
+        body: Center( // Center the entire column
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center, // Center children vertically
             children: [
-              SizedBox(
-                height: 16,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 250,
+                  width: 250, // Set a width for the container
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Lottie.asset(
+                    'Assets/Images/share.json',
+                    fit: BoxFit.fill, // Ensure the animation fills the container
+                  ),
+                ),
               ),
               Container(
-                height: 350,
-                width: double.infinity,
-                child: Image.asset("Assets/Images/gipy.jpg",fit: BoxFit.fill,)
+                child: Text("ESHJSKLSDGER",style: TextStyle(fontSize: 20),),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Center(
-                child: BoldText(
-                  name:'YOUR INVITE CODE',fontsize: 22,color: boxColor,
-                ),
-              ),
-                SizedBox(
-                  height: 16,
-                ),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border:Border.all(
-                      style: BorderStyle.solid
+              const SizedBox(height: 20), // Space between the container and button
+              ElevatedButton(
+                onPressed: () {
+                  Share.share('com.example.quizzype001');
 
-                    )
-                  ),
-                  height: 60,
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BoldText(name: "  AHUVUEHBCK2S              |", fontsize:22,color: Colors.black,),
-                     Icon(Icons.copy,color: Colors.black,)
-                    ],
-                  ),
-                ),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Invite link shared!'),
+                    ),
+                  );
+                },
+                child: const Text('Share'), // Button text
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Center(
-                child: BoldText(
-                  name:'SEND AN INVITE',fontsize: 22,color: boxColor,
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              PlainText(name: "send an invite to your friend and earn \n            bonus each time", fontsize: 16,color:Colors.grey,)
-              ,SizedBox(
-                height: 16,
-              ),
-              RoundedButton(buttonColor: Colors.yellow,
-                  title: "INVITE NEW FRIEND", textColor:boxColor,fontsize: 22,onTap: (){
-
-              })
-
             ],
           ),
-        )
+        ),
       ),
     );
   }

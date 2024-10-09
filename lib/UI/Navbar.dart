@@ -8,7 +8,6 @@ import 'package:quizzype001/UI/Live_Contest/LiveContest.dart';
 import '../Common/Colors.dart';
 import 'Gift_Voucher.dart';
 import 'Share&Earn.dart';
-import 'Shareing.dart';
 
 void main() {
   runApp(

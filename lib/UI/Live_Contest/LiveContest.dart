@@ -13,6 +13,7 @@ import 'package:quizzype001/UI/Live_Contest/controller.dart';
 import 'package:quizzype001/UI/SideBar.dart';
 import 'package:quizzype001/routes/approutes.dart';
 import '../../model/leaderboard/leaderBoard.dart';
+import '../1-12Class.dart';
 import '../Addcash/Add_CASH.dart';
 import '../Collage_Student/Collage_Student.dart';
 import '../Competitive.dart';
@@ -308,7 +309,10 @@ class _LiveContestState extends State<LiveContest> {
                                       );
                                       break;
                                     case 1:
-                                      Get.toNamed(AppRoutes.gK_Question,arguments:"670242c4d7fffe03d6e187e5");
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Class()),
+                                      );
                                       break;
                                     case 2:
                                       Navigator.push(

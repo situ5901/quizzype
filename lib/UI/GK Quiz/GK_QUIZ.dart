@@ -6,6 +6,7 @@ import 'package:quizzype001/UI/GK%20Quiz/gkquizcontoller.dart';
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 
+
 class GK_QUIZ extends StatefulWidget {
   const GK_QUIZ({super.key});
 
@@ -126,24 +127,13 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       },
       child: GetBuilder<GkQuizController>(
         builder: (controller) {
-          // Check if contest or players is null
-          if (controller.contest == null || controller.contest!.players == null) {
-            return Center(child: CircularProgressIndicator());
-          }
-
           final correctAnswer = controller.quizQuestion?.correctAnswer;
-          final players = controller.contest!.players;
-
-          // Check if quizQuestion is null
-          if (controller.quizQuestion == null) {
-            return Center(child: Text("No question available."));
-          }
-
           return Scaffold(
             appBar: AppBar(
               backgroundColor: appColor,
               centerTitle: true,
-              title: BoldText(name: "GK QUIZ", fontsize: 22, color: Colors.white),
+              title:
+                  BoldText(name: "GK QUIZ", fontsize: 22, color: Colors.white),
               leading: Icon(Icons.menu, color: Colors.white),
               actions: [
                 Padding(
@@ -155,13 +145,15 @@ class _GK_QUIZState extends State<GK_QUIZ> {
                         height: 40,
                         width: 40,
                         child: CircularProgressIndicator(
-                          value: controller.progress,
+                          value: controller
+                              .progress, // The progress value for the timer
                           backgroundColor: Colors.grey,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.blue),
                         ),
                       ),
                       Text(
-                        '${controller.timeLeft}',
+                        '${controller.timeLeft}', // Display the remaining time in seconds
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -175,111 +167,108 @@ class _GK_QUIZState extends State<GK_QUIZ> {
             body: controller.isLoading
                 ? Center(child: CircularProgressIndicator())
                 : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    height: 100,
-                    width: double.infinity,
-                    color: appColor,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        BoldText(
-                          name: '${players[0].fullname} vs ${players[1].fullname}',
-                          color: Colors.white,
-                          fontsize: 18,
+                        Container(
+                          height: 100,
+                          width: double.infinity,
+                          color: appColor,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(10, (index) {
+                                  return Icon(
+                                    Icons.circle,
+                                    color: index < controller.questionNumber
+                                        ? Colors.yellow
+                                        : Colors.white,
+                                  );
+                                }),
+                              ),
+                              SizedBox(height: 8),
+                              BoldText(
+                                name: '${controller.questionNumber} out of 10',
+                                color: Colors.white,
+                                fontsize: 16,
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(10, (index) {
-                            return Icon(
-                              Icons.circle,
-                              color: index < controller.questionNumber
-                                  ? Colors.yellow
-                                  : Colors.white,
-                            );
-                          }),
-                        ),
-                        SizedBox(height: 8),
-                        BoldText(
-                          name: '${controller.questionNumber} out of 10',
-                          color: Colors.white,
-                          fontsize: 16,
-                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 16),
+                              Container(
+                                width: double.infinity, // Full width
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.blue,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(
+                                      10.0), // Add some padding for better appearance
+                                  child: Text(
+                                    "Q${controller.questionNumber}. ${controller.quizQuestion?.question ?? ''}", // Prefix "Q."
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    softWrap:
+                                        true, // Allows text to wrap within container width
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 12),
+                              _buildListAnswer(
+                                controller.quizQuestion?.options ?? [],
+                                _handleOptionSelection,
+                                selectedOption,
+                                correctAnswer, // Pass the correct answer here
+                              ),
+                              SizedBox(height: 16),
+                              Align(
+                                alignment: Alignment.center,
+                                child: isAnswerSelected
+                                    ? GestureDetector(
+                                        onTap: _handleNextQuestion,
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10.0, horizontal: 15.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.grey,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                          child: BoldText(
+                                            name: "NEXT",
+                                            color: Colors.black,
+                                            fontsize: 20,
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox
+                                        .shrink(), // Hide button if no answer is selected
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 16),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 2,
-                              color: Colors.blue,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Text(
-                              "Q${controller.questionNumber}. ${controller.quizQuestion?.question ?? ''}",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              softWrap: true,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 12),
-                        _buildListAnswer(
-                          controller.quizQuestion?.options ?? [],
-                          _handleOptionSelection,
-                          selectedOption,
-                          correctAnswer,
-                        ),
-                        SizedBox(height: 16),
-                        Align(
-                          alignment: Alignment.center,
-                          child: isAnswerSelected
-                              ? GestureDetector(
-                            onTap: _handleNextQuestion,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 15.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius:
-                                  BorderRadius.circular(15)),
-                              child: BoldText(
-                                name: "NEXT",
-                                color: Colors.black,
-                                fontsize: 20,
-                              ),
-                            ),
-                          )
-                              : SizedBox.shrink(),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
           );
         },
       ),
     );
   }
-
 }
 
 Widget _buildListAnswer(List<String> options, Function(String) onSelected,
@@ -302,21 +291,21 @@ Widget _buildListAnswer(List<String> options, Function(String) onSelected,
           decoration: BoxDecoration(
             color: isSelected
                 ? isOptionCorrect
-                ? Colors.green.withOpacity(0.1) // Green for correct answer
-                : Colors.red.withOpacity(0.1) // Red for wrong answer
+                    ? Colors.green.withOpacity(0.1) // Green for correct answer
+                    : Colors.red.withOpacity(0.1) // Red for wrong answer
                 : (showCorrectAnswer && isOptionCorrect)
-                ? Colors.green.withOpacity(
-                0.1) // Green for correct answer when wrong answer is selected
-                : Colors.transparent,
+                    ? Colors.green.withOpacity(
+                        0.1) // Green for correct answer when wrong answer is selected
+                    : Colors.transparent,
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(
               color: isSelected
                   ? isOptionCorrect
-                  ? Colors.green
-                  : Colors.red
+                      ? Colors.green
+                      : Colors.red
                   : (showCorrectAnswer && isOptionCorrect)
-                  ? Colors.green
-                  : Colors.grey,
+                      ? Colors.green
+                      : Colors.grey,
               width: 2.0,
             ),
           ),
@@ -327,23 +316,29 @@ Widget _buildListAnswer(List<String> options, Function(String) onSelected,
               Text(
                 "${index + 1}.", // Displaying index + 1 for numbering
                 style: TextStyle(
-                  fontSize: 18,
-                  color: isSelected
-                      ? (isOptionCorrect
-                      ? Colors.green
-                      : Colors.red)
-                      : Colors.black,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: 8),
+              SizedBox(width: 10.0), // Add space between number and option
+
+              // Answer text part
               Expanded(
                 child: Text(
                   option,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.0,
                     color: isSelected
-                        ? (isOptionCorrect ? Colors.green : Colors.red)
-                        : Colors.black,
+                        ? isOptionCorrect
+                            ? Colors.green
+                            : Colors.red
+                        : (showCorrectAnswer && isOptionCorrect)
+                            ? Colors.green
+                            : Colors.black,
+                    fontWeight:
+                        isSelected || (showCorrectAnswer && isOptionCorrect)
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                   ),
                 ),
               ),

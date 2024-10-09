@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:quizzype001/UI/GK%20Quiz/scoreController.dart'; // Import Lottie package
+import 'package:quizzype001/UI/GK%20Quiz/scoreController.dart';
+
+import '../LeaderBoard/Leaderboard.dart'; // Import Lottie package
 
 void main() {
   runApp(const Showscore());
@@ -183,8 +185,12 @@ class Showscore extends StatelessWidget {
                 const SizedBox(height: 20), // Space between container and button
                 ElevatedButton(
                   onPressed: () {
-                    print("Button Pressed!");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Leaderboard()), // Replace 'NewPage' with your target screen widget.
+                    );
                   },
+
                   child: const Text(
                     "Next Round",
                     style: TextStyle(color: Colors.white),

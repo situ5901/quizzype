@@ -48,15 +48,44 @@ class _LeaderboardState extends State<Leaderboard> {
                     ),
                   ),
 
-                  // Show the current user's rank if available
+                  // Show the current user's rank and score if available
                   if (controller.currentUserRank.value != -1)
-                    Container(
-                      color: Colors.greenAccent,
-                      padding: EdgeInsets.all(16),
-                      child: Text(
-                        "Your Rank: ${controller.currentUserRank.value}",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(16), // Adds padding around the Row
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center, // Centers the items horizontally
+                            children: [
+                              // Rank container
+                              Container(
+                                padding: EdgeInsets.all(16),
+                                margin: EdgeInsets.only(right: 8), // Adds space between rank and score
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(12), // Adding rounded corners
+                                ),
+                                child: Text(
+                                  "Your Rank: ${controller.currentUserRank.value}",
+                                  style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              // Score container
+                              Container(
+                                padding: EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(12), // Adding rounded corners
+                                ),
+                                child: Text(
+                                  "Your Score: ${controller.currentUserScore.value}",
+                                  style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     )
                   else
                     Container(
@@ -81,7 +110,8 @@ class _LeaderboardState extends State<Leaderboard> {
                         controller.leaderboardData.length,
                             (index) {
                           final user = controller.leaderboardData[index];
-                          bool isCurrentUser = user.combineId.trim() == Get.find<DatabaseService>().user?.id?.trim();
+                          bool isCurrentUser = user.combineId.trim() ==
+                              Get.find<DatabaseService>().user?.id?.trim();
 
                           return DataRow(
                             // Highlight the current user's row with a different color

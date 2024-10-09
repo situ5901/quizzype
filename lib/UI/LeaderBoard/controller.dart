@@ -2,10 +2,12 @@ import 'package:get/get.dart';
 import '../../domain/repository/repository_imports.dart';
 import '../../domain/service/app/app_service_imports.dart';
 import '../../model/leaderboard/leaderBoard.dart';
+
 class LeaderboardController extends GetxController {
   var isLoading = true.obs;
   var leaderboardData = <TopUser>[].obs;
   var currentUserRank = (-1).obs; // Variable to store the current user's rank
+  var currentUserScore = 0.obs; // Variable to store the current user's score
   final UserRepository repository = UserRepository();
 
   @override
@@ -13,6 +15,7 @@ class LeaderboardController extends GetxController {
     fetchLeaderboard();
     super.onInit();
   }
+
   Future<void> fetchLeaderboard() async {
     try {
       final response = await repository.getLeaderBoard();
@@ -33,7 +36,8 @@ class LeaderboardController extends GetxController {
           // Compare currentUser's id with leaderboard user's combineId
           if (leaderboardData[i].combineId.trim() == currentUser?.id?.trim()) {
             currentUserRank.value = i + 1; // Rank is 1-based
-            print("Found user at rank: ${currentUserRank.value}");
+            currentUserScore.value = leaderboardData[i].score; // Set the score
+            print("Found user at rank: ${currentUserRank.value}, score: ${currentUserScore.value}");
             break;
           }
         }
@@ -50,8 +54,4 @@ class LeaderboardController extends GetxController {
       isLoading.value = false;
     }
   }
-
-
-
 }
-

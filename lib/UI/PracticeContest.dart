@@ -1,31 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
-import '../Common/BoldText.dart';
-import '../Common/Colors.dart';
-
-class PracticeCont extends StatefulWidget {
-  const PracticeCont({super.key});
-
-  @override
-  State<PracticeCont> createState() => _PracticeContState();
+void main() {
+  runApp(practiceContest());
 }
 
-class _PracticeContState extends State<PracticeCont> {
+class practiceContest extends StatelessWidget {
+  const practiceContest({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar:AppBar(
-          backgroundColor: appColor,
-          title: BoldText(name: "PRACTICE CONTEST",fontsize: 22,),
-          centerTitle: true,
-          leading: Icon(Icons.menu),
-          actions: [
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.yellow,
-            )
-          ],
-        )
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Practice Contest",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.blue,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white), // White arrow
+            onPressed: () {
+              Navigator.pop(context); // Go back to the previous page
+            },
+          ),
+        ),
+        body: Center(
+          child:Lottie.asset('Assets/Images/Animation.json',
+            height: 300, // set the height
+            width: 300,  // set the width
+            fit: BoxFit.fill, ),
+        ),
+      ),
     );
   }
 }

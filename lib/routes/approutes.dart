@@ -31,6 +31,7 @@ class AppRoutes{
   static const daily = '/Daily';
   static const contestDetails = '/Contest_details';
   static const dailyContest = '/DailyContest';
+  static const practiceContest = '/PracticeCont';
   static const addCash = '/Add_Cash';
   static const showscore = '/ShowScore.dart';
 
@@ -44,7 +45,7 @@ class AppRoutes{
     GetPage(name: userScreen, page: () =>   UserProfile()),
     GetPage(name: gK_Question, page: () =>   GK_QUIZ()),
     GetPage(name: leaderBoard, page: () =>   Leaderboard()),
-    GetPage(name: megaContest, page: () =>   MegaContest()),
+    GetPage(name: megaContest, page: () =>   MEGACONTEST()),
     GetPage(name: daily, page: () =>   Daily()),
     GetPage(name: contestDetails, page: () =>   ContestDetails()),
     GetPage(name: dailyContest, page: () =>   DailyContest()),
