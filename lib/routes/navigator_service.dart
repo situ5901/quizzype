@@ -47,19 +47,6 @@ class NavigatorService {
 
   static Future<dynamic> popAndPushNamed(String routeName, {dynamic arguments}) async {
 
-    // if (routeName == AppRoutes.landingScreen) {
-    //   // Create an instance of EnsureAuthMiddleware
-    //   var authMiddleware = EnsureAuthMiddleware();
-    //
-    //   // Get the redirect route from the middleware
-    //   RouteSettings? redirectRoute = authMiddleware.redirect(routeName);
-    //
-    //   if (redirectRoute != null) {
-    //     // Redirect to the specified route
-    //     return navigatorKey.currentState
-    //         ?.popAndPushNamed(routeName, arguments: arguments);
-    //   }
-    // }
 
     return navigatorKey.currentState?.popAndPushNamed(routeName, arguments: arguments);
   }

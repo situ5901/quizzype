@@ -37,7 +37,6 @@ class AddCashController extends GetxController {
         Get.snackbar('Insufficient Balance', 'Your balance is too low to add this amount');
         return;
       }
-
       // Show success dialog
       Get.dialog(CustomDialog(onJoinNow: () async {
         final contestId = await repository.createContestId(); // Get the contest ID
@@ -45,8 +44,6 @@ class AddCashController extends GetxController {
         print(contestId.toString());
         Get.toNamed(AppRoutes.gK_Question, arguments: contestId.toString());
         await getBalance(); // Reload balance after successful transaction
-
-
        // Get.toNamed(AppRoutes.gK_Question, arguments: contestId); // Pass the contestId as an argument
       }));
 

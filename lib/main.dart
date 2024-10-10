@@ -14,7 +14,6 @@ Future<void> main() async {
   await Get.putAsync(() => AppService().init());
   runApp(const MyApp());
 }
-
 class TempContext {
   static late BuildContext context;
 }

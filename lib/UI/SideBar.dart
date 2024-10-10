@@ -72,7 +72,6 @@ class SideBar extends StatelessWidget {
               leading: Icon(Icons.score),
               title: Text("Monthely Contest"),
             ),
-
             ListTile(
               leading: Icon(Icons.notifications),
               title: Text("Notification"),
