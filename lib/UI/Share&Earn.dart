@@ -21,7 +21,7 @@ class Shareing extends StatelessWidget {
           ), // AppBar title
           backgroundColor: Colors.blue,
         ),
-        body: Center( // Center the entire column
+        body: Center(// Center the entire column
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // Center children vertically
             children: [

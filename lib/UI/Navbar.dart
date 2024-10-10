@@ -39,9 +39,9 @@ class NavbarState extends State<Navbar> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon:Icon(Icons.info),label: "About"),
-          BottomNavigationBarItem(icon:Icon(Icons.home),label: "Home"),
-          BottomNavigationBarItem(icon:Icon(Icons.cleaning_services),label: "Share")
+          BottomNavigationBarItem(icon:Icon(Icons.info,color: Colors.blue,),label: "About"),
+          BottomNavigationBarItem(icon:Icon(Icons.home,color: Colors.blue,),label: "Home"),
+          BottomNavigationBarItem(icon:Icon(Icons.share_sharp,color: Colors.blue,),label: "Share")
         ],
         currentIndex: _selectedIteam,
         onTap: (setValue){
