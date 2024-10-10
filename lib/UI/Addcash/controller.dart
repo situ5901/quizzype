@@ -40,7 +40,7 @@ class AddCashController extends GetxController {
 
       // Show success dialog
       Get.dialog(CustomDialog(onJoinNow: () async {
-        final contestId = await repository.createContestId(enteredAmount); // Get the contest ID
+        final contestId = await repository.createContestId(); // Get the contest ID
         Get.back(); // Close the dialog
         print(contestId.toString());
         Get.toNamed(AppRoutes.gK_Question, arguments: contestId.toString());

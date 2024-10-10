@@ -8,10 +8,11 @@ import 'package:quizzype001/UI/HomeScreen/controller.dart';
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/MegaContest.dart';
 import 'package:quizzype001/UI/SideBar.dart';
+import 'package:quizzype001/domain/repository/repository_imports.dart';
 import 'package:quizzype001/domain/service/app/app_service_imports.dart';
 import '../../Common/Colors.dart';
 import '../../routes/approutes.dart';
-import '../PracticeContest.dart';
+import '../practisescreens/PracticeContest.dart';
 
 
 class Home extends StatefulWidget {
@@ -24,8 +25,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<String> imagePaths = [
     "Assets/Images/1.jpeg",
-    "Assets/Images/mega.png",
     "Assets/Images/Dailycont.png",
+    "Assets/Images/mega.png",
     "Assets/Images/Practices.png",
   ];
   var itemId = 0;
@@ -259,7 +260,7 @@ class _HomeState extends State<Home> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             // Handle navigation based on the clicked item
                             switch (index) {
                               case 0:
@@ -273,22 +274,22 @@ class _HomeState extends State<Home> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MEGACONTEST()),
+                                      builder: (context) => GK_Contest()),
                                 );
                                 break;
                               case 2:
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => GK_Contest()),
+                                      builder: (context) =>MEGACONTEST()) ,
                                 );
                                 break;
                               case 3:
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => practiceContest()),
-                                );
+                                var id  =  await UserRepository().createContestId();
+                                print("Container pressed!"); // Print before navigation
+
+                                Get.toNamed(AppRoutes.PracticeContest, arguments: id.toString());
+
                                 break;
                               default:
                               // Handle default case or any additional items
@@ -311,14 +312,12 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
+
+                   var id  =  await UserRepository().createContestId();
                     print("Container pressed!"); // Print before navigation
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => practiceContest(), // Ensure the context is passed
-                      ),
-                    );
+
+                    Get.toNamed(AppRoutes.PracticeContest, arguments: id.toString());
                   },
                   child: Container(
                     height: 80,

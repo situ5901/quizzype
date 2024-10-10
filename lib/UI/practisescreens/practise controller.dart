@@ -1,6 +1,6 @@
+import 'package:get/get.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:quizzype001/domain/repository/repository_imports.dart';
 import '../../domain/service/app/app_service_imports.dart';
 import '../../model/Questionmodel/questionModel.dart';
@@ -9,22 +9,26 @@ import '../widgets/TimesupAppdialog/timesUp.dart';
 import '../widgets/quizzDoneAppdiloagbox/DoneDiloagbox.dart';
 import '../../model/ContestModel/contest_model.dart';
 
-class GkQuizController extends GetxController {
+class PracticeScreenController extends GetxController {
   QuizQuestion? quizQuestion;
   final DatabaseService databaseService = Get.find<DatabaseService>();
   bool isLoading = true;
   final repository = UserRepository();
   String? gkQuestionId;
   String? selectedOption;
-  String score = "0";
+  int score = 0; // Use int for score to handle numerical operations
   Timer? timer;
-  int timeLeft = 8; // 8 seconds per question
+  int timeLeft = 15; // 15 seconds per question
   double progress = 1.0;
   int questionNumber = 1; // Current question number
   bool isQuizCompleted = false;
   Contest? contest; // To hold contest details
   String? contestId;
 
+
+  @override
+  // TODO: implement onDelete
+  InternalFinalCallback<void> get onDelete => super.onDelete;
   @override
   void onInit() {
     super.onInit();
@@ -41,10 +45,13 @@ class GkQuizController extends GetxController {
     super.onClose();
   }
 
+
+
+
   Future<void> getQuestion() async {
     try {
-      quizQuestion = await repository.fetchQuestion();
-      gkQuestionId = quizQuestion?.id;
+      quizQuestion = await repository.fetchPracticeQuestion();
+      gkQuestionId = quizQuestion?.id; // Ensure this is a String
       isLoading = false;
     } catch (e) {
       print("Error fetching question: $e");
@@ -56,7 +63,16 @@ class GkQuizController extends GetxController {
     if (gkQuestionId != null && selectedOption != null) {
       try {
         print("Posting answer: $selectedOption for question ID: $gkQuestionId");
-        await repository.postAnswer(gkQuestionId!, selectedOption!, contestId!);
+        final updatedScore = await repository.postPracticeAnswer(
+          gkQuestionId!,
+          selectedOption!,
+          contestId!,
+        );
+
+        if (updatedScore != null) {
+          score += updatedScore; // Update the score with the new score
+          update(); // Notify the UI about the score update
+        }
       } catch (e) {
         print("Error posting answer: $e");
       }
@@ -66,8 +82,7 @@ class GkQuizController extends GetxController {
   }
 
   Future<void> loadData() async {
-    getContestDetails();
-    await Future.wait([getNextQuestion()]);
+    await Future.wait([getNextQuestion()]); // Ensure we get the next question
     isLoading = false;
     update();
   }
@@ -78,13 +93,8 @@ class GkQuizController extends GetxController {
   }
 
   void selectOption(String option) {
-    selectedOption = option;
-    update();
-  }
-
-  Future<void> getScore() async {
-    score = await repository.getScore(contestId!);
-    update();
+    selectedOption = option; // Select the option
+    update(); // Update the UI
   }
 
   Future<void> handleNextQuestion() async {
@@ -95,17 +105,14 @@ class GkQuizController extends GetxController {
         await loadData(); // Load next question
         startTimer(); // Start the timer for the next question
       } else {
-        timer
-            ?.cancel(); // Cancel any existing timer to avoid multiple instances
-
-        await getScore();
+        timer?.cancel(); // Cancel any existing timer to avoid multiple instances
         Get.dialog(
           DoneDialog(
-            score: int.parse(score),
+            score: score, // Use the int score directly
             onTap: () {
               onClose();
               Get.back();
-              Get.offNamed(AppRoutes.showscore, arguments: contestId);
+              Get.offAllNamed(AppRoutes.homeScreen); // Navigate to score screen
             },
           ),
           barrierDismissible: false,
@@ -117,14 +124,14 @@ class GkQuizController extends GetxController {
 
   void startTimer() {
     print("Starting timer...");
-    timeLeft = 8;
+    timeLeft = 15;
     progress = 1.0;
     timer?.cancel();
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (timeLeft > 0) {
         timeLeft--;
-        progress = timeLeft / 8;
-        update();
+        progress = timeLeft / 15; // Update progress
+        update(); // Update the UI
       } else {
         timer.cancel();
         handleTimeUp();
@@ -133,34 +140,25 @@ class GkQuizController extends GetxController {
   }
 
   void handleTimeUp() async {
-    await postAnswer();
+    await postAnswer(); // Post answer when time is up
     if (questionNumber < 10) {
       questionNumber++;
-      await loadData();
-      startTimer();
+      await loadData(); // Load next question
+      startTimer(); // Start the timer for the next question
     } else {
-      await getScore();
       if (Get.context != null) {
         Get.dialog(
           TimesUpDialog(
-            score: int.parse(score),
+            score: score, // Use the int score directly
             onTap: () {
               Get.back();
-              Get.offNamed(AppRoutes.showscore, arguments: contestId);
               onClose();
+              Get.offNamed(AppRoutes.homeScreen); // Navigate to score screen
             },
           ),
           barrierDismissible: false,
         );
       }
     }
-  }
-
-  Future<void> getContestDetails() async {
-    final contestDetails = await repository.getContestDetail(contestId!);
-    contest = contestDetails
-        .contests.first; // Assuming we only care about the first contest
-    update(); // Update the UI after fetching details
-    isLoading = false;
   }
 }

@@ -127,16 +127,40 @@ class UserApi {
     }
   }
 
-// API method to create contest
-  Future<Response> createContestId(
-      {required String token, required String combineID, required String name,required int amount}) async {
+// API method to create contest]
+  Future<Response> PractiseContestId(
+      {required String token, required String combineID,}) async {
     try {
       final response = await dio.post(
-        '$basePath/create-contest',
+        '$basePath/practice_question',
+        data: {
+          "combineId": combineID
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching ContestId: $e");
+      rethrow;
+    }
+  }
+
+
+
+
+  Future<Response> createContestId(
+      {required String token, required String combineID, required String name}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/practice_Contest',
         data: {
           "combineId": combineID,
-          "fullname": name,
-          "gameAmount": amount
+          "fullName": name,
         },
         options: Options(
           headers: {
@@ -153,6 +177,32 @@ class UserApi {
   }
 
   // API method to fetch question for other
+
+
+  Future<Response> createPracticeContest(
+      {required String token, required String combineID, required String name,required int amount}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/create-contest',
+        data: {
+          "combineId": combineID,
+          "fullname": name,
+
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching ContestId: $e");
+      rethrow;
+    }
+  }
+
   Future<Response> getQuestion(
       {required String token, required String combineID}) async {
     try {
@@ -171,6 +221,61 @@ class UserApi {
       return response;
     } catch (e) {
       print("Error fetching question: $e");
+      rethrow;
+    }
+  }
+
+
+  Future<Response> getPracticeQuestion(
+      {required String token, required String combineID}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/practice_question',
+        data: {
+          "combineId": combineID,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching question: $e");
+      rethrow;
+    }
+  }
+
+  Future<Response> PracticeAnswer({
+    required String token,
+    required String contestId,
+    required String combineID,
+    required String gkQuestionId,
+    required String selectedOption,
+    required String name,
+  }) async {
+    try {
+      final response = await dio.post(
+        '$basePath/practice_answer', // Ensure this is the correct route
+        data: {
+          "combineId": combineID,
+          "gkquestionId": gkQuestionId,
+          "contestId": contestId,
+          "selectedOption": selectedOption,
+          "combineuser": name
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;  // Return the full response
+    } catch (e) {
+      print("Error posting answer: $e");
       rethrow;
     }
   }

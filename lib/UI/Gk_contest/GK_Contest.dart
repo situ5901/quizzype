@@ -148,7 +148,6 @@ class _GK_ContestState extends State<GK_Contest> {
                                               //   ),
                                               // ),
                                               // Center - Lottie Animation
-
                                               // Right Side - Players' Names
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),

@@ -15,6 +15,7 @@ import '../UI/HomeScreen/Home.dart';
 import '../UI/LeaderBoard/Leaderboard.dart';
 import '../UI/Navbar.dart';
 import '../UI/Profile/Profile.dart';
+import '../UI/practisescreens/PracticeContest.dart';
 import 'middleware.dart';
 
 
@@ -31,7 +32,7 @@ class AppRoutes{
   static const daily = '/Daily';
   static const contestDetails = '/Contest_details';
   static const dailyContest = '/DailyContest';
-  static const practiceContest = '/PracticeCont';
+  static const PracticeContest = '/PracticeCont';
   static const addCash = '/Add_Cash';
   static const showscore = '/ShowScore.dart';
 
@@ -51,6 +52,7 @@ class AppRoutes{
     GetPage(name: dailyContest, page: () =>   DailyContest()),
     GetPage(name: addCash, page: () =>   ADD_CASh()),
     GetPage(name: showscore, page: () =>   Showscore()),
+    GetPage(name: PracticeContest, page: () =>   practiceContest()),
 
   ];
 }
