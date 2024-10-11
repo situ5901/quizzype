@@ -26,7 +26,6 @@ class PracticeScreenController extends GetxController {
 
 
   @override
-  // TODO: implement onDelete
   InternalFinalCallback<void> get onDelete => super.onDelete;
   @override
   void onInit() {
