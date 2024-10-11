@@ -1,32 +1,30 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:quizzype001/UI/practisescreens/practise%20controller.dart';
+import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
+import 'package:quizzype001/UI/GK%20Quiz/gkquizcontoller.dart';
 import '../../Common/BoldText.dart';
+import '../../Common/Colors.dart';
 
-void main() {
-  runApp(practiceContest());
-}
-class practiceContest extends StatefulWidget {
-  const practiceContest({super.key});
+
+class ClassContest extends StatefulWidget {
+  const ClassContest({super.key});
+
   @override
-  State<practiceContest> createState() => _practiceContestState();
+  State<ClassContest> createState() => _ClassContestState();
+
 }
-class _practiceContestState extends State<practiceContest> {
-  late PracticeScreenController controller;
 
+class _ClassContestState extends State<ClassContest> {
+  late GkQuizController controller;
   String? selectedOption;
-
   bool isAnswerSelected = false;
-
   bool isAnswerCorrect = false;
 
   @override
   void initState() {
     super.initState();
-    controller = Get.put(PracticeScreenController());
+    controller = Get.put(GkQuizController());
   }
 
   void _showExitConfirmationBottomSheet() {
@@ -91,7 +89,6 @@ class _practiceContestState extends State<practiceContest> {
       },
     );
   }
-
   void _handleOptionSelection(String option) {
     if (!isAnswerSelected) {
       setState(() {
@@ -120,6 +117,7 @@ class _practiceContestState extends State<practiceContest> {
       print("No option selected");
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -127,15 +125,15 @@ class _practiceContestState extends State<practiceContest> {
         _showExitConfirmationBottomSheet();
         return false;
       },
-      child: GetBuilder<PracticeScreenController>(
+      child: GetBuilder<GkQuizController>(
         builder: (controller) {
           final correctAnswer = controller.quizQuestion?.correctAnswer;
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.red,
+              backgroundColor: appColor,
               centerTitle: true,
               title:
-              BoldText(name: "Practice Contest", fontsize: 22, color: Colors.white),
+              BoldText(name: "Class QUIZ", fontsize: 22, color: Colors.white),
               leading: Icon(Icons.menu, color: Colors.white),
               actions: [
                 Padding(
@@ -174,9 +172,9 @@ class _practiceContestState extends State<practiceContest> {
                   Container(
                     height: 100,
                     width: double.infinity,
-                    color: Colors.red,
+                    color: appColor,
                     child: Column(
-                      mainAxisAlignment:MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

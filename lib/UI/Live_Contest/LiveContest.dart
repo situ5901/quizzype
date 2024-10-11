@@ -11,9 +11,10 @@ import 'package:quizzype001/Common/PlainText.dart';
 import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/Live_Contest/controller.dart';
 import 'package:quizzype001/UI/SideBar.dart';
+import 'package:quizzype001/UI/classcontest/classQuest.dart';
 import 'package:quizzype001/routes/approutes.dart';
 import '../../model/leaderboard/leaderBoard.dart';
-import '../1-12Class.dart';
+import '../classcontest/1-12Class.dart';
 import '../Addcash/Add_CASH.dart';
 import '../Collage_Student/Collage_Student.dart';
 import '../Competitive.dart';
@@ -317,7 +318,7 @@ class _LiveContestState extends State<LiveContest> {
                                     case 2:
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => Collage_Student()),
+                                        MaterialPageRoute(builder: (context) => ClassContest()),
                                       );
                                       break;
                                     case 3:

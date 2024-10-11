@@ -131,7 +131,6 @@ class GkQuizController extends GetxController {
       }
     });
   }
-
   void handleTimeUp() async {
     await postAnswer();
     if (questionNumber < 10) {

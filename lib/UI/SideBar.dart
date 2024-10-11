@@ -42,46 +42,28 @@ class SideBar extends StatelessWidget {
                 Get.toNamed(AppRoutes.leaderBoard);
               },
               leading: Icon(Icons.score),
-              title: Text("Score"),
+              title: Text("LeaderBoard"),
             ),
             ListTile(
               onTap: (){
                 Get.toNamed(AppRoutes.dailyContest);
               },
-              leading: Icon(Icons.score),
+              leading: Icon(Icons.emoji_events),
               title: Text("Daily Contest"),
+            ),
+            ListTile(
+              onTap: (){
+                Get.toNamed(AppRoutes.leaderBoard);
+              },
+              leading: Icon(Icons.event),
+              title: Text("Monthely Contest"),
             ),
             ListTile(
               onTap: (){
                 Get.toNamed(AppRoutes.megaContest);
               },
-              leading: Icon(Icons.score),
+              leading: Icon(Icons.stacked_bar_chart),
               title: Text("Mega Contest"),
-            ),
-            ListTile(
-              onTap: (){
-                Get.toNamed(AppRoutes.leaderBoard);
-              },
-              leading: Icon(Icons.score),
-              title: Text("Practice Contest"),
-            ),
-            ListTile(
-              onTap: (){
-                Get.toNamed(AppRoutes.leaderBoard);
-              },
-              leading: Icon(Icons.score),
-              title: Text("Monthely Contest"),
-            ),
-            ListTile(
-              leading: Icon(Icons.notifications),
-              title: Text("Notification"),
-            ),
-            ListTile(
-              onTap: (){
-                UserRepository().getContestDetail("6700feb966df418db40511de");
-              },
-              leading: Icon(Icons.settings),
-              title: Text("Setting"),
             ),
             ListTile(
               onTap: () async{

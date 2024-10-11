@@ -2,11 +2,9 @@ part of 'package:quizzype001/domain/service/api/api_import.dart';
 
 class UserApi {
   final Dio dio;
-
   UserApi(this.dio);
 
   final String basePath = ''; // Add your base path here if needed
-
   //to get user
   Future<Response> getUser({required String phoneNumber}) async {
     try {
@@ -15,7 +13,6 @@ class UserApi {
       rethrow;
     }
   }
-
   //post user details
   Future<Response> postUserDetails({
     required String token,
@@ -31,11 +28,10 @@ class UserApi {
   }) async {
     ;
     final String endpoint = '/other/add';
-
     try {
       final response = await dio.post(
         '$basePath$endpoint',
-        data: {
+        data:{
           "fullname": fullname,
           "address": address,
           "email": email,
@@ -149,10 +145,6 @@ class UserApi {
       rethrow;
     }
   }
-
-
-
-
   Future<Response> createContestId(
       {required String token, required String combineID, required String name}) async {
     try {
@@ -178,9 +170,9 @@ class UserApi {
 
   // API method to fetch question for other
 
-
-  Future<Response> createPracticeContest(
-      {required String token, required String combineID, required String name,required int amount}) async {
+// for +1,+2 class contest
+  Future<Response> createClassContest(
+      {required String token, required String combineID, required String name}) async {
     try {
       final response = await dio.post(
         '$basePath/create-contest',
@@ -224,8 +216,6 @@ class UserApi {
       rethrow;
     }
   }
-
-
   Future<Response> getPracticeQuestion(
       {required String token, required String combineID}) async {
     try {

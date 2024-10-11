@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:vibration/vibration.dart'; // Import vibration package
+import 'package:vibration/vibration.dart';
 import 'package:quizzype001/UI/GK%20Quiz/gkquizcontoller.dart';
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
@@ -12,6 +12,7 @@ class GK_QUIZ extends StatefulWidget {
 
   @override
   State<GK_QUIZ> createState() => _GK_QUIZState();
+
 }
 
 class _GK_QUIZState extends State<GK_QUIZ> {
@@ -88,7 +89,6 @@ class _GK_QUIZState extends State<GK_QUIZ> {
       },
     );
   }
-
   void _handleOptionSelection(String option) {
     if (!isAnswerSelected) {
       setState(() {
@@ -133,7 +133,7 @@ class _GK_QUIZState extends State<GK_QUIZ> {
               backgroundColor: appColor,
               centerTitle: true,
               title:
-                  BoldText(name: "GK QUIZ", fontsize: 22, color: Colors.white),
+                  BoldText(name: "QUIZ", fontsize: 22, color: Colors.white),
               leading: Icon(Icons.menu, color: Colors.white),
               actions: [
                 Padding(

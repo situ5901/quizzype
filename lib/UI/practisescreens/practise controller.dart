@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:quizzype001/domain/repository/repository_imports.dart';
 import '../../domain/service/app/app_service_imports.dart';
 import '../../model/Questionmodel/questionModel.dart';
@@ -44,9 +43,6 @@ class PracticeScreenController extends GetxController {
     timer?.cancel();
     super.onClose();
   }
-
-
-
 
   Future<void> getQuestion() async {
     try {

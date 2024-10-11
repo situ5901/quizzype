@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:get/get.dart';
-import 'dart:async'; // Import for Timer
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
+import 'package:quizzype001/UI/classcontest/classontroller.dart';
+import 'package:quizzype001/UI/Gk_contest/controller.dart';
+import 'package:lottie/lottie.dart'; // Import Lottie package
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../../Common/PlainText.dart';
-import '../../domain/repository/repository_imports.dart';
-import '../../domain/service/app/app_service_imports.dart';
-import '../../model/ContestModel/contest_model.dart';
 import '../../routes/approutes.dart';
-import 'collagecontroller.dart';
 
-
-class Collage_Student extends StatelessWidget {
-  const Collage_Student({super.key});
+class Class extends StatefulWidget {
+  const Class({super.key});
 
   @override
+  State<Class> createState() => _ClassState();
+}
+
+class _ClassState extends State<Class> {
+  @override
   Widget build(BuildContext context) {
-    return GetX<CollegeContrller>(
-      init:CollegeContrller(),
+    return GetX<ClassController>(
+      init:ClassController(),
       builder: (controller) {
         var onlineContests = controller.contests.where((contest) => !contest.isFull).toList();
 
         return Scaffold(
           appBar: AppBar(
             backgroundColor: appColor,
-            title: BoldText(name: "College Contest", color: Colors.white, fontsize: 25),
+            title: BoldText(name: "Class Contest", color: Colors.white, fontsize: 25),
             centerTitle: true,
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.white),

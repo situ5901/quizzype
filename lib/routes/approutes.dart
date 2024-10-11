@@ -10,11 +10,13 @@ import 'package:quizzype001/UI/userProfie/userProfile.dart';
 
 import '../UI/Auth/login/Login.dart';
 import '../UI/Auth/otp/Otp.dart';
+import '../UI/Collage_Student/ColllageQuest.dart';
 import '../UI/GK Quiz/ShowScore.dart';
 import '../UI/HomeScreen/Home.dart';
 import '../UI/LeaderBoard/Leaderboard.dart';
 import '../UI/Navbar.dart';
 import '../UI/Profile/Profile.dart';
+import '../UI/classcontest/classQuest.dart';
 import '../UI/practisescreens/PracticeContest.dart';
 import 'middleware.dart';
 
@@ -35,6 +37,8 @@ class AppRoutes{
   static const PracticeContest = '/PracticeCont';
   static const addCash = '/Add_Cash';
   static const showscore = '/ShowScore.dart';
+  static const classContest = '/classQuest.dart';
+  static const collageQuest = '/CollageQuest.dart';
 
 
 
@@ -53,6 +57,8 @@ class AppRoutes{
     GetPage(name: addCash, page: () =>   ADD_CASh()),
     GetPage(name: showscore, page: () =>   Showscore()),
     GetPage(name: PracticeContest, page: () =>   practiceContest()),
+    GetPage(name: classContest, page: () =>   ClassContest()),
+    GetPage(name: collageQuest, page: () =>   CollageQuest()),
 
   ];
 }
