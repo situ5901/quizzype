@@ -170,30 +170,7 @@ class UserApi {
 
   // API method to fetch question for other
 
-// for +1,+2 class contest
-  Future<Response> createClassContest(
-      {required String token, required String combineID, required String name}) async {
-    try {
-      final response = await dio.post(
-        '$basePath/create-contest',
-        data: {
-          "combineId": combineID,
-          "fullname": name,
 
-        },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
-      return response;
-    } catch (e) {
-      print("Error fetching ContestId: $e");
-      rethrow;
-    }
-  }
 
   Future<Response> getQuestion(
       {required String token, required String combineID}) async {
@@ -543,5 +520,228 @@ class UserApi {
       rethrow;
     }
   }
+
+
+
+
+
+
+
+
+// for +1,+2 class contest
+  Future<Response> createClassContest(
+      {required String token, required String combineID, required String name}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/student_create_contest',
+        data: {
+          "combineId": combineID,
+          "fullname": name,
+
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching ContestId: $e");
+      rethrow;
+    }
+  }
+
+
+
+
+  Future<Response> getClassQuestion(
+      {required String token, required String combineID}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/student_question',
+        data: {
+          "combineId": combineID,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching question: $e");
+      rethrow;
+    }
+  }
+  Future<Response> postClassAnswer({
+    required String token,
+    required String contestId,
+    required String combineID,
+    required String gkQuestionId,
+    required String selectedOption,
+    required String name,
+  }) async {
+    try {
+      final response = await dio.post(
+        '$basePath/Student_answer', // Ensure this is the correct route
+        data: {
+          "combineId": combineID,
+          "gkquestionId": gkQuestionId,
+          "contestId": contestId,
+          "selectedOption": selectedOption,
+          "combineuser": name
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;  // Return the full response
+    } catch (e) {
+      print("Error posting answer: $e");
+      rethrow;
+    }
+  }
+
+  Future<Response> joinClassGame({
+    required String token,
+    required String contestId,
+    required String combineID,
+    required String name}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/student_join-contest',
+        data: {
+          "contestId": contestId,
+          "newcombineId": combineID,
+          "fullname": name,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching to join game: $e");
+      rethrow;
+    }
+  }
+
+
+
+  Future<Response> createCompetitiveContest(
+      {required String token, required String combineID, required String name}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/competitive_create_contest',
+        data: {
+          "combineId": combineID,
+          "fullname": name,
+
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching ContestId: $e");
+      rethrow;
+    }
+  }
+
+
+  Future<Response> getCompetitiveQuestion(
+      {required String token, required String combineID}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/competitive_question',
+        data: {
+          "combineId": combineID,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching question: $e");
+      rethrow;
+    }
+  }
+  Future<Response> postCompetitiveAnswer({
+    required String token,
+    required String contestId,
+    required String combineID,
+    required String gkQuestionId,
+    required String selectedOption,
+    required String name,
+  }) async {
+    try {
+      final response = await dio.post(
+        '$basePath/competitive_answer', // Ensure this is the correct route
+        data: {
+          "combineId": combineID,
+          "gkquestionId": gkQuestionId,
+          "contestId": contestId,
+          "selectedOption": selectedOption,
+          "combineuser": name
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;  // Return the full response
+    } catch (e) {
+      print("Error posting answer: $e");
+      rethrow;
+    }
+  }
+
+  Future<Response> joinCompetitiveGame({
+    required String token,
+    required String contestId,
+    required String combineID,
+    required String name}) async {
+    try {
+      final response = await dio.post(
+        '$basePath/competitive_join-contest',
+        data: {
+          "contestId": contestId,
+          "combineId": combineID,
+          "fullname": name,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching to join game: $e");
+      rethrow;
+    }
+  }
+
 
 }

@@ -7,10 +7,6 @@ import 'package:quizzype001/UI/GK%20Quiz/scoreController.dart';
 
 import '../LeaderBoard/Leaderboard.dart';
 
-void main() {
-  runApp(const Showscore());
-}
-
 class Showscore extends StatelessWidget {
   const Showscore({super.key});
 
