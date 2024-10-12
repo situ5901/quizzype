@@ -17,7 +17,7 @@ import '../../model/leaderboard/leaderBoard.dart';
 import '../classcontest/1-12Class.dart';
 import '../Addcash/Add_CASH.dart';
 import '../Collage_Student/Collage_Student.dart';
-import '../Competitive.dart';
+import '../competitive/Competitive.dart';
 
 class LiveContest extends StatefulWidget {
   const LiveContest({super.key});

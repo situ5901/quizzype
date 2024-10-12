@@ -1,3 +1,4 @@
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get.dart';
 import 'dart:async'; // Import for Timer
 import 'package:flutter/foundation.dart';
@@ -6,7 +7,7 @@ import '../../domain/repository/repository_imports.dart';
 import '../../domain/service/app/app_service_imports.dart';
 import '../../model/ContestModel/contest_model.dart';
 import '../../routes/approutes.dart';
-class ClassController extends GetxController{
+class Competitve extends GetxController{
 
   final repository = UserRepository();
   String balance = "0"; // Initialize with "0"
@@ -51,7 +52,7 @@ class ClassController extends GetxController{
 
   Future<void> getContest() async {
     try {
-      final response = await repository.getClassContest();
+      final response = await repository.getCompContest();
       if (response != null) {
         var newContests = (response['contests'] as List<dynamic>)
             .map<Contest>((json) => Contest.fromJson(json))

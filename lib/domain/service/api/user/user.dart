@@ -359,7 +359,6 @@ class UserApi {
     required String token,
     required String contestId,
     required String combineID,
-
     required String name}) async {
     try {
       final response = await dio.post(
@@ -529,22 +528,11 @@ class UserApi {
 
 
 // for +1,+2 class contest
-  Future<Response> createClassContest(
-      {required String token, required String combineID, required String name}) async {
+  Future<Response> getClassContest() async {
     try {
-      final response = await dio.post(
-        '$basePath/student_create_contest',
-        data: {
-          "combineId": combineID,
-          "fullname": name,
+      final response = await dio.get(
+        '$basePath/student_contest_answer',
 
-        },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
       );
       return response;
     } catch (e) {
@@ -554,7 +542,24 @@ class UserApi {
   }
 
 
-
+  Future<Response> getClassContestDetails(
+      {required String token,required String contestId }) async {
+    try {
+      final response = await dio.get(
+        '$basePath/student_one_contest?id=$contestId',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching to Details: $e");
+      rethrow;
+    }
+  }
 
   Future<Response> getClassQuestion(
       {required String token, required String combineID}) async {
@@ -590,7 +595,7 @@ class UserApi {
         '$basePath/Student_answer', // Ensure this is the correct route
         data: {
           "combineId": combineID,
-          "gkquestionId": gkQuestionId,
+          "questionId": gkQuestionId,
           "contestId": contestId,
           "selectedOption": selectedOption,
           "combineuser": name
@@ -619,7 +624,7 @@ class UserApi {
         '$basePath/student_join-contest',
         data: {
           "contestId": contestId,
-          "newcombineId": combineID,
+          "combineId": combineID,
           "fullname": name,
         },
         options: Options(
@@ -638,16 +643,23 @@ class UserApi {
 
 
 
-  Future<Response> createCompetitiveContest(
-      {required String token, required String combineID, required String name}) async {
+  Future<Response> getCompetitiveContest() async {
     try {
-      final response = await dio.post(
-        '$basePath/competitive_create_contest',
-        data: {
-          "combineId": combineID,
-          "fullname": name,
+      final response = await dio.get(
+        '$basePath/competitive_contest_answer',
 
-        },
+      );
+      return response;
+    } catch (e) {
+      print("Error fetching ContestId: $e");
+      rethrow;
+    }
+  }
+  Future<Response> getCompContestDetails(
+      {required String token,required String contestId }) async {
+    try {
+      final response = await dio.get(
+        '$basePath/competitive_one_contest?id=$contestId',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -657,7 +669,7 @@ class UserApi {
       );
       return response;
     } catch (e) {
-      print("Error fetching ContestId: $e");
+      print("Error fetching to Details: $e");
       rethrow;
     }
   }
@@ -697,7 +709,7 @@ class UserApi {
         '$basePath/competitive_answer', // Ensure this is the correct route
         data: {
           "combineId": combineID,
-          "gkquestionId": gkQuestionId,
+          "questionId": gkQuestionId,
           "contestId": contestId,
           "selectedOption": selectedOption,
           "combineuser": name

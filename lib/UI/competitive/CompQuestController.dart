@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -11,8 +12,7 @@ import '../../model/Questionmodel/questionModel.dart';
 import '../../routes/approutes.dart';
 import '../widgets/TimesupAppdialog/timesUp.dart';
 import '../widgets/quizzDoneAppdiloagbox/DoneDiloagbox.dart';
-
-class ClassQuestController extends GetxController{
+class CompQuestController extends GetxController{
   QuizQuestion? quizQuestion;
   final DatabaseService databaseService = Get.find<DatabaseService>();
   bool isLoading = true;
@@ -46,7 +46,7 @@ class ClassQuestController extends GetxController{
 
   Future<void> getQuestion() async {
     try {
-      quizQuestion = await repository.fetchclassQuestion();
+      quizQuestion = await repository.getCompetitiveQuestion();
       gkQuestionId = quizQuestion?.id;
       isLoading = false;
     } catch (e) {
@@ -59,7 +59,7 @@ class ClassQuestController extends GetxController{
     if (gkQuestionId != null && selectedOption != null) {
       try {
         print("Posting answer: $selectedOption for question ID: $gkQuestionId");
-        await repository.postClassAnswer(gkQuestionId!, selectedOption!, contestId!);
+        await repository.postCompetitiveAnswer(gkQuestionId!, selectedOption!, contestId!);
       } catch (e) {
         print("Error posting answer: $e");
       }
@@ -159,10 +159,11 @@ class ClassQuestController extends GetxController{
   }
 
   Future<void> getContestDetails() async {
-    final contestDetails = await repository.getClassContestDetail(contestId!);
+    final contestDetails = await repository.getCompContestDetail(contestId!);
     contest = contestDetails
         .contests.first; // Assuming we only care about the first contest
     update(); // Update the UI after fetching details
     isLoading = false;
   }
+
 }

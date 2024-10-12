@@ -17,6 +17,7 @@ import '../UI/LeaderBoard/Leaderboard.dart';
 import '../UI/Navbar.dart';
 import '../UI/Profile/Profile.dart';
 import '../UI/classcontest/classQuest.dart';
+import '../UI/competitive/CompQuest.dart';
 import '../UI/practisescreens/PracticeContest.dart';
 import 'middleware.dart';
 
@@ -39,6 +40,7 @@ class AppRoutes{
   static const showscore = '/ShowScore.dart';
   static const classContest = '/classQuest.dart';
   static const collageQuest = '/CollageQuest.dart';
+  static const compQuest = '/CompQuest.dart';
 
 
 
@@ -59,6 +61,7 @@ class AppRoutes{
     GetPage(name: PracticeContest, page: () =>   practiceContest()),
     GetPage(name: classContest, page: () =>   ClassContest()),
     GetPage(name: collageQuest, page: () =>   CollageQuest()),
+    GetPage(name: compQuest, page: () =>   Compquest()),
 
   ];
 }

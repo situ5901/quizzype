@@ -1,22 +1,23 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:vibration/vibration.dart';
+
 import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
-import 'classQuestController.dart';
+import '../classcontest/classQuestController.dart';
+import 'CompQuestController.dart';
 
-
-class ClassContest extends StatefulWidget {
-  const ClassContest({super.key});
+class Compquest extends StatefulWidget {
+  const Compquest({super.key});
 
   @override
-  State<ClassContest> createState() => _ClassContestState();
-
+  State<Compquest> createState() => _CompquestState();
 }
 
-class _ClassContestState extends State<ClassContest> {
-  late ClassQuestController controller;
+class _CompquestState extends State<Compquest> {
+  late CompQuestController controller;
   String? selectedOption;
   bool isAnswerSelected = false;
   bool isAnswerCorrect = false;
@@ -24,7 +25,7 @@ class _ClassContestState extends State<ClassContest> {
   @override
   void initState() {
     super.initState();
-    controller = Get.put(ClassQuestController());
+    controller = Get.put(CompQuestController());
   }
 
   void _showExitConfirmationBottomSheet() {
@@ -125,7 +126,7 @@ class _ClassContestState extends State<ClassContest> {
         _showExitConfirmationBottomSheet();
         return false;
       },
-      child: GetBuilder<ClassQuestController>(
+      child: GetBuilder<CompQuestController>(
         builder: (controller) {
           final correctAnswer = controller.quizQuestion?.correctAnswer;
           return Scaffold(
@@ -349,3 +350,4 @@ Widget _buildListAnswer(List<String> options, Function(String) onSelected,
     }).toList(),
   );
 }
+

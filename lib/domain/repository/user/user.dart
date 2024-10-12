@@ -525,68 +525,81 @@ class UserRepository {
     }
   }
 
-  Future<String> createclassContestId() async {
+  Future<Map<String, dynamic>> getClassContest() async {
     try {
-      final userId = databaseService.user?.id;
-      final userName = databaseService.user?.fullname;
-      final token = databaseService.accessToken;
 
-      if (userId == null || token == null || userName == null) {
-        print('User ID, token, or username is null');
-        return ''; // Return an empty string or handle this case appropriately
-      }
+      var response = await userApi.getClassContest(
+      );
 
-      final response = await userApi.createClassContest(
-          token: token, combineID: userId, name: userName);
-
-      final data = response.data;
-
-      // Navigate through the response structure to extract the actual contestId
-      final contestIdMap = data['contest']; // This is a map containing 'id'
-      final contestId = contestIdMap['_id']; // Extract the 'id' from the map
-
-      if (contestId is String) {
-        return contestId; // Return the contest ID as a string
+      // Ensure response.data is of type Map<String, dynamic>
+      if (response.data is Map<String, dynamic>) {
+        return response.data as Map<String, dynamic>;
       } else {
-        print('Invalid contestId type: ${contestId.runtimeType}');
-        return ''; // Handle the case where contestId is not a string
+        throw Exception('Unexpected response format');
       }
     } catch (e) {
-      print("Exception fetching contestId: $e");
+      print("Exception fetching leaderboard: $e");
       rethrow;
     }
   }
+  Future<ContestResponse> getClassContestDetail(String contestId) async {
+    try {
+      final token = databaseService.accessToken;
 
+      if (token == null) {
+        print('Token is null');
+        throw Exception(
+            'Token is missing'); // Throw a specific exception for token issues
+      }
+
+      // Make the API call to fetch the contest details
+      final response = await userApi.getClassContestDetails(
+        token: token,
+        contestId: contestId,
+      );
+
+      // Assuming 'response' contains a valid status and a body
+      if (response.statusCode == 200) {
+        // Parse the response data into ContestResponse
+        final data = response.data; // Assuming response has a 'data' field
+        final contestResponse = ContestResponse.fromJson(data);
+        print('Contest Details retrieved successfully');
+        return contestResponse;
+      } else {
+        // Handle other status codes or failure scenarios
+        throw Exception(
+            'Failed to retrieve contest details, Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("Exception fetching Details: $e");
+      rethrow; // Rethrow the exception for further handling
+    }
+  }
   Future<QuizQuestion?> fetchclassQuestion() async {
     try {
       final userId = databaseService.user?.id;
       final token = databaseService.accessToken;
-      final role = databaseService.user?.role;
 
       if (userId == null || token == null) {
         print('User ID or token is null');
         return null;
       }
 
-      //for other
-
-      final response =
-      await userApi.getClassQuestion(token: token, combineID: userId);
-      final data = response.data['randomQuestion'];
+      final response = await userApi.getClassQuestion(token: token, combineID: userId);
+      final data = response.data; // Directly use the response data here
 
       if (data != null && data is Map<String, dynamic>) {
         return QuizQuestion.fromJson(data);
       } else {
         print('No question data available');
+        return null;
       }
-
-
-      return null;
     } catch (e) {
       print("Exception fetching question: $e");
       return null;
     }
   }
+
 
 
   Future<int?> postClassAnswer(
@@ -654,63 +667,84 @@ class UserRepository {
 
 
 // Competitive
-  Future<String> createCompetitiveContest() async {
+  Future<Map<String, dynamic>> getCompContest() async {
     try {
-      final userId = databaseService.user?.id;
-      final userName = databaseService.user?.fullname;
       final token = databaseService.accessToken;
 
-      if (userId == null || token == null || userName == null) {
-        print('User ID, token, or username is null');
-        return ''; // Return an empty string or handle this case appropriately
+      if (token == null) {
+        print('token is null');
+        throw Exception('token is null');
       }
 
-      final response = await userApi.createCompetitiveContest(
-          token: token, combineID: userId, name: userName);
+      var response = await userApi.getCompetitiveContest(
 
-      final data = response.data;
+      );
 
-      // Navigate through the response structure to extract the actual contestId
-      final contestIdMap = data['contest']; // This is a map containing 'id'
-      final contestId = contestIdMap['_id']; // Extract the 'id' from the map
-
-      if (contestId is String) {
-        return contestId; // Return the contest ID as a string
+      // Ensure response.data is of type Map<String, dynamic>
+      if (response.data is Map<String, dynamic>) {
+        return response.data as Map<String, dynamic>;
       } else {
-        print('Invalid contestId type: ${contestId.runtimeType}');
-        return ''; // Handle the case where contestId is not a string
+        throw Exception('Unexpected response format');
       }
     } catch (e) {
-      print("Exception fetching contestId: $e");
+      print("Exception fetching leaderboard: $e");
       rethrow;
     }
   }
 
+
+  Future<ContestResponse> getCompContestDetail(String contestId) async {
+    try {
+      final token = databaseService.accessToken;
+
+      if (token == null) {
+        print('Token is null');
+        throw Exception(
+            'Token is missing'); // Throw a specific exception for token issues
+      }
+
+      // Make the API call to fetch the contest details
+      final response = await userApi.getCompContestDetails(
+        token: token,
+        contestId: contestId,
+      );
+
+      // Assuming 'response' contains a valid status and a body
+      if (response.statusCode == 200) {
+        // Parse the response data into ContestResponse
+        final data = response.data; // Assuming response has a 'data' field
+        final contestResponse = ContestResponse.fromJson(data);
+        print('Contest Details retrieved successfully');
+        return contestResponse;
+      } else {
+        // Handle other status codes or failure scenarios
+        throw Exception(
+            'Failed to retrieve contest details, Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("Exception fetching Details: $e");
+      rethrow; // Rethrow the exception for further handling
+    }
+  }
   Future<QuizQuestion?> getCompetitiveQuestion() async {
     try {
       final userId = databaseService.user?.id;
       final token = databaseService.accessToken;
-      final role = databaseService.user?.role;
 
       if (userId == null || token == null) {
         print('User ID or token is null');
         return null;
       }
 
-      //for other
-
-      final response =
-      await userApi.getCompetitiveQuestion(token: token, combineID: userId);
-      final data = response.data['randomQuestion'];
+      final response = await userApi.getCompetitiveQuestion(token: token, combineID: userId);
+      final data = response.data; // Directly use the response data here
 
       if (data != null && data is Map<String, dynamic>) {
         return QuizQuestion.fromJson(data);
       } else {
         print('No question data available');
+        return null;
       }
-
-
-      return null;
     } catch (e) {
       print("Exception fetching question: $e");
       return null;
@@ -767,7 +801,7 @@ class UserRepository {
 
       print(" user id $userId");
 
-      await userApi.joinClassGame(
+      await userApi.joinCompetitiveGame(
         token: token,
         combineID: userId,
         name: userName,
