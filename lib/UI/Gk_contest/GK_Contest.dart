@@ -6,7 +6,6 @@ import '../../Common/BoldText.dart';
 import '../../Common/Colors.dart';
 import '../../Common/PlainText.dart';
 import '../../routes/approutes.dart';
-
 class GK_Contest extends StatefulWidget {
   const GK_Contest({super.key});
 
@@ -78,7 +77,7 @@ class _GK_ContestState extends State<GK_Contest> {
                       child: Column(
                         children: [
                           PlainText(
-                            name: 'Join Participants ${contest.players.length}',
+                            name: 'Winning Amount ${contest.winningAmount}',
                             fontsize: 12,
                             color: Colors.black,
                           ),
@@ -204,6 +203,7 @@ class _GK_ContestState extends State<GK_Contest> {
                                   ),
                                 ),
                               ),
+
                             ],
                           ),
                         ],

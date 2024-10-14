@@ -154,10 +154,10 @@ class ClassQuestController extends GetxController{
           ),
           barrierDismissible: false,
         );
+
       }
     }
   }
-
   Future<void> getContestDetails() async {
     final contestDetails = await repository.getClassContestDetail(contestId!);
     contest = contestDetails

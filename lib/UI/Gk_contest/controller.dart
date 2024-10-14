@@ -12,13 +12,12 @@ class GkContestController extends GetxController {
   var contests = <Contest>[].obs; // List to store contests
   Timer? _timer; // Timer for refreshing contests
   String? currentuser;
-
   bool isLoading = true;
   String? currentusername;
   var db = Get.find<DatabaseService>();
   int _fetchInterval = 1; // Initial fetch interval
   var players = <String>[].obs; // List to store players in the contest
-bool showWaitingMessage =true;
+bool showWaitingMessage = true;
   @override
   void onInit() {
     super.onInit();
@@ -111,8 +110,6 @@ bool showWaitingMessage =true;
       }
     });
   }
-
-
   Future<void> joinGame(String contestId) async {
     try {
       await repository.joingame(contestId);
@@ -123,11 +120,9 @@ bool showWaitingMessage =true;
       print("Error joining Contest: $e");
     }
   }
-
   void refreshContests() {
     getContest();
   }
-
   void startAutoRefresh() {
     _timer = Timer.periodic(Duration(seconds: _fetchInterval), (timer) {
       getContest();

@@ -160,38 +160,54 @@ class UserRepository {
     }
   }
 
-// Service method to get contest id
+// Service method to get contest ID
   Future<String> createContestId() async {
     try {
+      // Fetch user details and access token
       final userId = databaseService.user?.id;
       final userName = databaseService.user?.fullname;
       final token = databaseService.accessToken;
 
+      // Check if any required information is missing
       if (userId == null || token == null || userName == null) {
         print('User ID, token, or username is null');
-        return ''; // Return an empty string or handle this case appropriately
+        return 'User authentication failed'; // Return meaningful error message
       }
 
+      // Make API call to create contest ID
       final response = await userApi.createContestId(
-          token: token, combineID: userId, name: userName);
+        token: token,
+        combineID: userId,
+        name: userName,
+      );
 
-      final data = response.data;
+      // Check for successful response
+      if (response.statusCode == 200) {
+        final data = response.data;
 
-      // Navigate through the response structure to extract the actual contestId
-      final contestIdMap = data['contest']; // This is a map containing 'id'
-      final contestId = contestIdMap['_id']; // Extract the 'id' from the map
+        // Extract contestId from response
+        final contestIdMap = data['contest'];
+        final contestId = contestIdMap['_id'];
 
-      if (contestId is String) {
-        return contestId; // Return the contest ID as a string
+        // Ensure contestId is a valid string
+        if (contestId is String) {
+          return contestId;
+        } else {
+          print('Invalid contestId type: ${contestId.runtimeType}');
+          return 'Invalid contest ID received';
+        }
       } else {
-        print('Invalid contestId type: ${contestId.runtimeType}');
-        return ''; // Handle the case where contestId is not a string
+        // Handle API errors and display status code
+        print('API Error: ${response.statusCode} ${response.data}');
+        return 'API error occurred: ${response.statusCode}';
       }
     } catch (e) {
+      // Catch any exceptions and rethrow or handle them appropriately
       print("Exception fetching contestId: $e");
-      rethrow;
+      return 'Failed to fetch contest ID due to network or server issue';
     }
   }
+
 
   Future<QuizQuestion?> fetchPracticeQuestion() async {
     try {
@@ -600,8 +616,6 @@ class UserRepository {
     }
   }
 
-
-
   Future<int?> postClassAnswer(
       String gkQuestionId,
       String selectedOption,
@@ -751,7 +765,6 @@ class UserRepository {
     }
   }
 
-
   Future<int?> postCompetitiveAnswer(
       String gkQuestionId,
       String selectedOption,
@@ -814,6 +827,4 @@ class UserRepository {
       rethrow;
     }
   }
-
-
 }

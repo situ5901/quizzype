@@ -80,7 +80,7 @@ class _ClassState extends State<Class> {
                       child: Column(
                         children: [
                           PlainText(
-                            name: 'Join Participants ${contest.players.length}',
+                            name: 'Join Participants ${contest.winningAmount}',
                             fontsize: 12,
                             color: Colors.black,
                           ),

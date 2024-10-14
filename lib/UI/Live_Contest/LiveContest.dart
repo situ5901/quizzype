@@ -12,12 +12,11 @@ import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/Live_Contest/controller.dart';
 import 'package:quizzype001/UI/SideBar.dart';
 import 'package:quizzype001/UI/classcontest/classQuest.dart';
-import 'package:quizzype001/routes/approutes.dart';
+import 'package:quizzype001/UI/competitive/Competitive.dart';
 import '../../model/leaderboard/leaderBoard.dart';
 import '../classcontest/1-12Class.dart';
 import '../Addcash/Add_CASH.dart';
-import '../Collage_Student/Collage_Student.dart';
-import '../competitive/Competitive.dart';
+
 
 class LiveContest extends StatefulWidget {
   const LiveContest({super.key});
@@ -82,7 +81,7 @@ class _LiveContestState extends State<LiveContest> {
           return Scaffold(
             drawer: SideBar(),
             appBar: AppBar(
-              backgroundColor: Colors.blue,  // Set AppBar background color to white
+              backgroundColor: Colors.blue.shade900,  // Set AppBar background color to white
               title: BoldText(
                 name: "LIVE CONTEST",
                 fontsize: 22,
@@ -126,7 +125,7 @@ class _LiveContestState extends State<LiveContest> {
               child: Column(
                   children: [
                     Container(
-                        color: appColor,
+                        color: Colors.blue.shade900,
                         height: 200,
                         width: double.infinity,
                         child: Padding(
@@ -277,15 +276,25 @@ class _LiveContestState extends State<LiveContest> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: 40,width: 200,
+                            height: 40,
+                            width: 200,
                             decoration: BoxDecoration(
-                              border:Border.all(
-                                  width: 2,
-                                  color: Colors.greenAccent
+                              color: Colors.blue.shade900, // Set background color to blue.shade900
+                              border: Border.all(
+                                width: 2,
+                                color: Colors.blue.shade900,
+                              ),
+                              borderRadius: BorderRadius.circular(12)
+                            ),
+                            child: Center(
+                              child: BoldText(
+                                name: "CONTEST FOR YOU",
+                                color: Colors.white,
+                                fontsize: 21,
                               ),
                             ),
-                            child: Center(child:BoldText(name:"CONTEST FOR YOU",color: Colors.greenAccent,fontsize:21)),
                           ),
+
                           SizedBox(
                             height: 12,
                           ),
@@ -330,6 +339,7 @@ class _LiveContestState extends State<LiveContest> {
                                     default:
                                     // Handle default case or any additional items
                                       break;
+
                                   }
                                 },
                                 child: Container(
@@ -350,16 +360,19 @@ class _LiveContestState extends State<LiveContest> {
                           Container(
                             height: 200,
                             width: double.infinity,
-                            color: Colors.grey.withOpacity(0.5),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade900, // Set background color to blue.shade900
+                              borderRadius: BorderRadius.circular(12), // Add border radius of 12 (adjust as needed)
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset("Assets/Images/tick.png"),
-                                BoldText(name: 'instant withdrawals', fontsize: 22),
-                                PlainText(name: '100% secure payments', fontsize: 25,color: Colors.blueGrey,)
+                                BoldText(name: 'instant withdrawals', fontsize: 22,color: Colors.white,),
+                                PlainText(name: '100% secure payments', fontsize: 25, color: Colors.white),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     )
@@ -367,7 +380,6 @@ class _LiveContestState extends State<LiveContest> {
               ),
             ),
           );
-
     });
   }
 }
