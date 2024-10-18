@@ -60,8 +60,7 @@ class _CompetitiveState extends State<Competitive> {
               "No contest available",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          )
-              : SingleChildScrollView(
+          ): SingleChildScrollView(
             child: Column(
               children: [
                 for (var contest in onlineContests)

@@ -51,7 +51,9 @@ class ClassController extends GetxController{
 
   Future<void> getContest() async {
     try {
-      final response = await repository.getClassContest();
+      String token = 'your_jwt_token_here'; // You can retrieve this from storage, login response, etc.
+
+      final response = await repository.getClassContest(token: token); // Pass the token
       if (response != null) {
         var newContests = (response['contests'] as List<dynamic>)
             .map<Contest>((json) => Contest.fromJson(json))

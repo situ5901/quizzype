@@ -12,7 +12,6 @@ class GK_Contest extends StatefulWidget {
   @override
   State<GK_Contest> createState() => _GK_ContestState();
 }
-
 class _GK_ContestState extends State<GK_Contest> {
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class _GK_ContestState extends State<GK_Contest> {
 
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: appColor,
+            backgroundColor: Colors.blue.shade900,
             title: BoldText(name: "GK CONTEST", color: Colors.white, fontsize: 25),
             centerTitle: true,
             leading: IconButton(
@@ -65,7 +64,7 @@ class _GK_ContestState extends State<GK_Contest> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height: 100,
+                      height: 140,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -77,7 +76,7 @@ class _GK_ContestState extends State<GK_Contest> {
                       child: Column(
                         children: [
                           PlainText(
-                            name: 'Winning Amount ${contest.winningAmount}',
+                            name: 'Join Participants 2',
                             fontsize: 12,
                             color: Colors.black,
                           ),
@@ -87,14 +86,32 @@ class _GK_ContestState extends State<GK_Contest> {
                             children: [
                               Column(
                                 children: [
-                                  BoldText(name: 'PRIZE POOL', fontsize: 12),
+                                  // BoldText widget for "PRIZE POOL"
                                   Text(
-                                    'Rs. ${contest.gameAmount}',
+                                    'Entery Fee',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      backgroundColor: Colors.blue.shade900,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5), // For spacing between text and button
+
+                                  // Button with amount
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blue.shade900, // Button background color
+                                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                    ),
+                                    onPressed: () {
+                                      // Add your button press functionality here
+                                    },
+                                    child: Text(
+                                      'Rs. ${contest.gameAmount}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -121,96 +138,111 @@ class _GK_ContestState extends State<GK_Contest> {
                                   ],
                                 ),
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Show the dialog
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                        elevation: 16,
-                                        child: Container(
-                                          width: double.maxFinite,
-                                          height: 250,
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              // Left Side - Current User Name
-                                              // Padding(
-                                              //   padding: const EdgeInsets.all(8.0),
-                                              //   child: Text(
-                                              //     '${controller.currentusername}',
-                                              //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                              //   ),
-                                              // ),
-                                              // Center - Lottie Animation
-                                              // Right Side - Players' Names
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  children: [
-                                                    // Show dynamic player names
-                                                    Obx(() {
-                                                      if (controller.players.isNotEmpty) {
-                                                        return Column(
-                                                          children: [
-                                                            // Show the current player
-                                                            Text(
-                                                              '${controller.players[0]}', // Current user's name
-                                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                                            ),
-                                                            SizedBox(height: 8),
-                                                            Container(
-                                                              width: 100,
-                                                              height: 100,
-                                                              child: Lottie.asset('Assets/Images/battle.json'),
-                                                            ),
-                                                            // If there is a second player, show their name
-                                                            if (controller.players.length > 1)
-                                                              Text(
-                                                                '${controller.players[1]}', // Opponent's name
-                                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                                              ),
-                                                          ],
-                                                        );
-                                                      } else {
-                                                        return WaitingMessage(); // Show waiting message
-                                                      }
-                                                    }),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                  // Join the game and start checking player status
-                                  controller.joinGame(contest.contestId);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red,
-                                ),
-                                child: Text(
-                                  'Join',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
 
+                              Column(
+                                children: [
+                                  // Text for "PRIZE POOL"
+                                  Text(
+                                    'PRIZE POOL',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5), // For spacing between text and button
+
+                                  // ElevatedButton
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Show the dialog
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                            elevation: 16,
+                                            child: Container(
+                                              width: double.maxFinite,
+                                              height: 250,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Column(
+                                                      children: [
+                                                        // Show dynamic player names
+                                                        Obx(() {
+                                                          if (controller.players.isNotEmpty) {
+                                                            return Column(
+                                                              children: [
+                                                                // Show the current player
+                                                                Text(
+                                                                  '${controller.players[0]}', // Current user's name
+                                                                  style: TextStyle(
+                                                                    fontSize: 16,
+                                                                    fontWeight: FontWeight.bold,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(height: 8),
+                                                                Container(
+                                                                  width: 100,
+                                                                  height: 100,
+                                                                  child: Lottie.asset('Assets/Images/battle.json'),
+                                                                ),
+                                                                // If there is a second player, show their name
+                                                                if (controller.players.length > 1)
+                                                                  Text(
+                                                                    '${controller.players[1]}', // Opponent's name
+                                                                    style: TextStyle(
+                                                                      fontSize: 16,
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ),
+                                                                  ),
+                                                              ],
+                                                            );
+                                                          } else {
+                                                            return WaitingMessage(); // Show waiting message
+                                                          }
+                                                        }),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                      // Join the game and start checking player status
+                                      controller.joinGame(contest.contestId);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.yellow,
+                                    ),
+                                    child: Text(
+                                      '₹ ${contest.winningAmount}',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
-                        ],
+                          Divider(),
+                          SizedBox(height: 2),
+                          Container(
+                                  child: Text('Play and Win Money'),
+                                ),
+                              ],
                       ),
                     ),
                   ),
-                SizedBox(height: 14),
               ],
             ),
           ),
@@ -239,7 +271,6 @@ class _WaitingMessageState extends State<WaitingMessage> with SingleTickerProvid
 
     _animation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
   }
-
   @override
   Widget build(BuildContext context) {
     return Row(

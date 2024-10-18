@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quizzype001/Common/BoldText.dart';
+import 'package:quizzype001/UI/DailyContest.dart';
 import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/HomeScreen/controller.dart';
 import 'package:quizzype001/UI/Main_Page.dart';
@@ -18,7 +20,6 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
-
 class _HomeState extends State<Home> {
   List<String> imagePaths = [
     "Assets/Images/1.jpeg",
@@ -53,10 +54,14 @@ class _HomeState extends State<Home> {
             appBar: AppBar(
               backgroundColor: Colors.blue.shade900,
               centerTitle: true,
-              title: BoldText(
-                name: "QUIZYPE",
-                fontsize: 22,
-                color: Colors.white,
+              title: Text(
+                "GO QUIZZY",
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic, // Change font style to italic
+                  fontWeight: FontWeight.bold, // Bold text
+                ),
               ),
               actions: [
                 Row(
@@ -198,7 +203,7 @@ class _HomeState extends State<Home> {
                                     CrossAxisAlignment.start,
                                     children: [
                                       BoldText(
-                                        name: "PLAY QUIZYPE",
+                                        name: "PLAY QUIZZY",
                                         fontsize: 18,
                                         color: Colors.black,
                                       ),
@@ -285,7 +290,7 @@ class _HomeState extends State<Home> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => GK_Contest()),
+                                          builder: (context) => DailyContest()),
                                     );
                                     break;
                                   case 2:
@@ -297,6 +302,14 @@ class _HomeState extends State<Home> {
                                     );
                                     break;
                                   case 3:
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DailyContest()),
+                                    );
+                                    break;
+                                  case 4:
                                     var id = await UserRepository()
                                         .createContestId();
                                     print("Container pressed!");
@@ -405,12 +418,10 @@ class _HomeState extends State<Home> {
                               ),
                               Expanded(
                                 flex: 1,
-                                child: Image.asset(
-                                  'Assets/Images/students.png',
-                                  height: double.infinity,
-                                  width: double.infinity,
-                                  fit: BoxFit.contain,
-                                ),
+                                child:Lottie.asset('Assets/Images/school.json',
+                                  height: 250, // set the height
+                                  width: 250,  // set the width
+                                  fit: BoxFit.fill, ),
                               ),
                             ],
                           ),

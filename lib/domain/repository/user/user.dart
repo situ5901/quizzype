@@ -231,8 +231,6 @@ class UserRepository {
         } else {
           print('No question data available');
         }
-
-
       return null;
     } catch (e) {
       print("Exception fetching question: $e");
@@ -475,7 +473,6 @@ class UserRepository {
         throw Exception(
             'Token is missing'); // Throw a specific exception for token issues
       }
-
       // Make the API call to fetch the contest details
       final response = await userApi.getContestDetails(
         token: token,
@@ -530,7 +527,6 @@ class UserRepository {
       /// var responseData = response.data['data'];
       print(responseData);
       await getUser(responseData.toString());
-
       // Save the received user data to the local database
       // await databaseService.putStudent(StudentDetails.fromJson(responseData));
 
@@ -541,11 +537,10 @@ class UserRepository {
     }
   }
 
-  Future<Map<String, dynamic>> getClassContest() async {
+  Future<Map<String, dynamic>> getClassContest({required String token}) async {
     try {
-
-      var response = await userApi.getClassContest(
-      );
+      // Pass the token to the API call
+      var response = await userApi.getClassContest(token: token);
 
       // Ensure response.data is of type Map<String, dynamic>
       if (response.data is Map<String, dynamic>) {
@@ -558,6 +553,7 @@ class UserRepository {
       rethrow;
     }
   }
+
   Future<ContestResponse> getClassContestDetail(String contestId) async {
     try {
       final token = databaseService.accessToken;

@@ -26,7 +26,6 @@ class HomeController extends GetxController {
     super.onReady();
     load();
     update();
-
   }
 
   void getUser() {

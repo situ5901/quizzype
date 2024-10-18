@@ -17,7 +17,7 @@ class GkContestController extends GetxController {
   var db = Get.find<DatabaseService>();
   int _fetchInterval = 1; // Initial fetch interval
   var players = <String>[].obs; // List to store players in the contest
-bool showWaitingMessage = true;
+  bool showWaitingMessage = true;
   @override
   void onInit() {
     super.onInit();
@@ -54,7 +54,6 @@ bool showWaitingMessage = true;
         var newContests = (response['contests'] as List<dynamic>)
             .map<Contest>((json) => Contest.fromJson(json))
             .toList();
-
         if (!listEquals(contests, newContests)) {
           contests.value = newContests;
           print("Contests fetched: ${contests.length}");
@@ -75,7 +74,6 @@ bool showWaitingMessage = true;
       print("Error fetching Contest: $e");
     }
   }
-
   // In your controller or the relevant place
   void checkPlayerStatus(String contestId) async {
     Timer.periodic(Duration(seconds: 1), (timer) async {
@@ -112,6 +110,7 @@ bool showWaitingMessage = true;
   }
   Future<void> joinGame(String contestId) async {
     try {
+      print("Attempting to join contest: $contestId");
       await repository.joingame(contestId);
       print("Joined contest: $contestId");
       players.clear(); // Clear the previous players

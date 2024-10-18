@@ -14,6 +14,7 @@ import 'package:quizzype001/UI/SideBar.dart';
 import 'package:quizzype001/UI/classcontest/classQuest.dart';
 import 'package:quizzype001/UI/competitive/Competitive.dart';
 import '../../model/leaderboard/leaderBoard.dart';
+import '../Junior-gk/junior-gk.dart';
 import '../classcontest/1-12Class.dart';
 import '../Addcash/Add_CASH.dart';
 
@@ -32,7 +33,6 @@ class _LiveContestState extends State<LiveContest> {
     "Assets/Images/coll.jpg",
     "Assets/Images/Com.jpg",
   ];
-
 
 
   final ScrollController _scrollController = ScrollController();
@@ -315,7 +315,7 @@ class _LiveContestState extends State<LiveContest> {
                                     case 0:
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => GK_Contest()),
+                                        MaterialPageRoute(builder: (context) => junior()),
                                       );
                                       break;
                                     case 1:

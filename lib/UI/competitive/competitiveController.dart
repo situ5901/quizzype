@@ -14,7 +14,6 @@ class Competitve extends GetxController{
   var contests = <Contest>[].obs; // List to store contests
   Timer? _timer; // Timer for refreshing contests
   String? currentuser;
-
   bool isLoading = true;
   String? currentusername;
   var db = Get.find<DatabaseService>();

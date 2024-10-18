@@ -101,11 +101,10 @@ class _GK_QUIZState extends State<GK_QUIZ> {
           Vibration.vibrate(duration: 500);
         }
       });
-
+      
       controller.selectOption(option); // Also update in controller
     }
   }
-
   void _handleNextQuestion() async {
     if (selectedOption != null) {
       await controller.handleNextQuestion(); // Call the new method

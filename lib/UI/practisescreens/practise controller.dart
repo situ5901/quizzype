@@ -17,7 +17,7 @@ class PracticeScreenController extends GetxController {
   String? selectedOption;
   int score = 0; // Use int for score to handle numerical operations
   Timer? timer;
-  int timeLeft = 15; // 15 seconds per question
+  int timeLeft = 5; // 15 seconds per question
   double progress = 1.0;
   int questionNumber = 1; // Current question number
   bool isQuizCompleted = false;
@@ -119,13 +119,13 @@ class PracticeScreenController extends GetxController {
 
   void startTimer() {
     print("Starting timer...");
-    timeLeft = 15;
+    timeLeft = 5;
     progress = 1.0;
     timer?.cancel();
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (timeLeft > 0) {
         timeLeft--;
-        progress = timeLeft / 15; // Update progress
+        progress = timeLeft / 5; // Update progress
         update(); // Update the UI
       } else {
         timer.cancel();

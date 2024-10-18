@@ -169,9 +169,6 @@ class UserApi {
   }
 
   // API method to fetch question for other
-
-
-
   Future<Response> getQuestion(
       {required String token, required String combineID}) async {
     try {
@@ -214,7 +211,6 @@ class UserApi {
       rethrow;
     }
   }
-
   Future<Response> PracticeAnswer({
     required String token,
     required String contestId,
@@ -246,6 +242,7 @@ class UserApi {
       rethrow;
     }
   }
+
 
   //for student
   Future<Response> getStudentQuestion(
@@ -349,12 +346,11 @@ class UserApi {
         ),
       );
       return response;
-    } catch (e) {
+    } catch (e){
       print("Error fetching to join game: $e");
       rethrow;
     }
   }
-
   Future<Response> joinGame({
     required String token,
     required String contestId,
@@ -362,7 +358,7 @@ class UserApi {
     required String name}) async {
     try {
       final response = await dio.post(
-        '$basePath/join-game/many',
+        '$basePath/join-game',
         data: {
           "contestId": contestId,
           "newcombineId": combineID,
@@ -377,12 +373,11 @@ class UserApi {
         ),
       );
       return response;
-    } catch (e) {
+    } catch (e){
       print("Error fetching to join game: $e");
       rethrow;
     }
   }
-
 
   Future<Response> compare({
     required String token,
@@ -520,23 +515,22 @@ class UserApi {
     }
   }
 
-
-
-
-
-
-
-
 // for +1,+2 class contest
-  Future<Response> getClassContest() async {
+
+  Future<Response> getClassContest({required String token}) async {
     try {
       final response = await dio.get(
-        '$basePath/student_contest_answer',
-
+        '$basePath/1-12_get-contest',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
       );
       return response;
     } catch (e) {
-      print("Error fetching ContestId: $e");
+      print("Error fetching class contest: $e");
       rethrow;
     }
   }
@@ -643,7 +637,7 @@ class UserApi {
 
 
 
-  Future<Response> getCompetitiveContest() async {
+  Future<Response>getCompetitiveContest() async {
     try {
       final response = await dio.get(
         '$basePath/competitive_contest_answer',

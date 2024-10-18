@@ -13,7 +13,6 @@ class ContestResponse {
       message: json['message'] ?? '',
     );
   }
-
   Map<String, dynamic> toJson() {
     return {
       'contests': contests.map((contest) => contest.toJson()).toList(),
@@ -21,7 +20,6 @@ class ContestResponse {
     };
   }
 }
-
 class Contest {
   String contestId;
   bool isFull;

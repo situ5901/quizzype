@@ -241,24 +241,19 @@ class _practiceContestState extends State<practiceContest> {
                               ? GestureDetector(
                             onTap: _handleNextQuestion,
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 15.0),
+                              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                               decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius:
-                                  BorderRadius.circular(15)),
+                                color: Colors.red.shade900,
+                                borderRadius: BorderRadius.circular(15), // No border now
+                              ),
                               child: BoldText(
                                 name: "NEXT",
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontsize: 20,
                               ),
                             ),
                           )
-                              : SizedBox
-                              .shrink(), // Hide button if no answer is selected
+                              : SizedBox.shrink(), // Hide button if no answer is selected
                         ),
                       ],
                     ),
