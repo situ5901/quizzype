@@ -354,6 +354,7 @@ class UserApi {
   Future<Response> joinGame({
     required String token,
     required String contestId,
+
     required String combineID,
     required String name}) async {
     try {
@@ -361,9 +362,9 @@ class UserApi {
         '$basePath/join-game',
         data: {
           "contestId": contestId,
-          "newcombineId": combineID,
+          "combineId": combineID,
           "fullname": name,
-          "gameAmount": 10
+
         },
         options: Options(
           headers: {

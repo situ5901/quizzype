@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/HomeScreen/Home.dart';
 
+import 'junior2.dart';
+
 class junior extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class junior extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Home()),
+                  MaterialPageRoute(builder: (context) => junior2()),
                 );
               },
             ),

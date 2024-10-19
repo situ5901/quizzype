@@ -23,8 +23,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<String> imagePaths = [
     "Assets/Images/1.jpeg",
-    "Assets/Images/Dailycont.png",
-    "Assets/Images/mega.png",
+    "Assets/Images/weekly.jpg",
+    "Assets/Images/monthly0.jpg",
     "Assets/Images/Practices.png",
   ];
   var itemId = 0;

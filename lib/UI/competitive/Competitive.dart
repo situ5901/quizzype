@@ -26,7 +26,7 @@ class _CompetitiveState extends State<Competitive> {
 
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: appColor,
+            backgroundColor: Colors.blue.shade900,
             title: BoldText(name: "Competitive Contest", color: Colors.white, fontsize: 25),
             centerTitle: true,
             leading: IconButton(

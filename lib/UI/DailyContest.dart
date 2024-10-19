@@ -14,7 +14,7 @@ class DailyContest extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Daily Contest",
+          title: const Text("Weekly Contest",
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.blue,

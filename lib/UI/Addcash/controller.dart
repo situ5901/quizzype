@@ -51,15 +51,15 @@ class AddCashController extends GetxController {
       print("Error adding cash or creating contest: $e");
     }
   }
-  Future<void> joinGame(String contestId) async {
-    try {
-      await repository.joingame(contestId);
-
-      print("Joined contest: $contestId");
-    } catch (e) {
-      print("Error joining Contest: $e");
-    }
-  }
+  // Future<void> joinGame(String contestId) async {
+  //   try {
+  //     await repository.joingame(contestId);
+  //
+  //     print("Joined contest: $contestId");
+  //   } catch (e) {
+  //     print("Error joining Contest: $e");
+  //   }
+  // }
 
   @override
   void onClose() {
