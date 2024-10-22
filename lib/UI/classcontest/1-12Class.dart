@@ -239,11 +239,6 @@ class _ClassState extends State<Class> {
 
                             ],
                           ),
-                          Divider(),
-                          SizedBox(height: 2),
-                          Container(
-                            child: Text('Play and Win Money'),
-                          ),
                         ],
                       ),
                     ),

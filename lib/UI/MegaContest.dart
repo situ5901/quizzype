@@ -14,7 +14,7 @@ class MEGACONTEST extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Monthly Contest",
+          title: const Text("Mega Contest",
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.blue,

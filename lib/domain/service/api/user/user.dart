@@ -641,7 +641,7 @@ class UserApi {
   Future<Response>getCompetitiveContest() async {
     try {
       final response = await dio.get(
-        '$basePath/competitive_contest_answer',
+        '$basePath/competitive_contest_show',
 
       );
       return response;

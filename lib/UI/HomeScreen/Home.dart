@@ -8,6 +8,7 @@ import 'package:quizzype001/UI/Gk_contest/GK_Contest.dart';
 import 'package:quizzype001/UI/HomeScreen/controller.dart';
 import 'package:quizzype001/UI/Main_Page.dart';
 import 'package:quizzype001/UI/MegaContest.dart';
+import 'package:quizzype001/UI/Monthly.dart';
 import 'package:quizzype001/UI/SideBar.dart';
 import 'package:quizzype001/domain/repository/repository_imports.dart';
 import 'package:quizzype001/domain/service/app/app_service_imports.dart';
@@ -25,7 +26,7 @@ class _HomeState extends State<Home> {
     "Assets/Images/1.jpeg",
     "Assets/Images/weekly.jpg",
     "Assets/Images/monthly0.jpg",
-    "Assets/Images/Practices.png",
+    "Assets/Images/mega.png",
   ];
   var itemId = 0;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -298,7 +299,7 @@ class _HomeState extends State<Home> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              MEGACONTEST()),
+                                              Monthly()),
                                     );
                                     break;
                                   case 3:
@@ -306,7 +307,7 @@ class _HomeState extends State<Home> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              DailyContest()),
+                                              MEGACONTEST()),
                                     );
                                     break;
                                   case 4:
