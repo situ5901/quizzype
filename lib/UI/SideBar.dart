@@ -12,22 +12,22 @@ class SideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: 250,
+      width: 250, // Set the width of the Drawer
       child: Container(
-        margin: EdgeInsets.only(bottom: 20),
+        margin: EdgeInsets.only(bottom: 20), // Set the bottom margin to 20
         child: ListView(
           children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(databaseService.user!.fullname ?? "user"),
-              accountEmail: Text(databaseService.user!.email ?? "email"),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.indigo.shade900,
-                child: Text(
-                  "SS",
-                  style: TextStyle(fontSize: 30, color: Colors.white),
-                ),
-              ),
-            ),
+            // UserAccountsDrawerHeader(
+            //   accountName: Text(controller.userModel!.fullname?? ""),
+            //   accountEmail: Text(controller.userModel!.email ?? ""),
+            //   currentAccountPicture: CircleAvatar(
+            //     backgroundColor: Colors.indigo.shade900,
+            //     child: Text(
+            //       "SS",
+            //       style: TextStyle(fontSize: 30, color: Colors.white),
+            //     ),
+            //   ),
+            // ),
             GestureDetector(
               onTap: (){
                 Get.toNamed(AppRoutes.userScreen);
@@ -42,28 +42,18 @@ class SideBar extends StatelessWidget {
                 Get.toNamed(AppRoutes.leaderBoard);
               },
               leading: Icon(Icons.score),
-              title: Text("LeaderBoard"),
+              title: Text("Score"),
+            ),
+            ListTile(
+              leading: Icon(Icons.notifications),
+              title: Text("Notification"),
             ),
             ListTile(
               onTap: (){
-                Get.toNamed(AppRoutes.dailyContest);
+                UserRepository().getWalletBalance();
               },
-              leading: Icon(Icons.emoji_events),
-              title: Text("Daily Contest"),
-            ),
-            ListTile(
-              onTap: (){
-                Get.toNamed(AppRoutes.leaderBoard);
-              },
-              leading: Icon(Icons.event),
-              title: Text("Monthely Contest"),
-            ),
-            ListTile(
-              onTap: (){
-                Get.toNamed(AppRoutes.megaContest);
-              },
-              leading: Icon(Icons.stacked_bar_chart),
-              title: Text("Mega Contest"),
+              leading: Icon(Icons.settings),
+              title: Text("Setting"),
             ),
             ListTile(
               onTap: () async{
