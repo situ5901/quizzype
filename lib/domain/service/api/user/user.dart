@@ -541,7 +541,7 @@ class UserApi {
       {required String token,required String contestId }) async {
     try {
       final response = await dio.get(
-        '$basePath/student_one_contest?id=$contestId',
+        '$basePath/1-12_one_contest?id=$contestId',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -555,7 +555,6 @@ class UserApi {
       rethrow;
     }
   }
-
   Future<Response> getClassQuestion(
       {required String token, required String combineID}) async {
     try {
@@ -616,7 +615,7 @@ class UserApi {
     required String name}) async {
     try {
       final response = await dio.post(
-        '$basePath/student_join-contest',
+        '$basePath/1-12_join-contest',
         data: {
           "contestId": contestId,
           "combineId": combineID,
@@ -654,7 +653,7 @@ class UserApi {
       {required String token,required String contestId }) async {
     try {
       final response = await dio.get(
-        '$basePath/competitive_one_contest?id=$contestId',
+        '$basePath/competitive_one_contest_show?id=$contestId',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -734,7 +733,7 @@ class UserApi {
         data: {
           "contestId": contestId,
           "combineId": combineID,
-          "fullname": name,
+          "fullname": name
         },
         options: Options(
           headers: {

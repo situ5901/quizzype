@@ -24,9 +24,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<String> imagePaths = [
     "Assets/Images/1.jpeg",
-    "Assets/Images/weekly.jpg",
-    "Assets/Images/monthly0.jpg",
-    "Assets/Images/mega.png",
+    "Assets/Images/Week.jpg",
+    "Assets/Images/Monthly.jpg",
+    "Assets/Images/Mega.jpg",
   ];
   var itemId = 0;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -52,6 +52,7 @@ class _HomeState extends State<Home> {
         init: HomeController(),
         builder: (controller) {
           return Scaffold(
+            drawer: SideBar(),
             appBar: AppBar(
               backgroundColor: Colors.blue.shade900,
               centerTitle: true,
@@ -100,9 +101,8 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-            drawer: SideBar(),
             body: Container(
-              color: Colors.white, // Change body background color
+              color: Colors.white30, // Change body background color
               child: SingleChildScrollView(
                 child: Column(
                   children: [

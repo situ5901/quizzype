@@ -84,7 +84,7 @@ class ClassController extends GetxController{
   void checkPlayerStatus(String contestId) async {
     Timer.periodic(Duration(seconds: 1), (timer) async {
       try {
-        final contestDetails = await repository.getCompContestDetail(contestId);
+        final contestDetails = await repository.getClassContestDetail(contestId);
 
         if (contestDetails.contests.isNotEmpty) {
           var currentContest = contestDetails.contests.first;
@@ -100,10 +100,9 @@ class ClassController extends GetxController{
             // Wait for 3 seconds and then navigate
             Future.delayed(Duration(seconds: 3), () {
               Get.back(); // Close the dialog
-              Get.offNamed(AppRoutes.compQuest, arguments: contestId); // Navigate to GK questions
+              Get.offNamed(AppRoutes.classContest, arguments: contestId); // Navigate to GK questions
             });
           }
-
           // Update the waiting message state
           if (currentContest.players.length >= 2) {
             showWaitingMessage = false; // Update this variable in your controller
@@ -118,7 +117,7 @@ class ClassController extends GetxController{
 
   Future<void> joinGame(String contestId) async {
     try {
-      await repository.joinCompetitiveGame(contestId);
+      await repository.joinClassGame(contestId);
       print("Joined contest: $contestId");
       players.clear(); // Clear the previous players
       checkPlayerStatus(contestId);
