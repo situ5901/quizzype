@@ -23,10 +23,10 @@ class Home extends StatefulWidget {
 }
 class _HomeState extends State<Home> {
   List<String> imagePaths = [
-    "Assets/Images/1.jpeg",
-    "Assets/Images/Week.jpg",
-    "Assets/Images/Monthly.jpg",
-    "Assets/Images/Mega.jpg",
+    "Assets/Images/Live.jpeg",
+    "Assets/Images/weekliy.jpeg",
+    "Assets/Images/Month01.jpg",
+    "Assets/Images/Megga.jpeg",
   ];
   var itemId = 0;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
